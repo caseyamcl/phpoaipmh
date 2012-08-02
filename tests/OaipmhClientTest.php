@@ -2,9 +2,11 @@
 
 require_once('../src/Phpoaipmh/Client.php');
 require_once('../src/Phpoaipmh/HttpException.php');
-require_once('../src/Phpoaipmh/OaipmhRequestException.php');
+require_once('../src/Phpoaipmh/OaipmhReqeustException.php');
 
-class PhpOaipmhClientTest extends PHPUnit_Framework_TestCase {
+class OaipmhClientTest extends PHPUnit_Framework_TestCase {
+
+    private $testurl = 'http://nsdl.org/oai';
 
     public function setUp() {
         parent::setUp();
@@ -16,14 +18,14 @@ class PhpOaipmhClientTest extends PHPUnit_Framework_TestCase {
 
     public function testInsantiateCreatesNewObject() {
 
-        $obj = new Phpoaipmh\Client('http://example.com');
+        $obj = new Phpoaipmh\Client($this->testurl);
         $this->assertInstanceOf('Phpoaipmh\Client', $obj);
 
     }
 
     public function testRequestRuns() {
-        $obj = new Phpoaipmh\Client('http://example.com');
-        $obj->request();
+        $obj = new Phpoaipmh\Client($this->testurl);
+        var_dump($obj->request('Identify'));
     }
 }
 
