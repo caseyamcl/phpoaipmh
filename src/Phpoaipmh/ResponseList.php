@@ -28,6 +28,7 @@ class ResponseList {
      * Recordset expiration date, converted to Unixtime
      *
      * @var int
+     * @TODO implement this...
      */
     private $expireDate;
 
@@ -35,16 +36,6 @@ class ResponseList {
      * @var string
      */
     private $resumptionToken;
-
-    /**
-     * @var int
-     */
-    private $limit = 0;
-
-    /**
-     * @var int
-     */
-    private $offset = 0;
 
     /**
      * Array of records
@@ -70,7 +61,7 @@ class ResponseList {
      * @param int $offset
      * @param int $limit
      */
-    public function __construct(Client $httpClient, $verb, $params = array(), $offset = 0, $limit = 0)
+    public function __construct(Client $httpClient, $verb, $params = array())
     {
         if (substr($verb, 0, 4) != 'List') {
             throw new \Exception("Cannot iterate over non-list OAI-PMH requests");
@@ -80,10 +71,8 @@ class ResponseList {
         $this->httpClient = $httpClient;
         $this->verb   = $verb;
         $this->params = $params;
-        $this->offset = $offset;
-        $this->limit  = $limit;
 
-        //Get first batch - Must happen in constructor
+        //Do request for the first batch - Must happen in constructor
         $this->retrieveBatch();
     }
 
@@ -92,22 +81,18 @@ class ResponseList {
     /**
      * Get the next item
      *
+     * Return an item from the current batch, try to get a new item from a request,
+     * or return false if both fail.
+     *
      * @return boolean|SimpleXMLElement
      */
     public function nextItem()
     {
-        //Determine if we have another item, and possibly
-        //do a request to get more
-
-        //If there is a limit and we are at it, return false
-        if ($this->limit && $this->totalProcessed >= $this->limit) {
-            $item = false;
-        }
-        //Elseif there are more items, return one of those
-        elseif (count($this->batch) > 0) {
+        //if still items in current batch, return one
+        if (count($this->batch) > 0) {
             $item = array_shift($this->batch);
         }
-        //Elseif we have zero more items and the ability to get more items, do so and try to return one
+        //Elseif ability to get more items, do so and try to return one
         elseif ($this->resumptionToken) {
             $this->retrieveBatch();
             $item = (count($this->batch) > 0) ? array_shift($this->batch) : false;
