@@ -49,7 +49,7 @@ class ResponseList {
      *
      * @var int
      */
-    private $totalProcessed;
+    private $totalProcessed = 0;
 
     // -------------------------------------------------------------------------
 
@@ -74,6 +74,18 @@ class ResponseList {
 
         //Do request for the first batch - Must happen in constructor
         $this->retrieveBatch();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Get the total number of records processed
+     *
+     * @return int
+     * The number of records processed during this run
+     */
+    public function getNumProcessed() {
+        return $this->totalProcessed;
     }
 
     // -------------------------------------------------------------------------
