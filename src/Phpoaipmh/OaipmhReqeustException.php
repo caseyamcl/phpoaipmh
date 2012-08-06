@@ -2,9 +2,12 @@
 
 namespace Phpoaipmh;
 
-class OaipmhReqeustException extends \Exception {
+class OaipmhReqeustException extends \Exception
+{
 
     private $oaiErrorCode;
+
+    // -------------------------------------------------------------------------
 
     public function __construct($oaiErrorCode, $message, $code = 0, Exception $previous = null)
     {
@@ -12,11 +15,12 @@ class OaipmhReqeustException extends \Exception {
         parent::__construct($message, $code, $previous);
     }
 
-    public function __toString() {
+    // -------------------------------------------------------------------------
+
+    public function __toString()
+    {
         return __CLASS__ . ": [{$this->code}]: ({$this->oaiErrorCode}) {$this->message}\n";
     }
-
-
 }
 
 /* OaipmhRequestException.php */

@@ -5,21 +5,33 @@ namespace Phpoaipmh;
 /**
  * A simple HTTP Client that performs only GET requests to
  * OAI Endpoints
- *
  */
 class Client
 {
+    /**
+     * @var string
+     */
     private $url;
+
+    /**
+     * @var object
+     */
+    private $httpClient;
 
     // -------------------------------------------------------------------------
 
-    public function __construct($url) {
-
-        if ( ! is_callable('curl_exec')) {
-            throw new \Exception("PHP OAI-PMH Library depends on the PHP Curl Extensions!");
-        }
-
+    /**
+     * Constructor
+     *
+     * @param string $url
+     */
+    public function __construct($url, $httpClient = null)
+    {
         $this->url = $url;
+
+        if ($httpClient) {
+            $this->httpClient = $httpClient;
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -29,15 +41,49 @@ class Client
      *
      * @return SimpleXMLElement
      */
-    public function request($verb, $params = array()) {
+    public function request($verb, $params = array())
+    {
+        $resp = $this->doRequest($verb, $params);
+        return $this->decodeResponse($resp);
+    }
 
+    // -------------------------------------------------------------------------
+
+    /**
+     * Strategy method to do a requet.  If an object was passed in the
+     * constructor, use that object to do the request.  Otherwise, use CURL
+     *
+     * @return string
+     * The raw response
+     */
+    private function doRequest($verb, $params = array())
+    {
         $params = array_merge(array('verb' => $verb), $params);
         $url = $this->url . '?' . http_build_query($params);
 
+        if ($this->httpClient) {
+            return $this->httpClient->request($url);
+        }
+        else {
+            return $this->doCurlRequest($url);
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Do CURL Request
+     *
+     * @param string $url
+     * The full URL 
+     * @return string
+     */
+    private function doCurlRequest($url)
+    {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
         curl_setopt($ch, CURLOPT_DNS_CACHE_TIMEOUT, 10);
         curl_setopt($ch, CURLOPT_TIMEOUT, 60);
         curl_setopt($ch, CURLOPT_USERAGENT, 'PHP OAI-PMH Library');
@@ -55,13 +101,19 @@ class Client
             throw new HttpException('HTTP Response Empty');
         }
 
-        return $this->decodeResponse($resp);
+        return $resp;
     }
 
     // -------------------------------------------------------------------------
 
-    private function decodeResponse($resp) {
-
+    /**
+     * Decode the response into XML
+     *
+     * @param $resp
+     * return SimpleXMLElement
+     */
+    private function decodeResponse($resp)
+    {
         $xml = @new \SimpleXMLElement($resp);
 
         if ( ! $xml) {
@@ -79,6 +131,5 @@ class Client
         return $xml;
     }
 }
-
 
 /* EOF: OaipmhClient.php */
