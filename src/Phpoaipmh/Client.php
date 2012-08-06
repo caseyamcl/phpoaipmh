@@ -87,7 +87,7 @@ class Client
             $code = (string) $xml->error['code'];
             $msg  = (string) $xml->error;
 
-            throw new OaipmhReqeustException($code, $msg);
+            throw new OaipmhRequestException($code, $msg);
         }
 
         return $xml;

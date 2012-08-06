@@ -2,7 +2,7 @@
 
 namespace Phpoaipmh;
 
-class OaipmhReqeustException extends \Exception
+class OaipmhRequestException extends \Exception
 {
 
     private $oaiErrorCode;

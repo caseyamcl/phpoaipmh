@@ -150,7 +150,7 @@ class ResponseList {
        
         //Result format error?
         if ( ! isset($resp->$verb->$nodeName)) {
-            throw new OaipmhReqeustException(sprintf("Expected XML element list %s missing for verb %s"), $nodeName, $verb);
+            throw new OaipmhRequestException(sprintf("Expected XML element list %s missing for verb %s"), $nodeName, $verb);
         }
 
         //Process the results
