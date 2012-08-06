@@ -51,6 +51,13 @@ class ResponseList {
      */
     private $totalProcessed = 0;
 
+    /**
+     * Initial Request Made
+     *
+     * @var boolean
+     */
+    private $numRequests = 0;
+
     // -------------------------------------------------------------------------
 
     /**
@@ -63,26 +70,36 @@ class ResponseList {
      */
     public function __construct(Client $httpClient, $verb, $params = array())
     {
-        if (substr($verb, 0, 4) != 'List') {
-            throw new \Exception("Cannot iterate over non-list OAI-PMH requests");
-        }
-
         //Set paramaters
         $this->httpClient = $httpClient;
         $this->verb   = $verb;
         $this->params = $params;
 
-        //Do request for the first batch - Must happen in constructor
-        $this->retrieveBatch();
+        //Node name error?
+        if ( ! $this->getItemNodeName()) {
+            throw new \RuntimeException('Cannot determine item name for verb: ' . $this->verb);
+        }        
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Get the total number of records processed
+     * Get the total number of requests made during this run
+     *
+     * @param int
+     * The number of HTTP reqeusts made
+     */
+    public function getNumRequests() {
+        return $this->numRequests;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Get the total number of records processed during this run
      *
      * @return int
-     * The number of records processed during this run
+     * The number of records processed 
      */
     public function getNumProcessed() {
         return $this->totalProcessed;
@@ -100,27 +117,19 @@ class ResponseList {
      */
     public function nextItem()
     {
+        //If no items in batch, and we have a resumptionToken or need to make initial request...
+        if (count($this->batch) == 0 && ($this->resumptionToken OR $this->numRequests == 0)) {
+            $this->retrieveBatch();            
+        }
+
         //if still items in current batch, return one
         if (count($this->batch) > 0) {
-            $item = array_shift($this->batch);
+            $this->totalProcessed++; 
+            return array_shift($this->batch);
         }
-        //Elseif ability to get more items, do so and try to return one
-        elseif ($this->resumptionToken) {
-            $this->retrieveBatch();
-            $item = (count($this->batch) > 0) ? array_shift($this->batch) : false;
-        } 
-        //Else, give up..
         else {
-            $item = false;
+            return false;
         }
-
-        //If we actually have a record
-        if ($item) {
-            $this->totalProcessed++;
-        }
-
-        //Return it
-        return $item;
     }
 
     // -------------------------------------------------------------------------
@@ -140,17 +149,13 @@ class ResponseList {
         $nodeName = $this->getItemNodeName();
         $verb = $this->verb;
 
-        //Node name error?
-        if ( ! $nodeName) {
-            throw new \RuntimeException('Cannot determine item name for verb: ' . $this->verb);
-        }
-
         //Do it..
         $resp = $this->httpClient->request($verb, $params); 
-       
+        $this->numRequests++;
+
         //Result format error?
         if ( ! isset($resp->$verb->$nodeName)) {
-            throw new OaipmhRequestException(sprintf("Expected XML element list %s missing for verb %s"), $nodeName, $verb);
+            throw new \RuntimeException(sprintf("Expected XML element list '%s' missing for verb '%s'", $nodeName, $verb));
         }
 
         //Process the results

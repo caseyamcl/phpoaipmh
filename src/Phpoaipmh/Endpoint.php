@@ -57,7 +57,7 @@ class Endpoint
      * If true, will return a ResponseList object instead of an array
      *
      * @return array|ResponseList
-     * An array of SimpleXMLElement objects
+     * An array of SimpleXMLElement objects (or responseList object)
      */
     public function listMetadataFormats($identifier = null, $asResponseList = false)
     {
@@ -75,7 +75,7 @@ class Endpoint
      * If true, will return a ResponseList object instead of an array
      *
      * @return array|ResponseList
-     * An array of SimpleXMLElement objects
+     * An array of SimpleXMLElement objects (or responseList object)
      */
     public function listSets($asResponseList = false)
     {

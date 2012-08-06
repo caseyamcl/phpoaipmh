@@ -1,0 +1,1219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+
+
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+<responseDate>2012-08-06T20:58:40Z</responseDate>
+<request verb="ListIdentifiers" from="2012-07-26" metadataPrefix="nsdl_dc">http://nsdl.org/oai</request>
+
+<!-- Showing records 1 through 200 out of 733 total  -->
+
+<ListIdentifiers>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20120614151514710T</identifier>
+      <datestamp>2012-07-28T23:33:30Z</datestamp>
+       <setSpec>ncs-NSDL-COLLECTION-000-003-112-016</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20120727185108778T</identifier>
+      <datestamp>2012-07-28T23:34:18Z</datestamp>
+       <setSpec>ncs-NSDL-COLLECTION-000-003-112-016</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20120727185110763T</identifier>
+      <datestamp>2012-07-28T23:35:14Z</datestamp>
+       <setSpec>ncs-NSDL-COLLECTION-000-003-112-016</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20120727185113102T</identifier>
+      <datestamp>2012-07-28T23:36:16Z</datestamp>
+       <setSpec>ncs-NSDL-COLLECTION-000-003-112-016</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20120727185111606T</identifier>
+      <datestamp>2012-07-28T23:38:21Z</datestamp>
+       <setSpec>ncs-NSDL-COLLECTION-000-003-112-016</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20120727185112839T</identifier>
+      <datestamp>2012-07-28T23:38:26Z</datestamp>
+       <setSpec>ncs-NSDL-COLLECTION-000-003-112-016</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20120727185109684T</identifier>
+      <datestamp>2012-07-28T23:38:37Z</datestamp>
+       <setSpec>ncs-NSDL-COLLECTION-000-003-112-016</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20120727185114982T</identifier>
+      <datestamp>2012-07-28T23:38:44Z</datestamp>
+       <setSpec>ncs-NSDL-COLLECTION-000-003-112-016</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20120727185110266T</identifier>
+      <datestamp>2012-07-28T23:37:16Z</datestamp>
+       <setSpec>ncs-NSDL-COLLECTION-000-003-112-016</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20120727185113635T</identifier>
+      <datestamp>2012-07-28T23:39:54Z</datestamp>
+       <setSpec>ncs-NSDL-COLLECTION-000-003-112-016</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20120727185111310T</identifier>
+      <datestamp>2012-07-28T23:40:02Z</datestamp>
+       <setSpec>ncs-NSDL-COLLECTION-000-003-112-016</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20120614151542291T</identifier>
+      <datestamp>2012-07-28T23:41:47Z</datestamp>
+       <setSpec>ncs-NSDL-COLLECTION-000-003-112-016</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20120727185113906T</identifier>
+      <datestamp>2012-07-28T23:43:59Z</datestamp>
+       <setSpec>ncs-NSDL-COLLECTION-000-003-112-016</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20120727185114719T</identifier>
+      <datestamp>2012-07-28T23:44:22Z</datestamp>
+       <setSpec>ncs-NSDL-COLLECTION-000-003-112-016</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20120727185113371T</identifier>
+      <datestamp>2012-07-28T23:44:41Z</datestamp>
+       <setSpec>ncs-NSDL-COLLECTION-000-003-112-016</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20120727185111887T</identifier>
+      <datestamp>2012-07-28T23:45:36Z</datestamp>
+       <setSpec>ncs-NSDL-COLLECTION-000-003-112-016</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20120727185114457T</identifier>
+      <datestamp>2012-07-28T23:46:17Z</datestamp>
+       <setSpec>ncs-NSDL-COLLECTION-000-003-112-016</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20120727185112153T</identifier>
+      <datestamp>2012-07-28T23:46:37Z</datestamp>
+       <setSpec>ncs-NSDL-COLLECTION-000-003-112-016</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20120727185115263T</identifier>
+      <datestamp>2012-07-28T23:47:23Z</datestamp>
+       <setSpec>ncs-NSDL-COLLECTION-000-003-112-016</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20120614151544324T</identifier>
+      <datestamp>2012-07-28T23:47:36Z</datestamp>
+       <setSpec>ncs-NSDL-COLLECTION-000-003-112-016</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20120614151516572T</identifier>
+      <datestamp>2012-07-28T23:48:19Z</datestamp>
+       <setSpec>ncs-NSDL-COLLECTION-000-003-112-016</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20120727185115526T</identifier>
+      <datestamp>2012-07-28T23:49:53Z</datestamp>
+       <setSpec>ncs-NSDL-COLLECTION-000-003-112-016</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20120614151526247T</identifier>
+      <datestamp>2012-07-28T23:50:09Z</datestamp>
+       <setSpec>ncs-NSDL-COLLECTION-000-003-112-016</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20120727185109994T</identifier>
+      <datestamp>2012-07-28T23:51:56Z</datestamp>
+       <setSpec>ncs-NSDL-COLLECTION-000-003-112-016</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20120727185108518T</identifier>
+      <datestamp>2012-07-28T23:52:21Z</datestamp>
+       <setSpec>ncs-NSDL-COLLECTION-000-003-112-016</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20120727185111044T</identifier>
+      <datestamp>2012-07-28T23:58:38Z</datestamp>
+       <setSpec>ncs-NSDL-COLLECTION-000-003-112-016</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20120727185108250T</identifier>
+      <datestamp>2012-07-28T23:59:13Z</datestamp>
+       <setSpec>ncs-NSDL-COLLECTION-000-003-112-016</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20120727185106827T</identifier>
+      <datestamp>2012-07-28T23:59:28Z</datestamp>
+       <setSpec>ncs-NSDL-COLLECTION-000-003-112-016</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20120727185114177T</identifier>
+      <datestamp>2012-07-29T00:00:56Z</datestamp>
+       <setSpec>ncs-NSDL-COLLECTION-000-003-112-016</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20120727185107955T</identifier>
+      <datestamp>2012-07-29T00:01:05Z</datestamp>
+       <setSpec>ncs-NSDL-COLLECTION-000-003-112-016</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20120614151549354T</identifier>
+      <datestamp>2012-07-29T00:01:40Z</datestamp>
+       <setSpec>ncs-NSDL-COLLECTION-000-003-112-016</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20120727185112574T</identifier>
+      <datestamp>2012-07-29T00:02:13Z</datestamp>
+       <setSpec>ncs-NSDL-COLLECTION-000-003-112-016</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003230358916T</identifier>
+      <datestamp>2012-07-29T07:59:38Z</datestamp>
+       <setSpec>dlese.org</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003230355413T</identifier>
+      <datestamp>2012-07-29T07:59:48Z</datestamp>
+       <setSpec>dlese.org</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062208483T</identifier>
+      <datestamp>2012-08-03T07:56:48Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062422825T</identifier>
+      <datestamp>2012-08-03T07:56:50Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062234139T</identifier>
+      <datestamp>2012-08-03T07:56:51Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062943964T</identifier>
+      <datestamp>2012-08-03T07:56:52Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063241894T</identifier>
+      <datestamp>2012-08-03T07:56:53Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062401429T</identifier>
+      <datestamp>2012-08-03T07:56:55Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062856599T</identifier>
+      <datestamp>2012-08-03T07:56:55Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063321748T</identifier>
+      <datestamp>2012-08-03T07:56:56Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062237930T</identifier>
+      <datestamp>2012-08-03T07:57:00Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003065336719T</identifier>
+      <datestamp>2012-08-03T07:57:01Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062741477T</identifier>
+      <datestamp>2012-08-03T07:57:02Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062643097T</identifier>
+      <datestamp>2012-08-03T07:57:04Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061121123600469T</identifier>
+      <datestamp>2012-08-03T07:57:13Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062516968T</identifier>
+      <datestamp>2012-08-03T07:57:14Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062809713T</identifier>
+      <datestamp>2012-08-03T07:57:15Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062638636T</identifier>
+      <datestamp>2012-08-03T07:57:16Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063259364T</identifier>
+      <datestamp>2012-08-03T07:57:17Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003065432590T</identifier>
+      <datestamp>2012-08-03T07:57:18Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062736216T</identifier>
+      <datestamp>2012-08-03T07:57:20Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062211602T</identifier>
+      <datestamp>2012-08-03T07:57:23Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003065325487T</identifier>
+      <datestamp>2012-08-03T07:57:23Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063415453T</identifier>
+      <datestamp>2012-08-03T07:57:24Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062541416T</identifier>
+      <datestamp>2012-08-03T07:57:26Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062651839T</identifier>
+      <datestamp>2012-08-03T07:57:27Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062844703T</identifier>
+      <datestamp>2012-08-03T07:57:28Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062929612T</identifier>
+      <datestamp>2012-08-03T07:57:30Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062723579T</identifier>
+      <datestamp>2012-08-03T07:57:32Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063113514T</identifier>
+      <datestamp>2012-08-03T07:57:33Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062407791T</identifier>
+      <datestamp>2012-08-03T07:57:34Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062946653T</identifier>
+      <datestamp>2012-08-03T07:57:35Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003065349505T</identifier>
+      <datestamp>2012-08-03T07:57:36Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063805933T</identifier>
+      <datestamp>2012-08-03T07:57:37Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062318916T</identifier>
+      <datestamp>2012-08-03T07:57:38Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063147654T</identifier>
+      <datestamp>2012-08-03T07:57:39Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061121123331177T</identifier>
+      <datestamp>2012-08-03T07:57:40Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063354546T</identifier>
+      <datestamp>2012-08-03T07:57:41Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063746128T</identifier>
+      <datestamp>2012-08-03T07:57:44Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063352209T</identifier>
+      <datestamp>2012-08-03T07:57:48Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062852077T</identifier>
+      <datestamp>2012-08-03T07:57:50Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063333874T</identifier>
+      <datestamp>2012-08-03T07:57:51Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003065339000T</identifier>
+      <datestamp>2012-08-03T07:57:52Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062754265T</identifier>
+      <datestamp>2012-08-03T07:57:53Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062255659T</identifier>
+      <datestamp>2012-08-03T07:57:55Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063145415T</identifier>
+      <datestamp>2012-08-03T07:57:55Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062251889T</identifier>
+      <datestamp>2012-08-03T07:57:57Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003065313473T</identifier>
+      <datestamp>2012-08-03T07:57:58Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062846076T</identifier>
+      <datestamp>2012-08-03T07:58:00Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063438762T</identifier>
+      <datestamp>2012-08-03T07:58:00Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062729786T</identifier>
+      <datestamp>2012-08-03T07:58:01Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063452228T</identifier>
+      <datestamp>2012-08-03T07:58:05Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062245107T</identifier>
+      <datestamp>2012-08-03T07:58:06Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063047043T</identifier>
+      <datestamp>2012-08-03T07:58:10Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062418531T</identifier>
+      <datestamp>2012-08-03T07:58:11Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003065428973T</identifier>
+      <datestamp>2012-08-03T07:58:13Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003065319525T</identifier>
+      <datestamp>2012-08-03T07:58:14Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062428108T</identifier>
+      <datestamp>2012-08-03T07:58:15Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063720525T</identifier>
+      <datestamp>2012-08-03T07:58:16Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062415488T</identifier>
+      <datestamp>2012-08-03T07:58:17Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063226108T</identifier>
+      <datestamp>2012-08-03T07:58:20Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062138882T</identifier>
+      <datestamp>2012-08-03T07:58:20Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062424942T</identifier>
+      <datestamp>2012-08-03T07:58:21Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061121122950059T</identifier>
+      <datestamp>2012-08-03T07:58:22Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003065440145T</identifier>
+      <datestamp>2012-08-03T07:58:23Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003065427259T</identifier>
+      <datestamp>2012-08-03T07:58:25Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062102468T</identifier>
+      <datestamp>2012-08-03T07:58:28Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003065430891T</identifier>
+      <datestamp>2012-08-03T07:58:29Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062153214T</identifier>
+      <datestamp>2012-08-03T07:58:30Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062552832T</identifier>
+      <datestamp>2012-08-03T07:58:30Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062314412T</identifier>
+      <datestamp>2012-08-03T07:58:33Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003064233666T</identifier>
+      <datestamp>2012-08-03T07:58:34Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062629268T</identifier>
+      <datestamp>2012-08-03T07:58:35Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062453157T</identifier>
+      <datestamp>2012-08-03T07:58:37Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003065347677T</identifier>
+      <datestamp>2012-08-03T07:58:38Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063633449T</identifier>
+      <datestamp>2012-08-03T07:58:39Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061121122639297T</identifier>
+      <datestamp>2012-08-03T07:58:40Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063409670T</identifier>
+      <datestamp>2012-08-03T07:58:43Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063200104T</identifier>
+      <datestamp>2012-08-03T07:58:46Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061121123246705T</identifier>
+      <datestamp>2012-08-03T07:58:47Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003064240407T</identifier>
+      <datestamp>2012-08-03T07:58:53Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062221717T</identifier>
+      <datestamp>2012-08-03T07:58:54Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062734505T</identifier>
+      <datestamp>2012-08-03T07:58:54Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062941257T</identifier>
+      <datestamp>2012-08-03T07:58:57Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062218447T</identifier>
+      <datestamp>2012-08-03T07:58:59Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062656668T</identifier>
+      <datestamp>2012-08-03T07:58:59Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063048828T</identifier>
+      <datestamp>2012-08-03T07:59:02Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062248503T</identifier>
+      <datestamp>2012-08-03T07:59:02Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063109270T</identifier>
+      <datestamp>2012-08-03T07:59:03Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063243961T</identifier>
+      <datestamp>2012-08-03T07:59:04Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062437462T</identifier>
+      <datestamp>2012-08-03T07:59:05Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003064223635T</identifier>
+      <datestamp>2012-08-03T07:59:07Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062954139T</identifier>
+      <datestamp>2012-08-03T07:59:08Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063317361T</identifier>
+      <datestamp>2012-08-03T07:59:09Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062136691T</identifier>
+      <datestamp>2012-08-03T07:59:10Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062624276T</identifier>
+      <datestamp>2012-08-03T07:59:13Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062750621T</identifier>
+      <datestamp>2012-08-03T07:59:15Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062523225T</identifier>
+      <datestamp>2012-08-03T07:59:16Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062530766T</identifier>
+      <datestamp>2012-08-03T07:59:18Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062726483T</identifier>
+      <datestamp>2012-08-03T07:59:22Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003065444256T</identifier>
+      <datestamp>2012-08-03T07:59:23Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003065327738T</identifier>
+      <datestamp>2012-08-03T07:59:24Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20080423152624112T</identifier>
+      <datestamp>2012-08-03T07:59:25Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003065332958T</identifier>
+      <datestamp>2012-08-03T07:59:26Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063712010T</identifier>
+      <datestamp>2012-08-03T07:59:27Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003064245124T</identifier>
+      <datestamp>2012-08-03T07:59:29Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062526119T</identifier>
+      <datestamp>2012-08-03T07:59:32Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062646168T</identifier>
+      <datestamp>2012-08-03T07:59:33Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063843916T</identifier>
+      <datestamp>2012-08-03T07:59:36Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062056351T</identifier>
+      <datestamp>2012-08-03T07:59:37Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062705108T</identifier>
+      <datestamp>2012-08-03T07:59:40Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062952456T</identifier>
+      <datestamp>2012-08-03T07:59:41Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063836305T</identifier>
+      <datestamp>2012-08-03T07:59:43Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063432099T</identifier>
+      <datestamp>2012-08-03T07:59:45Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062515333T</identifier>
+      <datestamp>2012-08-03T07:59:48Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062429944T</identifier>
+      <datestamp>2012-08-03T07:59:49Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003065434529T</identifier>
+      <datestamp>2012-08-03T07:59:50Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062341317T</identifier>
+      <datestamp>2012-08-03T07:59:52Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003065425574T</identifier>
+      <datestamp>2012-08-03T07:59:55Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063311602T</identifier>
+      <datestamp>2012-08-03T07:59:56Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062606524T</identifier>
+      <datestamp>2012-08-03T07:59:57Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061121123410481T</identifier>
+      <datestamp>2012-08-03T07:59:58Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062213222T</identifier>
+      <datestamp>2012-08-03T08:00:03Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003064254731T</identifier>
+      <datestamp>2012-08-03T08:00:03Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063215620T</identifier>
+      <datestamp>2012-08-03T08:00:05Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063007141T</identifier>
+      <datestamp>2012-08-03T08:00:06Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062346524T</identifier>
+      <datestamp>2012-08-03T08:00:08Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062114551T</identifier>
+      <datestamp>2012-08-03T08:00:09Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003065403482T</identifier>
+      <datestamp>2012-08-03T08:00:09Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063206286T</identifier>
+      <datestamp>2012-08-03T08:00:10Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062454741T</identifier>
+      <datestamp>2012-08-03T08:00:11Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062509600T</identifier>
+      <datestamp>2012-08-03T08:00:12Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061121122439546T</identifier>
+      <datestamp>2012-08-03T08:00:13Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062601632T</identifier>
+      <datestamp>2012-08-03T08:00:14Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063105829T</identifier>
+      <datestamp>2012-08-03T08:00:16Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062502707T</identifier>
+      <datestamp>2012-08-03T08:00:17Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003065351391T</identifier>
+      <datestamp>2012-08-03T08:00:20Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062336249T</identifier>
+      <datestamp>2012-08-03T08:00:22Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062547973T</identifier>
+      <datestamp>2012-08-03T08:00:23Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062350722T</identifier>
+      <datestamp>2012-08-03T08:00:24Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062622555T</identifier>
+      <datestamp>2012-08-03T08:00:26Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062612079T</identifier>
+      <datestamp>2012-08-03T08:00:29Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062910146T</identifier>
+      <datestamp>2012-08-03T08:00:30Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063030583T</identifier>
+      <datestamp>2012-08-03T08:00:31Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063427485T</identifier>
+      <datestamp>2012-08-03T08:00:33Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062311432T</identifier>
+      <datestamp>2012-08-03T08:00:34Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062431706T</identifier>
+      <datestamp>2012-08-03T08:00:35Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003065419174T</identifier>
+      <datestamp>2012-08-03T08:00:36Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061121123141204T</identifier>
+      <datestamp>2012-08-03T08:00:37Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063401507T</identifier>
+      <datestamp>2012-08-03T08:00:38Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062951021T</identifier>
+      <datestamp>2012-08-03T08:00:40Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062155059T</identifier>
+      <datestamp>2012-08-03T08:00:42Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062630829T</identifier>
+      <datestamp>2012-08-03T08:00:43Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062433119T</identifier>
+      <datestamp>2012-08-03T08:00:47Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062200784T</identifier>
+      <datestamp>2012-08-03T08:00:48Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003065352968T</identifier>
+      <datestamp>2012-08-03T08:00:51Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062337789T</identifier>
+      <datestamp>2012-08-03T08:00:57Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062511161T</identifier>
+      <datestamp>2012-08-03T08:00:59Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063458761T</identifier>
+      <datestamp>2012-08-03T08:01:00Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062955507T</identifier>
+      <datestamp>2012-08-03T08:01:00Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062122194T</identifier>
+      <datestamp>2012-08-03T08:01:01Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062619562T</identifier>
+      <datestamp>2012-08-03T08:01:02Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062512670T</identifier>
+      <datestamp>2012-08-03T08:01:06Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062151381T</identifier>
+      <datestamp>2012-08-03T08:01:07Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062505999T</identifier>
+      <datestamp>2012-08-03T08:01:09Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003063101157T</identifier>
+      <datestamp>2012-08-03T08:01:10Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062937990T</identifier>
+      <datestamp>2012-08-03T08:01:11Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    
+    <header>
+      <identifier>oai:nsdl.org:2200/20061003062544423T</identifier>
+      <datestamp>2012-08-03T08:01:12Z</datestamp>
+       <setSpec>369642</setSpec>
+      </header>
+    <resumptionToken completeListSize="733" cursor="0">0/200/733/nsdl_dc/null/2012-07-26/null</resumptionToken>
+
+</ListIdentifiers>
+
+</OAI-PMH>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+
+
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+
+<responseDate>2012-08-06T21:35:15Z</responseDate>
+
+<request verb="GetRecord" identifier="oai:nsdl.org:2200/20061003062336249T" metadataPrefix="nsdl_dc">http://nsdl.org/oai</request>
+
+
+
+<GetRecord>
+
+  <record>
+
+  
+
+    <header>
+
+      <identifier>oai:nsdl.org:2200/20061003062336249T</identifier>
+
+      <datestamp>2012-08-03T08:00:22Z</datestamp>
+
+      <setSpec>369642</setSpec>     
+
+    </header>
+
+    
+
+    <metadata>
+
+    
+<nsdl_dc:nsdl_dc xmlns:nsdl_dc="http://ns.nsdl.org/nsdl_dc_v1.02/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dct="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:lar="http://ns.nsdl.org/schemas/dc/lar" schemaVersion="1.02.000" xsi:schemaLocation="http://ns.nsdl.org/nsdl_dc_v1.02/ http://ns.nsdl.org/schemas/nsdl_dc/nsdl_dc_v1.02.xsd">
+  <dc:identifier>Reciprocal Net Sample id 27344140</dc:identifier>
+  <dc:identifier>Common molecules Sample 50743</dc:identifier>
+  <dc:identifier xsi:type="dct:URI">http://www.reciprocalnet.org/recipnet/showsample.jsp?sampleId=27344140</dc:identifier>
+  <dc:relation>CSD refcode:DNOPHL</dc:relation>
+  <dc:relation>Citation of a publication:T.Kagawa, R.Kawai, S.Kashino, M.Haisa; Acta Crystallogr.,Sect.B, 32, (1976), 3171</dc:relation>
+  <dc:date>2002-09-19T18:01:07Z</dc:date>
+  <dc:date>2009-06-18T02:49:30Z</dc:date>
+  <dc:title>Molecular Structure of Dinitrophenol</dc:title>
+  <dc:description>During the 1930s, 2,4-Dinitrophenol was used as a diet pill, but this use was stopped in 1938. Presently, 2,4-Dinitrophenol is used primarily as an intermediate in the production of certain dyes, photochemicals, pest control agents, wood preservatives, and explosives. A number of pesticides may release this compound into the environment when degraded over time. Short exposure to this compound may result in nausea, vomiting, sweating, dizziness, headaches, and weight loss-- it may also stain the skin yellow. Chronic exposure to this compound has been linked to a number of ailments including: dermatitis, cataracts, and skin lesions. This compound may also cause damaging effects to bone marrow, the central nervous system, and the cardiovascular system.</dc:description>
+  <dc:subject>diet pill</dc:subject>
+  <dc:subject>dyes</dc:subject>
+  <dc:subject>explosives</dc:subject>
+  <dc:subject>pesticide</dc:subject>
+  <dc:contributor>Common molecules</dc:contributor>
+  <dc:contributor>Obtained courtesy of the Cambridge Structural Database</dc:contributor>
+  <dc:identifier xsi:type="nsdl_dc:ResourceHandle">hdl:2200/20080423151356635T</dc:identifier>
+  <dc:identifier xsi:type="nsdl_dc:MetadataHandle">hdl:2200/20061003062336249T</dc:identifier>
+  <dc:identifier xsi:type="nsdl_dc:NSDLPartnerID">oai:reciprocalnet.org:27344140</dc:identifier>
+  <dc:type xsi:type="nsdl_dc:NSDLType">Dataset</dc:type>
+  <dc:type xsi:type="nsdl_dc:NSDLType">Interactive Simulation</dc:type>
+  <dc:type xsi:type="nsdl_dc:NSDLType">Instructional Material</dc:type>
+  <dc:type xsi:type="dct:DCMIType">Text</dc:type>
+  <dc:subject>Ecology, Forestry and Agriculture</dc:subject>
+  <dc:subject>Geoscience</dc:subject>
+  <dc:language>English</dc:language>
+  <lar:readiness xsi:type="lar:Ready">Not ready</lar:readiness>
+  <lar:metadataTerms>The National Science Digital Library (NSDL), located at the University Corporation for Atmospheric Research (UCAR), provides these metadata terms: These data and metadata may not be reproduced, duplicated, copied, sold, or otherwise exploited for any commercial purpose that is not expressly permitted by NSDL. More information is available at: http://nsdl.org/help/terms-of-use.</lar:metadataTerms>
+  <!--The National Science Digital Library (NSDL) has normalized this metadata record for use across its systems and services.-->
+</nsdl_dc:nsdl_dc>
+    
+
+    </metadata>
+
+  </record>
+
+</GetRecord>
+
+
+
+</OAI-PMH>

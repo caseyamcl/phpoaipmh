@@ -77,9 +77,10 @@ class Client
     private function decodeResponse($resp)
     {
         //Setup a SimpleXML Document
-        $xml = @new \SimpleXMLElement($resp);        
-        if ( ! $xml) {
-            throw new HttpException("Could not decode the response!");
+        try {
+            $xml = @new \SimpleXMLElement($resp);
+        } catch (\Exception $e) {
+            throw new Http\RequestException(sprintf("Could not decode XML Response: %s", $e->getMessage()));
         }
 
         //If we get back a OAI-PMH error, throw a OaipmhRequestException
