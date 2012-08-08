@@ -64,5 +64,29 @@ Getting lists of records:
     }
 </pre>
 
-For a full list of public API methods, refer to the inline documetnation inside
+
+Handling Results
+----------------
+Depending on the verb used, the library will send back one of three types of
+variables:
+
+* For 'identify' and 'getRecord', a SimpleXMLElement is returned
+* For 'listMetadataFormats' and 'listSets', an array of SimpleXMLElements is returned
+* For 'listIdentifiers' and 'listRecords', a ResponseList object is returned
+
+The responseList object encapsulates the logic needed to paginate through a large set
+of records over multiple HTTP requests.  You can extract a single record at a time from
+the object by calling the nextItem() method.  The nextItem() method returns a SimpleXMLElement
+object.
+
+
+Handling Errors
+---------------
+* For any HTTP request errors, the library will throw a Http\RequestException
+* For any OAI-PMH errors (e.g. invalid verb or missing params), the library will throw a OaipmhRequestException
+
+
+More Info
+---------
+For a full list of public API methods, refer to the inline documentation inside
 of src/Phpoaipmh/Endpoint.php
