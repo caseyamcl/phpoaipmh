@@ -1,8 +1,8 @@
 <?php
 
-require_once('../src/Phpoaipmh/Client.php');
-require_once('../src/Phpoaipmh/ResponseList.php');
-require_once('../src/Phpoaipmh/OaipmhRequestException.php');
+require_once(__DIR__ . '/../src/Phpoaipmh/Client.php');
+require_once(__DIR__ . '/../src/Phpoaipmh/ResponseList.php');
+require_once(__DIR__ . '/../src/Phpoaipmh/OaipmhRequestException.php');
 
 class ResponseListTest extends PHPUnit_Framework_TestCase {
 

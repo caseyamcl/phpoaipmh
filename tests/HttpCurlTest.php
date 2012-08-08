@@ -1,8 +1,8 @@
 <?php
 
-require_once('../src/Phpoaipmh/Http/Client.php');
-require_once('../src/Phpoaipmh/Http/Curl.php');
-require_once('../src/Phpoaipmh/Http/RequestException.php');
+require_once(__DIR__ . '/../src/Phpoaipmh/Http/Client.php');
+require_once(__DIR__ . '/../src/Phpoaipmh/Http/Curl.php');
+require_once(__DIR__ . '/../src/Phpoaipmh/Http/RequestException.php');
 
 class HttpCurlTest extends PHPUnit_Framework_TestCase {
 

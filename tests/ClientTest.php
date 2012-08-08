@@ -1,9 +1,9 @@
 <?php
 
-require_once('../src/Phpoaipmh/Http/Client.php');
-require_once('../src/Phpoaipmh/Http/RequestException.php');
-require_once('../src/Phpoaipmh/Client.php');
-require_once('../src/Phpoaipmh/OaipmhRequestException.php');
+require_once(__DIR__ . '/../src/Phpoaipmh/Http/Client.php');
+require_once(__DIR__ . '/../src/Phpoaipmh/Http/RequestException.php');
+require_once(__DIR__ . '/../src/Phpoaipmh/Client.php');
+require_once(__DIR__ . '/../src/Phpoaipmh/OaipmhRequestException.php');
 
 class ClientTest extends PHPUnit_Framework_TestCase {
 
