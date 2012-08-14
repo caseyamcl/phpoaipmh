@@ -125,7 +125,10 @@ class ResponseList {
         //if still items in current batch, return one
         if (count($this->batch) > 0) {
             $this->totalProcessed++; 
-            return array_shift($this->batch);
+
+            $item = array_shift($this->batch);
+            $item = new \SimpleXMLElement($item->asXML());
+            return $item;
         }
         else {
             return false;
