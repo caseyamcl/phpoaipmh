@@ -1,7 +1,7 @@
 PHPOAIMH
 ========
 
-A PHP OAI-PMH haveseter client library
+A PHP OAI-PMH harvester client library
 --------------------------------------
 
 This library provides an interface to harvest OAI-PMH metadata
