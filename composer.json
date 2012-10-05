@@ -1,9 +1,9 @@
 {
-    "name": "caseyamcl/Phpoaipmh",
+    "name": "caseyamcl/phpoaipmh",
     "type": "library",
     "description": "A PHP OAI-PMH 2.0 Harvester library",
     "keywords": ["OAI", "Harvester", "OAI-PMH"],
-    "homepage": "https://github.com/caseyamcl/Phpoaipmh",
+    "homepage": "https://github.com/caseyamcl/phpoaipmh",
     "license": "MIT",
     "require": {
         "php": ">=5.3.0"
@@ -12,6 +12,6 @@
         "psr-0": {"Phpoaipmh": "src/"}
     },
     "repositories": [
-        {"type": "git", "url": "http://github.com/caseyamcl/Phpoaipmh"}
+        {"type": "git", "url": "http://github.com/caseyamcl/phpoaipmh"}
     ]
 }
