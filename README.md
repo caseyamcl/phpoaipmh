@@ -84,6 +84,7 @@ Handling Errors
 * For any OAI-PMH errors (e.g. invalid verb or missing params), the library will throw a <code>Phpoaipmh\OaipmhRequestException</code>
 
 
+
 More Info
 ---------
 For a full list of public API methods, refer to the inline documentation inside of <var>src/Phpoaipmh/Endpoint.php</var>
