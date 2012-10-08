@@ -1,4 +1,4 @@
-PHPOAIMH
+PHPOAIPMH
 ========
 
 A PHP OAI-PMH harvester client library
