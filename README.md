@@ -4,6 +4,8 @@ PHPOAIMH
 A PHP OAI-PMH harvester client library
 --------------------------------------
 
+[![Build Status](https://travis-ci.org/caseyamcl/Phpoiapmh.png)](https://travis-ci.org/caseyamcl/Phpoiapmh.png)
+
 This library provides an interface to harvest OAI-PMH metadata
 from any [OAI 2.0 compliant endpoint](http://www.openarchives.org/OAI/openarchivesprotocol.html#ListMetadataFormats).
 
