@@ -10,8 +10,5 @@
     },
     "autoload": {
         "psr-0": {"Phpoaipmh": "src/"}
-    },
-    "repositories": [
-        {"type": "git", "url": "http://github.com/caseyamcl/phpoaipmh"}
-    ]
+    }
 }
