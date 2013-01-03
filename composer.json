@@ -8,6 +8,10 @@
     "require": {
         "php": ">=5.3.0"
     },
+    "require-dev": {
+        "guzzle/guzzle":   ">=3.0.0",
+        "mockery/mockery": "dev-master"        
+    },
     "autoload": {
         "psr-0": {"Phpoaipmh": "src/"}
     }

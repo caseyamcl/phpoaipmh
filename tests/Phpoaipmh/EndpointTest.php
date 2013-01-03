@@ -1,24 +1,10 @@
 <?php
 
-require_once(__DIR__ . '/../src/Phpoaipmh/Endpoint.php');
-require_once(__DIR__ . '/../src/Phpoaipmh/Client.php');
-require_once(__DIR__ . '/../src/Phpoaipmh/ResponseList.php');
+namespace Phpoaipmh;
+use PHPUnit_Framework_TestCase;
 
-class EndpointTest extends PHPUnit_Framework_TestCase {
-
-    // -------------------------------------------------------------------------
-
-    public function setUp()
-    {
-        parent::setUp();
-    }
-
-    // -------------------------------------------------------------------------
-
-    public function tearDown()
-    {
-        parent::tearDown();
-    }
+class EndpointTest extends PHPUnit_Framework_TestCase
+{
 
     // -------------------------------------------------------------------------
 
@@ -29,7 +15,7 @@ class EndpointTest extends PHPUnit_Framework_TestCase {
      */
     public function testInsantiateCreatesNewObject()
     {    
-        $obj = new Phpoaipmh\Endpoint('http://example.com/oai', $this->getMockClient());
+        $obj = new Endpoint('http://example.com/oai', $this->getMockClient());
         $this->assertInstanceOf('Phpoaipmh\Endpoint', $obj);
     }    
 
@@ -45,7 +31,7 @@ class EndpointTest extends PHPUnit_Framework_TestCase {
         $client = $this->getMockClient($retVal);
 
         //Do it
-        $obj = new Phpoaipmh\Endpoint('http://example.com/oai', $client);
+        $obj = new Endpoint('http://example.com/oai', $client);
         $response = $obj->identify();
 
         //Check results
@@ -71,8 +57,7 @@ class EndpointTest extends PHPUnit_Framework_TestCase {
      */
     protected function getSampleXML($file)
     {
-        $ds = DIRECTORY_SEPARATOR;
-        return __DIR__ . $ds . 'SampleXML' . $ds . $file;
+        return __DIR__ . '/../fixtures/SampleXML/' . $file;
     }  
 
     // -------------------------------------------------------------------------

@@ -2,6 +2,9 @@
 
 namespace Phpoaipmh;
 
+/**
+ * ResponseList class
+ */
 class ResponseList {
 
     /**
@@ -140,8 +143,7 @@ class ResponseList {
     /**
      * Do a request to get the next batch of items
      *
-     * @return int
-     * The number of items in the batch after the retrieve
+     * @return int  The number of items in the batch after the retrieve
      */
     private function retrieveBatch() {
 
@@ -200,6 +202,7 @@ class ResponseList {
 
         return (isset($mappings[$this->verb])) ? $mappings[$this->verb] : false;
     }
+    
 }
 
 /* EOF: ClientRecordIterator.php */

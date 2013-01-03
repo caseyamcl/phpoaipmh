@@ -1,24 +1,10 @@
 <?php
 
-require_once(__DIR__ . '/../src/Phpoaipmh/Client.php');
-require_once(__DIR__ . '/../src/Phpoaipmh/ResponseList.php');
-require_once(__DIR__ . '/../src/Phpoaipmh/OaipmhRequestException.php');
+namespace Phpoaipmh;
+use PHPUnit_Framework_TestCase;
 
-class ResponseListTest extends PHPUnit_Framework_TestCase {
-
-    // -------------------------------------------------------------------------
-
-    public function setUp()
-    {
-        parent::setUp();
-    }
-
-    // -------------------------------------------------------------------------
-
-    public function tearDown()
-    {
-        parent::tearDown();
-    }
+class ResponseListTest extends PHPUnit_Framework_TestCase
+{
 
     // -------------------------------------------------------------------------
 
@@ -29,7 +15,7 @@ class ResponseListTest extends PHPUnit_Framework_TestCase {
      */
     public function testInsantiateCreatesNewObject()
     {    
-        $obj = new Phpoaipmh\ResponseList($this->getMockClient(), 'ListIdentifiers');
+        $obj = new ResponseList($this->getMockClient(), 'ListIdentifiers');
         $this->assertInstanceOf('Phpoaipmh\ResponseList', $obj);
     }
 
@@ -42,7 +28,7 @@ class ResponseListTest extends PHPUnit_Framework_TestCase {
     {
         //Single page sample file contains 162 results in a valid ListRecords response
         $output = $this->generateSampleXML(array('GoodResponseSinglePage.xml'));
-        $obj = new Phpoaipmh\ResponseList($this->getMockClient($output), 'ListRecords');
+        $obj = new ResponseList($this->getMockClient($output), 'ListRecords');
 
         while($rec = $obj->nextItem()) {
             $respArr[] = $rec;
@@ -67,7 +53,7 @@ class ResponseListTest extends PHPUnit_Framework_TestCase {
             'GoodResponseFourPage_3.xml',
             'GoodResponseFourPage_4.xml'
         ));
-        $obj = new Phpoaipmh\ResponseList($this->getMockClient($output), 'ListIdentifiers');
+        $obj = new ResponseList($this->getMockClient($output), 'ListIdentifiers');
 
 
         while($rec = $obj->nextItem()) {
@@ -88,7 +74,7 @@ class ResponseListTest extends PHPUnit_Framework_TestCase {
     {
         $this->setExpectedException('RuntimeException');
         $output = $this->generateSampleXML(array('GoodResponseSinglePage.xml'));
-        $obj = new Phpoaipmh\ResponseList($this->getMockClient($output), 'Identify');
+        $obj = new ResponseList($this->getMockClient($output), 'Identify');
     }
 
     // -------------------------------------------------------------------------
@@ -103,7 +89,7 @@ class ResponseListTest extends PHPUnit_Framework_TestCase {
     {
         $this->setExpectedException('RuntimeException');
         $output = $this->generateSampleXML(array('GoodResponseSinglePage.xml'));
-        $obj = new Phpoaipmh\ResponseList($this->getMockClient($output), 'ListIdentifiers');
+        $obj = new ResponseList($this->getMockClient($output), 'ListIdentifiers');
         $obj->nextItem();        
     }
 
@@ -122,7 +108,7 @@ class ResponseListTest extends PHPUnit_Framework_TestCase {
     {
         foreach ($sampleFiles as $file) {
 
-            $obj = simplexml_load_file(__DIR__ . DIRECTORY_SEPARATOR . 'SampleXML' . DIRECTORY_SEPARATOR . $file);
+            $obj = simplexml_load_file(__DIR__ . '/../fixtures/SampleXML/' . $file);
 
             if ( ! $obj) {
                 user_error(sprintf("Could not load sampel XML file: %s", $file));
@@ -155,7 +141,7 @@ class ResponseListTest extends PHPUnit_Framework_TestCase {
 
 // =============================================================================
 
-class MockClient extends Phpoaipmh\Client
+class MockClient extends Client
 {
     public $retVals = array();
     private $callNum = 0;

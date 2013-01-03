@@ -1,8 +1,7 @@
 <?php
 
-require_once(__DIR__ . '/../src/Phpoaipmh/Http/Client.php');
-require_once(__DIR__ . '/../src/Phpoaipmh/Http/Curl.php');
-require_once(__DIR__ . '/../src/Phpoaipmh/Http/RequestException.php');
+namespace Phpoaipmh\Http;
+use PHPUnit_Framework_TestCase;
 
 class HttpCurlTest extends PHPUnit_Framework_TestCase {
 
@@ -30,7 +29,7 @@ class HttpCurlTest extends PHPUnit_Framework_TestCase {
      */
     public function testInsantiateCreatesNewObject()
     {    
-        $obj = new Phpoaipmh\Http\Curl();
+        $obj = new Curl();
         $this->assertInstanceOf('Phpoaipmh\Http\Curl', $obj);
         $this->assertInstanceOf('Phpoaipmh\Http\Client', $obj);
 
@@ -45,7 +44,7 @@ class HttpCurlTest extends PHPUnit_Framework_TestCase {
      */
     public function testGoodRequestReturnsContentBody()
     {
-        $obj = new Phpoaipmh\Http\Curl();
+        $obj = new Curl();
         $res = $obj->request('http://example.org');
         $this->assertTrue(strpos($res, "<body>") != false, "The response should include a <body> tag, since it is a HTML document");
     }
@@ -59,7 +58,7 @@ class HttpCurlTest extends PHPUnit_Framework_TestCase {
     {
         $this->setExpectedException('Phpoaipmh\Http\RequestException');
 
-        $obj = new Phpoaipmh\Http\Curl();
+        $obj = new Curl();
         $res = $obj->request('http://w3.org/doesnotexistyo');
     }
 
@@ -71,7 +70,7 @@ class HttpCurlTest extends PHPUnit_Framework_TestCase {
     public function testNonExistentServerThrowsException()
     {
         $this->setExpectedException('Phpoaipmh\Http\RequestException');
-        $obj = new Phpoaipmh\Http\Curl();
+        $obj = new Curl();
         $res = $obj->request('http://doesnotexist.blargasdf');
     }
 }
