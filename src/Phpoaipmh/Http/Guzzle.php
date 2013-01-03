@@ -2,7 +2,7 @@
 
 namespace Phpoaipmh\Http;
 use Guzzle\Http\Client as GuzzleClient;
-use Guzzle\Common\GuzzleException
+use Guzzle\Http\Exception\RequestException as GuzzleException;
 
 class Guzzle extends GuzzleClient implements Client
 {

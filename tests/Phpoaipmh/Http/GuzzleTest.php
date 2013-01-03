@@ -1,26 +1,9 @@
 <?php
-
 namespace Phpoaipmh\Http;
 use PHPUnit_Framework_TestCase;
 
-class HttpCurlTest extends PHPUnit_Framework_TestCase {
-
-    // -------------------------------------------------------------------------
-
-    public function setUp()
-    {
-        parent::setUp();
-    }
-
-    // -------------------------------------------------------------------------
-
-    public function tearDown()
-    {
-        parent::tearDown();
-    }
-
-    // -------------------------------------------------------------------------
-
+class GuzzleTest extends PHPUnit_Framework_TestCase
+{
     /**
      * Simple Instantiation Test
      *
@@ -29,10 +12,9 @@ class HttpCurlTest extends PHPUnit_Framework_TestCase {
      */
     public function testInsantiateCreatesNewObject()
     {    
-        $obj = new Curl();
-        $this->assertInstanceOf('Phpoaipmh\Http\Curl', $obj);
+        $obj = new Guzzle();
+        $this->assertInstanceOf('Phpoaipmh\Http\Guzzle', $obj);
         $this->assertInstanceOf('Phpoaipmh\Http\Client', $obj);
-
     }
 
     // -------------------------------------------------------------------------
@@ -44,7 +26,7 @@ class HttpCurlTest extends PHPUnit_Framework_TestCase {
      */
     public function testGoodRequestReturnsContentBody()
     {
-        $obj = new Curl();
+        $obj = new Guzzle();
         $res = $obj->request('http://example.org');
         $this->assertTrue(strpos($res, "<body>") != false, "The response should include a <body> tag, since it is a HTML document");
     }
@@ -58,7 +40,7 @@ class HttpCurlTest extends PHPUnit_Framework_TestCase {
     {
         $this->setExpectedException('Phpoaipmh\Http\RequestException');
 
-        $obj = new Curl();
+        $obj = new Guzzle();
         $res = $obj->request('http://w3.org/doesnotexistyo');
     }
 
@@ -70,9 +52,9 @@ class HttpCurlTest extends PHPUnit_Framework_TestCase {
     public function testNonExistentServerThrowsException()
     {
         $this->setExpectedException('Phpoaipmh\Http\RequestException');
-        $obj = new Curl();
+        $obj = new Guzzle();
         $res = $obj->request('http://doesnotexist.blargasdf');
-    }
+    }    
 }
 
-/* EOF: PhpOaipmhClientTest.php */
+/* EOF: HttpGuzzleTest.php */
