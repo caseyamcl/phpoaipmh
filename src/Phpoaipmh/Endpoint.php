@@ -5,11 +5,6 @@ namespace Phpoaipmh;
 class Endpoint
 {
     /**
-     * @var string
-     */
-    private $url;
-
-    /**
      * @var Client
      */
     private $client;
@@ -22,10 +17,21 @@ class Endpoint
      * @param string $url
      * @param Client $client
      */
-    public function __construct($url, Client $client = null)
+    public function __construct($url = null, Client $client = null)
     {
-        $this->url = $url;
         $this->client = $client ?: new Client($url);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Set the URL in the client
+     *
+     * @param string $url
+     */
+    public function setUrl()
+    {
+        $this->client->setUrl($url);
     }
 
     // -------------------------------------------------------------------------

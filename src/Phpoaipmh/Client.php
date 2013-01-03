@@ -30,10 +30,22 @@ class Client
      * Optional HTTP Client class
      *
      */
-    public function __construct($url, Http\Client $httpClient = null)
+    public function __construct($url = null, Http\Client $httpClient = null)
+    {
+        $this->setUrl($url);
+        $this->httpClient = $httpClient ?: new Http\Curl();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Set the URL
+     *
+     * @param string $url
+     */
+    public function setUrl($url)
     {
         $this->url = $url;
-        $this->httpClient = $httpClient ?: new Http\Curl();
     }
 
     // -------------------------------------------------------------------------
