@@ -1,6 +1,8 @@
 <?php
 
 namespace Phpoaipmh;
+use Phpoaipmh\Http\Client as HttpClient;
+use RuntimeException;
 
 /**
  * A simple HTTP Client that performs only GET requests to
@@ -23,14 +25,10 @@ class Client
     /**
      * Constructor
      *
-     * @param string $url
-     * The URL of the OAI-PMH Endpoint
-     *
-     * @param Http\Client $httpClient
-     * Optional HTTP Client class
-     *
+     * @param string $url  The URL of the OAI-PMH Endpoint
+     * @param Http\Client $httpClient  Optional HTTP Client class
      */
-    public function __construct($url = null, Http\Client $httpClient = null)
+    public function __construct($url = null, HttpClient $httpClient = null)
     {
         $this->setUrl($url);
         $this->httpClient = $httpClient ?: new Http\Curl();
@@ -53,17 +51,16 @@ class Client
     /**
      * Perform a request and return a OAI SimpleXML Document
      *
-     * @param string $verb
-     * Which OAI-PMH verb to use
-     *
-     * @param array $params
-     * An array of key/value parameters
-     *
-     * @return SimpleXMLElement
-     * An XML document
+     * @param string $verb  Which OAI-PMH verb to use
+     * @param array $params  An array of key/value parameters
+     * @return SimpleXMLElement  An XML document
      */
     public function request($verb, $params = array())
     {
+        if ( ! $this->url) {
+            throw new RuntimeException("Cannot perform request when URL not set.  Use setUrl() method");
+        }
+
         //Build the URL
         $params = array_merge(array('verb' => $verb), $params);
         $url = $this->url . '?' . http_build_query($params);
@@ -80,11 +77,8 @@ class Client
     /**
      * Decode the response into XML
      *
-     * @param $resp
-     * The response body from a HTTP request
-     *
-     * return SimpleXMLElement
-     * An XML document
+     * @param $resp  The response body from a HTTP request
+     * @return SimpleXMLElement  An XML document
      */
     private function decodeResponse($resp)
     {

@@ -14,12 +14,11 @@ class Endpoint
     /**
      * Constructor
      *
-     * @param string $url
      * @param Client $client
      */
-    public function __construct($url = null, Client $client = null)
+    public function __construct(Client $client = null)
     {
-        $this->client = $client ?: new Client($url);
+        $this->client = $client ?: new Client();
     }
 
     // -------------------------------------------------------------------------
@@ -29,7 +28,7 @@ class Endpoint
      *
      * @param string $url
      */
-    public function setUrl()
+    public function setUrl($url)
     {
         $this->client->setUrl($url);
     }

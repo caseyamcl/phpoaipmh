@@ -15,7 +15,7 @@ class EndpointTest extends PHPUnit_Framework_TestCase
      */
     public function testInsantiateCreatesNewObject()
     {    
-        $obj = new Endpoint('http://example.com/oai', $this->getMockClient());
+        $obj = new Endpoint($this->getMockClient());
         $this->assertInstanceOf('Phpoaipmh\Endpoint', $obj);
     }    
 
@@ -31,7 +31,7 @@ class EndpointTest extends PHPUnit_Framework_TestCase
         $client = $this->getMockClient($retVal);
 
         //Do it
-        $obj = new Endpoint('http://example.com/oai', $client);
+        $obj = new Endpoint($client);
         $response = $obj->identify();
 
         //Check results
