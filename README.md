@@ -35,7 +35,8 @@ Usage
 -----
 Setup a new endpoint:
 <pre>
-    $myEndpoint = new \Phpoaipmh\Endpoint('http://some.service.com/oai');
+    $client = new \Phpoaipmh\Client('http://some.service.com/oai');
+    $myEndpoint = new \Phpoaipmh\Endpoint($client)
 </pre>
 
 Getting basic information:
