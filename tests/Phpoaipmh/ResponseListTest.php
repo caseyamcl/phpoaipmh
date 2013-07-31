@@ -150,7 +150,7 @@ class MockClient extends Client
         //pass//
     }
 
-    public function request($url)
+    public function request($url, array $params = array())
     {
         $toReturn = (isset($this->retVals[$this->callNum]))
             ? $this->retVals[$this->callNum]

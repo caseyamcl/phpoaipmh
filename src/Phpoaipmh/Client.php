@@ -55,7 +55,7 @@ class Client
      * @param array $params  An array of key/value parameters
      * @return SimpleXMLElement  An XML document
      */
-    public function request($verb, $params = array())
+    public function request($verb, array $params = array())
     {
         if ( ! $this->url) {
             throw new RuntimeException("Cannot perform request when URL not set.  Use setUrl() method");
