@@ -109,7 +109,7 @@ class Endpoint
             'metadataPrefix' => $metadataPrefix
         );
 
-        $resp = $this->client->request('GetRecord');
+        return $this->client->request('GetRecord', $params);
     }
 
     // -------------------------------------------------------------------------
