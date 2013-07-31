@@ -4,6 +4,14 @@
     "description": "A PHP OAI-PMH 2.0 Harvester library",
     "keywords": ["OAI", "Harvester", "OAI-PMH"],
     "homepage": "https://github.com/caseyamcl/phpoaipmh",
+    "authors": [
+        {
+            "name":     "Casey McLaughlin",
+            "email":    "caseyamcl@gmail.com",
+            "homepage": "http://caseymclaughlin.com",
+            "role":     "Developer"
+        }
+    ],    
     "license": "MIT",
     "require": {
         "php": ">=5.3.0"
