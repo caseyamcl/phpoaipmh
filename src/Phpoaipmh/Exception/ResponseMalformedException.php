@@ -8,7 +8,11 @@
 
 namespace Phpoaipmh\Exception;
 
-
+/**
+ * Class ResponseMalformedException
+ *
+ * Thrown when the HTTP response body cannot be parsed into valid OAI-PMH (usually XML errors)
+ */
 class ResponseMalformedException extends BaseOaipmhException
 {
     // pass..

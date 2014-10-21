@@ -22,6 +22,8 @@
         "mockery/mockery":   "~0.9"
     },
     "autoload": {
-        "psr-0": {"Phpoaipmh": "src/"}
+        "psr-0": {
+            "Phpoaipmh": ["src/", "tests"]
+        }
     }
 }

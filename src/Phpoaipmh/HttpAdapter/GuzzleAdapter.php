@@ -33,6 +33,18 @@ class GuzzleAdapter implements HttpAdapterInterface
     // ----------------------------------------------------------------
 
     /**
+     * Get the Guzzle Client
+     *
+     * @return GuzzleClient
+     */
+    public function getGuzzleClient()
+    {
+        return $this->guzzle;
+    }
+
+    // ----------------------------------------------------------------
+
+    /**
      * Do the request with GuzzleAdapter
      *
      * @param string $url

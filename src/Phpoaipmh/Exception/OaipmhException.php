@@ -5,7 +5,7 @@ namespace Phpoaipmh\Exception;
 /**
  * OAI-PMH protocol Exception Class
  *
- * @package Phpoaipmh
+ * Thrown when OAI-PMH protocol errors occur
  */
 class OaipmhException extends BaseOaipmhException
 {

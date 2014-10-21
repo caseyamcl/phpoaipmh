@@ -2,64 +2,65 @@
 
 namespace Phpoaipmh;
 
-/**
- * ResponseList class
- */
-class ResponseList {
+use Phpoaipmh\Exception\BaseOaipmhException;
+use Phpoaipmh\Exception\ResponseMalformedException;
 
+/**
+ * Response List Entity iterates over records returned from an OAI-PMH Endpoint
+ *
+ * @author Casey McLaughlin <caseyamcl@gmail.com>
+ */
+class ResponseList implements \Iterator
+{
     /**
      * @var Client
      */
     private $httpClient;
 
     /**
-     * @var string
+     * @var string  The verb to use
      */
     private $verb;
 
     /**
-     * @var array
+     * @var array  OAI-PMH parameters passed as part of the request
      */
     private $params;
 
     /**
-     * @var int
+     * @var int  The number of total entities (if available)
      */
-    private $totalEntities;
+    private $totalRecordsInCollection;
 
     /**
-     * Recordset expiration date, converted to Unixtime
-     *
-     * @var int
-     * @TODO implement this...
+     * @var DateTime  Recordset expiration date (if specified)
      */
     private $expireDate;
 
     /** 
-     * @var string
+     * @var string  The resumption token
      */
     private $resumptionToken;
 
     /**
-     * Array of records
-     *
-     * @var array
+     * @var array  Array of records
      */
     private $batch;
 
     /**
-     * Total processed
-     *
-     * @var int
+     * @var int Total number of records processed
      */
-    private $totalProcessed = 0;
+    private $numProcessed = 0;
 
     /**
-     * Initial Request Made
-     *
-     * @var boolean
+     * @var boolean  Total number of requests made
      */
     private $numRequests = 0;
+
+    /**
+     * @var \SimpleXMLElement|null  Used for tracking the iterator
+     */
+    private $currItem;
 
     // -------------------------------------------------------------------------
 
@@ -79,7 +80,7 @@ class ResponseList {
 
         //Node name error?
         if ( ! $this->getItemNodeName()) {
-            throw new \RuntimeException('Cannot determine item name for verb: ' . $this->verb);
+            throw new BaseOaipmhException('Cannot determine item name for verb: ' . $this->verb);
         }        
     }
 
@@ -88,7 +89,7 @@ class ResponseList {
     /**
      * Get the total number of requests made during this run
      *
-     * @return int  The number of HTTP reqeusts made
+     * @return int  The number of HTTP requests made
      */
     public function getNumRequests()
     {
@@ -104,8 +105,31 @@ class ResponseList {
      */
     public function getNumProcessed()
     {
-        return $this->totalProcessed;
+        return $this->numProcessed;
     }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Get the total number of records in the collection if available
+     *
+     * This only returns a value if the OAI-PMH server provides this information
+     * in the response, which not all servers do (it is optional in the OAI-PMH spec)
+     *
+     * Also, the number of records may change during the requests, so it should
+     * be treated as an estimate
+     *
+     * @return int|null
+     */
+    public function getTotalRecordsInCollection()
+    {
+        if ($this->currItem === null) {
+            $this->next();
+        }
+
+        return $this->totalRecordsInCollection;
+    }
+
 
     // -------------------------------------------------------------------------
 
@@ -126,15 +150,16 @@ class ResponseList {
 
         //if still items in current batch, return one
         if (count($this->batch) > 0) {
-            $this->totalProcessed++; 
+            $this->numProcessed++;
 
             $item = array_shift($this->batch);
-            $item = new \SimpleXMLElement($item->asXML());
-            return $item;
+            $this->currItem = new \SimpleXMLElement($item->asXML());
         }
         else {
-            return false;
+            $this->currItem = false;
         }
+
+        return $this->currItem;
     }
 
     // -------------------------------------------------------------------------
@@ -149,10 +174,10 @@ class ResponseList {
         // Set OAI-PMH parameters for request
         // If resumptionToken, then we ignore params and just use that
         $params = ($this->resumptionToken)
-            ? array('resumptionToken' => $this->resumptionToken)
+            ? ['resumptionToken' => $this->resumptionToken]
             : $this->params;
 
-
+        // Node name and verb
         $nodeName = $this->getItemNodeName();
         $verb = $this->verb;
 
@@ -162,7 +187,7 @@ class ResponseList {
 
         //Result format error?
         if ( ! isset($resp->$verb->$nodeName)) {
-            throw new \RuntimeException(sprintf("Expected XML element list '%s' missing for verb '%s'", $nodeName, $verb));
+            throw new ResponseMalformedException(sprintf("Expected XML element list '%s' missing for verb '%s'", $nodeName, $verb));
         }
 
         //Process the results
@@ -170,12 +195,16 @@ class ResponseList {
             $this->batch[] = $node;
         }
 
-        //Set the resumption token and expiration date, if any
+        //Set the resumption token and expiration date, if specified in the response
         if (isset($resp->$verb->resumptionToken)) {
             $this->resumptionToken = (string) $resp->$verb->resumptionToken;
 
             if (isset($resp->$verb->resumptionToken['completeListSize'])) {
-                $this->totalEntities = (int) $resp->$verb->resumptionToken['completeListSize'];
+                $this->totalRecordsInCollection = (int) $resp->$verb->resumptionToken['completeListSize'];
+            }
+            if (isset($resp->$verb->resumptionToken['expirationDate'])) {
+                $t = $resp->$verb->resumptionToken['expirationDate'];
+                $this->expireDate = \DateTime::createFromFormat(\DateTime::ISO8601, $t);
             }
         }
 
@@ -203,7 +232,57 @@ class ResponseList {
 
         return (isset($mappings[$this->verb])) ? $mappings[$this->verb] : false;
     }
-    
+
+    // ----------------------------------------------------------------
+
+    /**
+     * Reset the request state
+     */
+    public function reset()
+    {
+        $this->numRequests  = 0;
+        $this->numProcessed = 0;
+
+        $this->currItem                 = null;
+        $this->resumptionToken          = null;
+        $this->totalRecordsInCollection = null;
+        $this->expireDate               = null;
+
+        $this->batch = [];
+    }
+
+    // ----------------------------------------------------------------
+
+    public function current()
+    {
+        return ($this->currItem === null)
+            ? $this->nextItem()
+            : $this->currItem;
+    }
+
+    public function next()
+    {
+        return $this->nextItem();
+    }
+
+    public function key()
+    {
+        if ($this->currItem === null) {
+            $this->nextItem();
+        }
+
+        return $this->getNumProcessed();
+    }
+
+    public function valid()
+    {
+        return ($this->currItem !== false);
+    }
+
+    public function rewind()
+    {
+        $this->reset();
+    }
 }
 
 /* EOF: ClientRecordIterator.php */

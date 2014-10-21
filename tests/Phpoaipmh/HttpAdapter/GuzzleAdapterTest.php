@@ -34,6 +34,14 @@ class GuzzleAdapterTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(strpos($res, "<body>") != false, "The response should include a <body> tag, since it is a HTML document");
     }
 
+    // ----------------------------------------------------------------
+
+    public function testGetGuzzleClientReturnsGuzzleClientObject()
+    {
+        $obj = new GuzzleAdapter();
+        $this->assertInstanceOf('\GuzzleHttp\Client', $obj->getGuzzleClient());
+    }
+
     // -------------------------------------------------------------------------
 
     /**
