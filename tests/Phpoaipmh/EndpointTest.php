@@ -42,7 +42,6 @@ class EndpointTest extends PHPUnit_Framework_TestCase
     // -------------------------------------------------------------------------
 
     /**
-     * LEFT OFF HERE LEFT OFF HERE
      * @TODO: Determine a way to mock to the responseList object (factory pattern?)
      */
     public function testListMetaDataFormatsReturnsValidArray() 

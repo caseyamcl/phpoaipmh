@@ -46,8 +46,7 @@ class Endpoint
     /**
      * Identify the OAI-PMH Endpoint
      *
-     * @return \SimpleXMLElement
-     * A XML document with attributes describing the repository
+     * @return \SimpleXMLElement A XML document with attributes describing the repository
      */
     public function identify()
     {
@@ -63,14 +62,9 @@ class Endpoint
      * Return the list of supported metadata format for a particular record (if $identifier
      * is provided), or the entire repository (if no arguments are provided)
      *
-     * @param string $identifier
-     * If specified, will return only those metadata formats that a particular record supports
-     *
-     * @param boolean $asResponseList
-     * If true, will return a ResponseList object instead of an array
-     *
-     * @return array|ResponseList
-     * An array of SimpleXMLElement objects (or responseList object)
+     * @param string $identifier If specified, will return only those metadata formats that a particular record supports
+     * @param boolean $asResponseList If true, will return a ResponseList object instead of an array
+     * @return array|ResponseList An array of SimpleXMLElement objects (or responseList object)
      */
     public function listMetadataFormats($identifier = null, $asResponseList = false)
     {
@@ -84,11 +78,8 @@ class Endpoint
     /**
      * List Record Sets
      *
-     * @param boolean $asResponseList
-     * If true, will return a ResponseList object instead of an array
-     *
-     * @return array|ResponseList
-     * An array of SimpleXMLElement objects (or responseList object)
+     * @param boolean $asResponseList If true, will return a ResponseList object instead of an array
+     * @return array|ResponseList An array of SimpleXMLElement objects (or responseList object)
      */
     public function listSets($asResponseList = false)
     {
@@ -101,14 +92,9 @@ class Endpoint
     /**
      * Get a single record
      *
-     * @param string $id
-     * Record Identifier
-     *
-     * @param string $metadataPrefix
-     * Required by OAI-PMH endpoint
-     *
-     * @return \SimpleXMLElement
-     * An XML document corresponding to the record
+     * @param string $id Record Identifier
+     * @param string $metadataPrefix Required by OAI-PMH endpoint
+     * @return \SimpleXMLElement  An XML document corresponding to the record
      */
     public function getRecord($id, $metadataPrefix)
     {
@@ -127,29 +113,21 @@ class Endpoint
      *
      * Corresponds to OAI Verb to list record identifiers
      *
-     * @param string $metadataPrefix
-     * Required by OAI-PMH endpoint
-     *
-     * @param string $from
-     * An optional ISO8601 encoded date for selective harvesting
-     *
-     * @param string $to
-     * An optional ISO8601 encoded date for selective harvesting
-     * 
-     * @param string $set
-     * An optional setSpec for selective harvesting
-     *
-     * @return ResponseList
-     * A ResponseList object that encapsulates the records and flow control
+     * @param string $metadataPrefix Required by OAI-PMH endpoint
+     * @param DateTime $from   An optional 'from' date for selective harvesting
+     * @param DateTime $until  An optional 'from' date for selective harvesting
+     * @param string $set An optional setSpec for selective harvesting
+     * @return ResponseList A ResponseList object that encapsulates the records and flow control
      */
-    public function listIdentifiers($metadataPrefix, $from = null, $until = null, $set = null)
+    public function listIdentifiers($metadataPrefix, DateTime $from = null, DateTime $until = null, $set = null)
     {
         $params = array('metadataPrefix' => $metadataPrefix);
+
         if ($from) {
-            $params['from'] = $from;
+            $params['from'] = $from->format(\DateTime::ISO8601);
         }
         if ($until) {
-            $params['until'] = $until;
+            $params['until'] = $until>format(\DateTime::ISO8601);
         }
         if ($set) {
             $params['set'] = $set;
@@ -165,29 +143,21 @@ class Endpoint
      *
      * Corresponds to OAI Verb to list records
      *
-     * @param string $metadataPrefix
-     * Required by OAI-PMH endpoint
-     *
-     * @param string $from
-     * An optional ISO8601 encoded date for selective harvesting
-     *
-     * @param string $to
-     * An optional ISO8601 encoded date for selective harvesting
-     * 
-     * @param string $set
-     * An optional setSpec for selective harvesting
-     *
-     * @return ResponseList
-     * A ResponseList object that encapsulates the records and flow control
+     * @param string $metadataPrefix Required by OAI-PMH endpoint
+     * @param DateTime $from   An optional 'from' date for selective harvesting
+     * @param DateTime $until  An optional 'from' date for selective harvesting
+     * @param string $set An optional setSpec for selective harvesting
+     * @return ResponseList A ResponseList object that encapsulates the records and flow control
      */
-    public function listRecords($metadataPrefix, $from = null, $until = null, $set = null)
+    public function listRecords($metadataPrefix, DateTime $from = null, DateTime $until = null, $set = null)
     {
         $params = array('metadataPrefix' => $metadataPrefix);
+
         if ($from) {
-            $params['from'] = $from;
+            $params['from'] = $from->format(\DateTime::ISO8601);
         }
         if ($until) {
-            $params['until'] = $until;
+            $params['until'] = $until>format(\DateTime::ISO8601);
         }
         if ($set) {
             $params['set'] = $set;
