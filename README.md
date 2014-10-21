@@ -23,7 +23,7 @@ Install via [Composer](http://getcomposer.org/) by including the following in yo
  
     {
         "require": {
-            "caseyamcl/Phpoaipmh": "~1.1",
+            "caseyamcl/phpoaipmh": "~1.1",
             ...
         }
     }
