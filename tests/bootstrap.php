@@ -11,6 +11,6 @@ foreach($checkFiles as $file) {
 }
 
 //Away we go
-$autoload = require_once $checkFiles['autoload'];
+$autoload = require_once($checkFiles['autoload']);
 
 /* EOF: bootstrap.php */

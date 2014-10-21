@@ -54,12 +54,12 @@ class EndpointCurlTest extends PHPUnit_Framework_TestCase
 
     /**
      * @depends testGetRecordWorksForCorrectRecord
-     * @expectedException Phpoaipmh\OaipmhRequestException
+     * @expectedException \Phpoaipmh\OaipmhRequestException
      */
     public function testGetRecordThrowsOAIExceptionForInvalidRecord()
     {
         $endpoint = $this->getObj();
-        $result = $endpoint->getRecord('thisISTotalFake'. rand(1000, 4000), self::METADATA_PREFIX);
+         $endpoint->getRecord('thisISTotalFake'. rand(1000, 4000), self::METADATA_PREFIX);
     }
 
     // --------------------------------------------------------------

@@ -74,7 +74,7 @@ class ResponseListTest extends PHPUnit_Framework_TestCase
     {
         $this->setExpectedException('RuntimeException');
         $output = $this->generateSampleXML(array('GoodResponseSinglePage.xml'));
-        $obj = new ResponseList($this->getMockClient($output), 'Identify');
+        new ResponseList($this->getMockClient($output), 'Identify');
     }
 
     // -------------------------------------------------------------------------

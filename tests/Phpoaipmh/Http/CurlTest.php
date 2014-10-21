@@ -43,7 +43,7 @@ class CurlTest extends PHPUnit_Framework_TestCase
         $this->setExpectedException('Phpoaipmh\Http\RequestException');
 
         $obj = new Curl();
-        $res = $obj->request('http://w3.org/doesnotexistyo');
+        $obj->request('http://w3.org/doesnotexistyo');
     }
 
     // -------------------------------------------------------------------------
@@ -55,7 +55,7 @@ class CurlTest extends PHPUnit_Framework_TestCase
     {
         $this->setExpectedException('Phpoaipmh\Http\RequestException');
         $obj = new Curl();
-        $res = $obj->request('http://doesnotexist.blargasdf');
+        $obj->request('http://doesnotexist.blargasdf');
     }
 }
 
