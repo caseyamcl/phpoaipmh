@@ -2,16 +2,17 @@
 
 namespace Phpoaipmh;
 
-use Phpoaipmh\Exception\HttpException;
 use Phpoaipmh\Exception\OaipmhException;
 use Phpoaipmh\Exception\ResponseMalformedException;
+use Phpoaipmh\HttpAdapter\CurlAdapter;
+use Phpoaipmh\HttpAdapter\GuzzleAdapter;
 use Phpoaipmh\HttpAdapter\HttpAdapterInterface;
-
 use RuntimeException;
 
 /**
- * A simple HTTP HttpAdapterInterface that performs only GET requests to
- * OAI Endpoints
+ * OAI-PMH Client class retrieves and decodes OAI-PMH from a given URL
+ *
+ * @author Casey McLaughlin <caseyamcl@gmail.com>
  */
 class Client
 {
@@ -21,7 +22,7 @@ class Client
     private $url;
 
     /**
-     * @var object
+     * @var HttpAdapterInterface
      */
     private $httpClient;
 
@@ -41,7 +42,7 @@ class Client
             $this->httpClient = $httpClient;
         }
         else {
-            $this->httpClient = (class_exists('Guzzle\Http\Client')) ? new Guzzle() : new Curl();
+            $this->httpClient = (class_exists('Guzzle\Http\Client')) ? new GuzzleAdapter() : new CurlAdapter();
         }
     }
 
@@ -91,7 +92,7 @@ class Client
      * @param string $resp  The response body from a HTTP request
      * @return \SimpleXMLElement  An XML document
      */
-    private function decodeResponse($resp)
+    protected function decodeResponse($resp)
     {
         //Setup a SimpleXML Document
         try {

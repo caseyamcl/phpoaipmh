@@ -7,27 +7,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a1fd02b0-a9f5-4bc7-99c4-9f7dfde3284e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Phpoaipmh/Exception/BaseOaipmhException.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Phpoaipmh/Exception/HttpException.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Phpoaipmh/Exception/ResponseMalformedException.php" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Phpoaipmh/Http/Client.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Phpoaipmh/Http/RequestException.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Phpoaipmh/OaipmhRequestException.php" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/Phpoaipmh/Http/CurlTest.php" afterPath="$PROJECT_DIR$/tests/Phpoaipmh/HttpAdapter/CurlAdapterTest.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/Phpoaipmh/Http/GuzzleTest.php" afterPath="$PROJECT_DIR$/tests/Phpoaipmh/HttpAdapter/GuzzleAdapterTest.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Phpoaipmh/Client.php" afterPath="$PROJECT_DIR$/src/Phpoaipmh/Client.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/Phpoaipmh/ClientTest.php" afterPath="$PROJECT_DIR$/tests/Phpoaipmh/ClientTest.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Phpoaipmh/HttpAdapter/CurlAdapter.php" afterPath="$PROJECT_DIR$/src/Phpoaipmh/HttpAdapter/CurlAdapter.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Phpoaipmh/Endpoint.php" afterPath="$PROJECT_DIR$/src/Phpoaipmh/Endpoint.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/Phpoaipmh/EndpointCurlTest.php" afterPath="$PROJECT_DIR$/tests/Phpoaipmh/EndpointCurlTest.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/Phpoaipmh/EndpointGuzzleTest.php" afterPath="$PROJECT_DIR$/tests/Phpoaipmh/EndpointGuzzleTest.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Phpoaipmh/HttpAdapter/GuzzleAdapter.php" afterPath="$PROJECT_DIR$/src/Phpoaipmh/HttpAdapter/GuzzleAdapter.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Phpoaipmh/HttpAdapter/HttpAdapterInterface.php" afterPath="$PROJECT_DIR$/src/Phpoaipmh/HttpAdapter/HttpAdapterInterface.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Phpoaipmh/Exception/OaipmhException.php" afterPath="$PROJECT_DIR$/src/Phpoaipmh/Exception/OaipmhException.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/Phpoaipmh/ResponseListTest.php" afterPath="$PROJECT_DIR$/tests/Phpoaipmh/ResponseListTest.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/bootstrap.php" afterPath="$PROJECT_DIR$/tests/bootstrap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/composer.json" afterPath="$PROJECT_DIR$/composer.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="phpoaipmh.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -52,33 +33,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Client.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Phpoaipmh/Client.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-18.607143" vertical-offset="1360" max-vertical-offset="2280">
-              <caret line="99" column="48" selection-start-line="99" selection-start-column="22" selection-end-line="99" selection-end-column="48" />
-              <folding>
-                <element signature="e#29#67#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ResponseMalformedException.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Phpoaipmh/Exception/ResponseMalformedException.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.071429" vertical-offset="0" max-vertical-offset="323">
-              <caret line="11" column="32" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="32" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ClientTest.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ClientTest.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tests/Phpoaipmh/ClientTest.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-23.357143" vertical-offset="334" max-vertical-offset="1767">
-              <caret line="52" column="83" selection-start-line="52" selection-start-column="83" selection-end-line="52" selection-end-column="83" />
+            <state vertical-scroll-proportion="0.74347824" vertical-offset="0" max-vertical-offset="1995">
+              <caret line="36" column="4" selection-start-line="36" selection-start-column="4" selection-end-line="36" selection-end-column="4" />
               <folding>
                 <element signature="e#28#75#0#PHP" expanded="true" />
               </folding>
@@ -86,35 +45,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EndpointCurlTest.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tests/Phpoaipmh/EndpointCurlTest.php">
+      <file leaf-file-name="Client.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Phpoaipmh/Client.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.571428" vertical-offset="835" max-vertical-offset="1862">
-              <caret line="61" column="47" selection-start-line="61" selection-start-column="47" selection-end-line="61" selection-end-column="47" />
+            <state vertical-scroll-proportion="-26.75" vertical-offset="1379" max-vertical-offset="2299">
+              <caret line="112" column="5" selection-start-line="112" selection-start-column="5" selection-end-line="112" selection-end-column="5" />
               <folding>
-                <element signature="e#29#60#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CurlAdapterTest.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tests/Phpoaipmh/HttpAdapter/CurlAdapterTest.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-24.035715" vertical-offset="448" max-vertical-offset="1368">
-              <caret line="59" column="70" selection-start-line="59" selection-start-column="70" selection-end-line="59" selection-end-column="70" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GuzzleAdapterTest.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/tests/Phpoaipmh/HttpAdapter/GuzzleAdapterTest.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.37173912" vertical-offset="0" max-vertical-offset="1311">
-              <caret line="18" column="52" selection-start-line="18" selection-start-column="52" selection-end-line="18" selection-end-column="52" />
-              <folding>
-                <element signature="e#34#74#0#PHP" expanded="true" />
+                <element signature="e#29#69#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -161,11 +98,11 @@
         <option value="$PROJECT_DIR$/tests/Phpoaipmh/HttpAdapter/GuzzleTest.php" />
         <option value="$PROJECT_DIR$/src/Phpoaipmh/Exception/OaipmhException.php" />
         <option value="$PROJECT_DIR$/src/Phpoaipmh/Exception/ResponseMalformedException.php" />
-        <option value="$PROJECT_DIR$/src/Phpoaipmh/Client.php" />
-        <option value="$PROJECT_DIR$/tests/Phpoaipmh/ClientTest.php" />
         <option value="$PROJECT_DIR$/tests/Phpoaipmh/EndpointCurlTest.php" />
         <option value="$PROJECT_DIR$/tests/Phpoaipmh/HttpAdapter/CurlAdapterTest.php" />
         <option value="$PROJECT_DIR$/tests/Phpoaipmh/HttpAdapter/GuzzleAdapterTest.php" />
+        <option value="$PROJECT_DIR$/src/Phpoaipmh/Client.php" />
+        <option value="$PROJECT_DIR$/tests/Phpoaipmh/ClientTest.php" />
       </list>
     </option>
   </component>
@@ -314,28 +251,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="phpoaipmh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="phpoaipmh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Phpoaipmh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Exception" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -472,14 +387,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Phpoaipmh/Endpoint.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.464286" vertical-offset="3737" max-vertical-offset="4465">
-          <caret line="218" column="29" selection-start-line="218" selection-start-column="29" selection-end-line="218" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Phpoaipmh/ResponseList.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.20150054" vertical-offset="477" max-vertical-offset="4085">
@@ -562,14 +469,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Phpoaipmh/HttpAdapter/CurlAdapter.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.6495177" vertical-offset="0" max-vertical-offset="1710">
-          <caret line="81" column="5" selection-start-line="81" selection-start-column="5" selection-end-line="81" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/guzzlehttp/guzzle/src/Message/ResponseInterface.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.1221865" vertical-offset="0" max-vertical-offset="2223">
@@ -626,26 +525,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Phpoaipmh/Client.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-18.607143" vertical-offset="1360" max-vertical-offset="2280">
-          <caret line="99" column="48" selection-start-line="99" selection-start-column="22" selection-end-line="99" selection-end-column="48" />
-          <folding>
-            <element signature="e#29#67#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/Phpoaipmh/ClientTest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-23.357143" vertical-offset="334" max-vertical-offset="1767">
-          <caret line="52" column="83" selection-start-line="52" selection-start-column="83" selection-end-line="52" selection-end-column="83" />
-          <folding>
-            <element signature="e#28#75#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/Phpoaipmh/EndpointCurlTest.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-11.571428" vertical-offset="835" max-vertical-offset="1862">
@@ -670,6 +549,42 @@
           <caret line="18" column="52" selection-start-line="18" selection-start-column="52" selection-end-line="18" selection-end-column="52" />
           <folding>
             <element signature="e#34#74#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Phpoaipmh/HttpAdapter/CurlAdapter.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.9892819" vertical-offset="616" max-vertical-offset="1710">
+          <caret line="81" column="5" selection-start-line="81" selection-start-column="5" selection-end-line="81" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Phpoaipmh/Endpoint.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.4008574" vertical-offset="969" max-vertical-offset="4465">
+          <caret line="218" column="29" selection-start-line="218" selection-start-column="29" selection-end-line="218" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Phpoaipmh/Client.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-26.75" vertical-offset="1379" max-vertical-offset="2299">
+          <caret line="112" column="5" selection-start-line="112" selection-start-column="5" selection-end-line="112" selection-end-column="5" />
+          <folding>
+            <element signature="e#29#69#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/Phpoaipmh/ClientTest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.74347824" vertical-offset="0" max-vertical-offset="1995">
+          <caret line="36" column="4" selection-start-line="36" selection-start-column="4" selection-end-line="36" selection-end-column="4" />
+          <folding>
+            <element signature="e#28#75#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
