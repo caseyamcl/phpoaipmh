@@ -1,6 +1,8 @@
 PHPOAIPMH Changelog
 ===================
 
+* v1.2.1 - 2014 Oct 21
+  - Updated this changelog
 * v1.2 - 2014 Oct 21
   - Cleaned up API comments
   - Fixed bug when the client class is instantiated without passing an HTTP Client
