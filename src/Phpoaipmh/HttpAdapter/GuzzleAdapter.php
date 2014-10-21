@@ -1,19 +1,19 @@
 <?php
 
-namespace Phpoaipmh\Http;
+namespace Phpoaipmh\HttpAdapter;
 
 use Guzzle\Http\Client as GuzzleClient;
 use Guzzle\Http\Exception\RequestException as GuzzleException;
 
 /**
- * Guzzle Http Client Adapter
+ * GuzzleAdapter HttpAdapter HttpAdapterInterface Adapter
  *
- * @package Phpoaipmh\Http
+ * @package Phpoaipmh\HttpAdapter
  */
-class Guzzle extends GuzzleClient implements Client
+class GuzzleAdapter extends GuzzleClient implements HttpAdapterInterface
 {
     /**
-     * Do the request with Guzzle
+     * Do the request with GuzzleAdapter
      *
      * @param string $url
      * @return string
@@ -25,11 +25,11 @@ class Guzzle extends GuzzleClient implements Client
             $result = parent::get()->send()->getBody(true);
         }
         catch (GuzzleException $e) {
-            throw new RequestException($e->getMessage(), $e->getCode(), $e);
+            throw new RequestExceptionBase($e->getMessage(), $e->getCode(), $e);
         }
 
         return $result;
     }
 }
 
-/* EOF: Guzzle.php */
+/* EOF: GuzzleAdapter.php */
