@@ -19,8 +19,8 @@ Features:
 
 Installation Options
 --------------------
-1. Install via [Composer](http://getcomposer.org/) by including the following in your composer.json file: 
-
+Install via [Composer](http://getcomposer.org/) by including the following in your composer.json file: 
+ 
     {
         "require": {
             "caseyamcl/Phpoaipmh": "~1.1",
@@ -28,7 +28,7 @@ Installation Options
         }
     }
 
-2. Drop the <var>src/</var> folder into your application and use a PSR-0 autoloader to include the files.
+Then drop the `src` folder into your application and use a PSR-0 autoloader to include the files.
 
 
 Usage
@@ -72,20 +72,20 @@ Handling Results
 Depending on the verb used, the library will send back one of three types of
 variables:
 
-* For <code>identify</code> and <code>getRecord</code>, a <var>SimpleXMLElement</var> object is returned
-* For <code>listMetadataFormats</code> and <code>listSets</code>, an array of <var>SimpleXMLElement</var> objects is returned
-* For <code>listIdentifiers</code> and <code>listRecords</code>, a <var>Phpoaipmh\ResponseList</var> object is returned
+* For `identify` and `getRecord`, a `SimpleXMLElement` object is returned
+* For `listMetadataFormats` and `listSets`, an array of `SimpleXMLElement` objects is returned
+* For `listIdentifiers` and `listRecords`, a `Phpoaipmh\ResponseList` object is returned
 
-The <var>ResponseList</var> object encapsulates the logic needed to paginate through a large set of records over multiple HTTP requests.  You can extract a single record at a time from the object by calling the <code>nextItem()</code> method.  The nextItem() method returns a <var>SimpleXMLElement</var> object, or <code>false</code> when there are no more records.
+The `ResponseList` object encapsulates the logic needed to paginate through a large set of records over multiple HTTP requests.  You can extract a single record at a time from the object by calling the `nextItem()` method.  The `nextItem()` method returns a `\SimpleXMLElement` object, or `false` when there are no more records.
 
 
 Handling Errors
 ---------------
-* For any HTTP request errors, the library will throw a <code>Phpoaipmh\Http\RequestException</code>
-* For any OAI-PMH errors (e.g. invalid verb or missing params), the library will throw a <code>Phpoaipmh\OaipmhRequestException</code>
+* For any HTTP request errors, the library will throw a `Phpoaipmh\Http\RequestException`
+* For any OAI-PMH errors (e.g. invalid verb or missing params), the library will throw a `Phpoaipmh\OaipmhRequestException`
 
 
 
 More Info
 ---------
-For a full list of public API methods, refer to the inline documentation inside of <var>src/Phpoaipmh/Endpoint.php</var>
+For a full list of public API methods, refer to the inline documentation inside of `src/Phpoaipmh/Endpoint.php`
