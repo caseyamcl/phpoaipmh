@@ -66,17 +66,16 @@ class ResponseList {
     /**
      * Constructor
      *
-     * @param Client $httpClient
-     * @param string $verb
-     * @param int $offset
-     * @param int $limit
+     * @param Client $httpClient  The client to use
+     * @param string $verb        The verb to use when retrieving results from the client
+     * @param array $params       Optional parameters passed to OAI-PMH
      */
-    public function __construct(Client $httpClient, $verb, $params = array())
+    public function __construct(Client $httpClient, $verb, array $params = array())
     {
-        //Set paramaters
+        //Set parameters
         $this->httpClient = $httpClient;
-        $this->verb   = $verb;
-        $this->params = $params;
+        $this->verb       = $verb;
+        $this->params     = $params;
 
         //Node name error?
         if ( ! $this->getItemNodeName()) {
@@ -89,10 +88,10 @@ class ResponseList {
     /**
      * Get the total number of requests made during this run
      *
-     * @param int
-     * The number of HTTP reqeusts made
+     * @return int  The number of HTTP reqeusts made
      */
-    public function getNumRequests() {
+    public function getNumRequests()
+    {
         return $this->numRequests;
     }
 
@@ -101,10 +100,10 @@ class ResponseList {
     /**
      * Get the total number of records processed during this run
      *
-     * @return int
-     * The number of records processed 
+     * @return int  The number of records processed
      */
-    public function getNumProcessed() {
+    public function getNumProcessed()
+    {
         return $this->totalProcessed;
     }
 
@@ -113,10 +112,10 @@ class ResponseList {
     /**
      * Get the next item
      *
-     * Return an item from the current batch, try to get a new item from a request,
-     * or return false if both fail.
+     * Return an item from the currently-retrieved batch, get next batch and
+     * return first record from it, or return false if no more records
      *
-     * @return boolean|SimpleXMLElement
+     * @return \SimpleXMLElement|boolean
      */
     public function nextItem()
     {
@@ -147,10 +146,13 @@ class ResponseList {
      */
     private function retrieveBatch() {
 
-        //Params
+        // Set OAI-PMH parameters for request
+        // If resumptionToken, then we ignore params and just use that
         $params = ($this->resumptionToken)
             ? array('resumptionToken' => $this->resumptionToken)
-            : $this->params;        
+            : $this->params;
+
+
         $nodeName = $this->getItemNodeName();
         $verb = $this->verb;
 
@@ -188,8 +190,7 @@ class ResponseList {
      *
      * Map the item node name based on the verb
      *
-     * @return string|boolean
-     * The element name for the mapping, or false if unmapped
+     * @return string|boolean  The element name for the mapping, or false if unmapped
      */
     private function getItemNodeName() {
 

@@ -2,6 +2,14 @@
 
 namespace Phpoaipmh;
 
+use Phpoaipmh\Exception\OaipmhException;
+
+
+/**
+ * OAI-PMH Endpoint Class
+ *
+ * @package Phpoaipmh
+ */
 class Endpoint
 {
     /**
@@ -14,7 +22,7 @@ class Endpoint
     /**
      * Constructor
      *
-     * @param Client $client
+     * @param Client $client  Optional; will attempt to auto-build dependency if not passed
      */
     public function __construct(Client $client = null)
     {
@@ -38,7 +46,7 @@ class Endpoint
     /**
      * Identify the OAI-PMH Endpoint
      *
-     * @return SimpleXMLElement
+     * @return \SimpleXMLElement
      * A XML document with attributes describing the repository
      */
     public function identify()
@@ -99,7 +107,7 @@ class Endpoint
      * @param string $metadataPrefix
      * Required by OAI-PMH endpoint
      *
-     * @return SimpleXMLElement
+     * @return \SimpleXMLElement
      * An XML document corresponding to the record
      */
     public function getRecord($id, $metadataPrefix)
@@ -190,30 +198,26 @@ class Endpoint
 
     // -------------------------------------------------------------------------
 
-    /** 
-     * Convert a ResponseList cursor object into an array
+    /**
+     * Convert a ResponseList object into an array
      *
      * Stores the entire array in memory, so this is not particularly useful
      * for listRecords or listIdentifiers, but is useful for small lists,
      * such as you would get back from listSets or listMetadataformats
      *
-     * @param ResponseList $rList
-     * A response list object
-     *
-     * @param int $max
-     * Optional maximum number to process (default: 200). Set to 0 for unlimited
-     *
-     * @return array
-     * An array of SimpleXMLElement objects
+     * @param ResponseList $rList  A response list object
+     * @param int $max  Optional maximum number of records allowed
+     * @return array  An array of SimpleXMLElement objects
+     * @throws OaipmhException  If response list is greater than the maximum
      */
-    public function processList(ResponseList $rList, $max = 200) {
+    public function processList(ResponseList $rList, $max = 500) {
 
         $outArr = array();
 
         while ($rec = $rList->nextItem()) {
 
             if ($max > 0 && $rList->getNumProcessed() >= $max) {
-                throw new \Exception("Maximum entities reached for responseList!  Set max higher than $max");
+                throw new OaipmhException("Maximum entities reached for responseList!  Set max higher than $max");
             }
 
             $outArr[] = $rec;

@@ -2,29 +2,30 @@
 
 namespace Phpoaipmh\Http;
 
+/**
+ * Curl Http Client Adapter
+ *
+ * @package Phpoaipmh\Http
+ */
 class Curl implements Client
 {
     /**
-     * @var int
-     * The maximum number of redirects
+     * @var int  The maximum number of redirects
      */
     protected $maxRedirects = 3;
 
     /**
-     * @var int
-     * Connection timeout
+     * @var int  Connection timeout
      */
     protected $connectTimeout = 10;
 
     /**
-     * @var int
-     * DNS lookup timeout
+     * @var int  DNS lookup timeout
      */
     protected $dnsCacheTimeout = 10;
 
     /**
-     * @var int
-     * Response timeout
+     * @var int  Response timeout
      */
     protected $responseTimeout = 60;
 
@@ -33,7 +34,7 @@ class Curl implements Client
     /**
      * Constructor
      *
-     * Checks for curl libraries
+     * Checks for CURL libraries
      */
     public function __construct()
     {
@@ -47,11 +48,8 @@ class Curl implements Client
     /**
      * Do CURL Request
      *
-     * @param string $url
-     * The full URL 
-     *
-     * @return string
-     * The response body 
+     * @param  string $url  The full URL
+     * @return string  The response body
      */
     public function request($url)
     {

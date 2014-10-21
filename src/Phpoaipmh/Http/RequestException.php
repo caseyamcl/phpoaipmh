@@ -2,7 +2,13 @@
 
 namespace Phpoaipmh\Http;
 
-class RequestException extends \Exception {
+use Phpoaipmh\Exception\OaipmhException;
+
+/**
+ * Request Exception
+ */
+class RequestException extends OaipmhException
+{
     /* pass */
 }
 

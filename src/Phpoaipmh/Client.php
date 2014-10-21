@@ -1,7 +1,10 @@
 <?php
 
 namespace Phpoaipmh;
+
 use Phpoaipmh\Http\Client as HttpClient;
+use Phpoaipmh\Http\Guzzle;
+use Phpoaipmh\Http\Curl;
 use RuntimeException;
 
 /**
@@ -26,12 +29,18 @@ class Client
      * Constructor
      *
      * @param string $url  The URL of the OAI-PMH Endpoint
-     * @param Http\Client $httpClient  Optional HTTP Client class
+     * @param Http\Client $httpClient  Optional HTTP Client class; attempt to auto-build dependency if not passed
      */
     public function __construct($url = null, HttpClient $httpClient = null)
     {
         $this->setUrl($url);
-        $this->httpClient = $httpClient ?: new Http\Curl();
+
+        if ($httpClient) {
+            $this->httpClient = $httpClient;
+        }
+        else {
+            $this->httpClient = (class_exists('Guzzle\Http\Client')) ? new Guzzle() : new Curl();
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -53,7 +62,7 @@ class Client
      *
      * @param string $verb  Which OAI-PMH verb to use
      * @param array $params  An array of key/value parameters
-     * @return SimpleXMLElement  An XML document
+     * @return \SimpleXMLElement  An XML document
      */
     public function request($verb, array $params = array())
     {
@@ -77,8 +86,8 @@ class Client
     /**
      * Decode the response into XML
      *
-     * @param $resp  The response body from a HTTP request
-     * @return SimpleXMLElement  An XML document
+     * @param string $resp  The response body from a HTTP request
+     * @return \SimpleXMLElement  An XML document
      */
     private function decodeResponse($resp)
     {
@@ -101,4 +110,4 @@ class Client
     }
 }
 
-/* EOF: OaipmhClient.php */
+/* EOF: Client.php */
