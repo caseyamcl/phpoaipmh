@@ -20,27 +20,27 @@ Features:
 Installation Options
 --------------------
 1. Install via [Composer](http://getcomposer.org/) by including the following in your composer.json file: 
-<pre>
+
     {
         "require": {
-            "caseyamcl/Phpoaipmh": "dev-master",
+            "caseyamcl/Phpoaipmh": "~1.1",
             ...
         }
     }
-</pre>
+
 2. Drop the <var>src/</var> folder into your application and use a PSR-0 autoloader to include the files.
 
 
 Usage
 -----
 Setup a new endpoint:
-<pre>
+
     $client = new \Phpoaipmh\Client('http://some.service.com/oai');
     $myEndpoint = new \Phpoaipmh\Endpoint($client)
-</pre>
+
 
 Getting basic information:
-<pre>
+
 
     //Result will be a SimpleXMLElement object
     $result = $myEndpoint->identify();
@@ -52,10 +52,9 @@ Getting basic information:
         var_dump($item);
     }
 
-</pre>
 
 Getting lists of records:
-<pre>
+
     //recs will be a Phpoaipmh\ResponseList object
     $recs = $myEndpoint->listRecords('someMetaDataFormat');
 
@@ -66,7 +65,6 @@ Getting lists of records:
     while($rec = $recs->nextItem()) {
         var_dump($rec);
     }
-</pre>
 
 
 Handling Results
