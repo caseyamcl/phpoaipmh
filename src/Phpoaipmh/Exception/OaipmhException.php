@@ -1,21 +1,30 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: casey
- * Date: 10/21/14
- * Time: 2:28 PM
- */
 
 namespace Phpoaipmh\Exception;
 
 /**
- * Class OaipmhException
+ * OAI-PMH protocol Exception Class
  *
  * @package Phpoaipmh
  */
-class OaipmhException extends \RuntimeException
+class OaipmhException extends BaseOaipmhException
 {
-    // pass..
+    private $oaiErrorCode;
+
+    // -------------------------------------------------------------------------
+
+    public function __construct($oaiErrorCode, $message, $code = 0, \Exception $previous = null)
+    {
+        $this->oaiErrorCode = $oaiErrorCode;
+        parent::__construct($message, $code, $previous);
+    }
+
+    // -------------------------------------------------------------------------
+
+    public function __toString()
+    {
+        return __CLASS__ . ": [{$this->code}]: ({$this->oaiErrorCode}) {$this->message}\n";
+    }
 }
 
-/* EOF: OaipmhException.php */
+/* OaipmhException.php */

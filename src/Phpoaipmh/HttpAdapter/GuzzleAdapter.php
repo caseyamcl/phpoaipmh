@@ -2,33 +2,52 @@
 
 namespace Phpoaipmh\HttpAdapter;
 
-use Guzzle\Http\Client as GuzzleClient;
-use Guzzle\Http\Exception\RequestException as GuzzleException;
+use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Exception\TransferException as GuzzleException;
+use Phpoaipmh\Exception\HttpException;
 
 /**
  * GuzzleAdapter HttpAdapter HttpAdapterInterface Adapter
  *
  * @package Phpoaipmh\HttpAdapter
  */
-class GuzzleAdapter extends GuzzleClient implements HttpAdapterInterface
+class GuzzleAdapter implements HttpAdapterInterface
 {
+    /**
+     * @var GuzzleClient
+     */
+    private $guzzle;
+
+    // ----------------------------------------------------------------
+
+    /**
+     * Constructor
+     *
+     * @param GuzzleClient $guzzle
+     */
+    public function __construct(GuzzleClient $guzzle = null)
+    {
+        $this->guzzle = $guzzle ?: new GuzzleClient();
+    }
+
+    // ----------------------------------------------------------------
+
     /**
      * Do the request with GuzzleAdapter
      *
      * @param string $url
      * @return string
+     * @throws HttpException
      */
     public function request($url)
     {
         try {
-            parent::setBaseUrl($url);
-            $result = parent::get()->send()->getBody(true);
+            $resp = $this->guzzle->get($url);
+            return (string) $resp->getBody();
         }
         catch (GuzzleException $e) {
-            throw new RequestExceptionBase($e->getMessage(), $e->getCode(), $e);
+            throw new HttpException($e->getMessage(), $e->getCode(), $e);
         }
-
-        return $result;
     }
 }
 

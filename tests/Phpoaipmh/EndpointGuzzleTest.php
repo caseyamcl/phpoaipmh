@@ -7,9 +7,9 @@ require_once __DIR__ . '/EndpointCurlTest.php';
 
 class EndpointGuzzleTest extends EndpointCurlTest
 {
-    protected function getHttpClientObj()
+    protected function getHttpAdapterObj()
     {
-        return new Http\Guzzle();
+        return new HttpAdapter\GuzzleAdapter();
     }    
 }
 

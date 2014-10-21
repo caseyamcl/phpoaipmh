@@ -1,20 +1,22 @@
 <?php
+
 namespace Phpoaipmh\Http;
+
+use Phpoaipmh\HttpAdapter\GuzzleAdapter;
 use PHPUnit_Framework_TestCase;
 
-class GuzzleTest extends PHPUnit_Framework_TestCase
+class GuzzleAdapterTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Simple Instantiation Test
      *
      * Tests that no syntax or runtime errors occur during object insantiation,
-     * and that the class implements the Http\Client interface
+     * and that the class implements the HttpAdapter\HttpAdapterInterface interface
      */
     public function testInsantiateCreatesNewObject()
     {    
-        $obj = new Guzzle();
-        $this->assertInstanceOf('Phpoaipmh\Http\Guzzle', $obj);
-        $this->assertInstanceOf('Phpoaipmh\Http\Client', $obj);
+        $obj = new GuzzleAdapter();
+        $this->assertInstanceOf('Phpoaipmh\HttpAdapter\GuzzleAdapter', $obj);
     }
 
     // -------------------------------------------------------------------------
@@ -26,8 +28,9 @@ class GuzzleTest extends PHPUnit_Framework_TestCase
      */
     public function testGoodRequestReturnsContentBody()
     {
-        $obj = new Guzzle();
+        $obj = new GuzzleAdapter();
         $res = $obj->request('http://example.org');
+
         $this->assertTrue(strpos($res, "<body>") != false, "The response should include a <body> tag, since it is a HTML document");
     }
 
@@ -38,9 +41,9 @@ class GuzzleTest extends PHPUnit_Framework_TestCase
      */
     public function test404ResponseThrowsAnException()
     {
-        $this->setExpectedException('Phpoaipmh\Http\RequestException');
+        $this->setExpectedException('Phpoaipmh\Exception\HttpException');
 
-        $obj = new Guzzle();
+        $obj = new GuzzleAdapter();
         $obj->request('http://w3.org/doesnotexistyo');
     }
 
@@ -51,8 +54,9 @@ class GuzzleTest extends PHPUnit_Framework_TestCase
      */
     public function testNonExistentServerThrowsException()
     {
-        $this->setExpectedException('Phpoaipmh\Http\RequestException');
-        $obj = new Guzzle();
+        $this->setExpectedException('Phpoaipmh\Exception\HttpException');
+
+        $obj = new GuzzleAdapter();
         $obj->request('http://doesnotexist.blargasdf');
     }    
 }

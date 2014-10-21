@@ -1,8 +1,14 @@
 <?php
 
 namespace Phpoaipmh;
+use Phpoaipmh\HttpAdapter\HttpAdapterInterface;
 use PHPUnit_Framework_TestCase;
 
+/**
+ * Class ClientTest
+ *
+ * @package Phpoaipmh
+ */
 class ClientTest extends PHPUnit_Framework_TestCase
 {
     // -------------------------------------------------------------------------
@@ -38,13 +44,13 @@ class ClientTest extends PHPUnit_Framework_TestCase
     // -------------------------------------------------------------------------
 
     /**
-     * Test that the client throws a Http\RequestException for non-XML or non-parsable responses
+     * Test that the client throws a HttpAdapter\HttpException for non-XML or non-parsable responses
      */
     public function testInvalidXMLResponseThrowsHttpRequestException()
     {
         $mockClient = new HttpMockClient;
         $mockClient->toReturn = 'thisIs&NotXML!!';
-        $this->setExpectedException('Phpoaipmh\Http\RequestException');
+        $this->setExpectedException('Phpoaipmh\Exception\ResponseMalformedException');
 
         $obj = new Client('http://nsdl.org/oai', $mockClient);
         $obj->request('Identify');
@@ -59,7 +65,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
     {
         $mockClient = new HttpMockClient;
         $mockClient->toReturn = '<?xml version="1.0" encoding="UTF-8" ?>  <OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/  http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd"> <responseDate>2012-08-06T19:33:31Z</responseDate> <request>http://nsdl.org/oai</request>      <error code="badVerb">The verb &#39;NotExist&#39; is illegal</error>  </OAI-PMH>';
-        $this->setExpectedException('Phpoaipmh\OaipmhRequestException');
+        $this->setExpectedException('Phpoaipmh\Exception\OaipmhException');
 
         $obj = new Client('http://nsdl.org/oai', $mockClient);
         $obj->request('NonexistentVerb');
@@ -68,7 +74,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
 
 // =============================================================================
 
-class HttpMockClient implements Http\Client
+class HttpMockClient implements HttpAdapterInterface
 {
     public $toReturn = '';
 

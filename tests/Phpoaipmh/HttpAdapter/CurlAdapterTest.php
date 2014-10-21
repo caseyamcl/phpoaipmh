@@ -1,22 +1,26 @@
 <?php
 
 namespace Phpoaipmh\Http;
-use PHPUnit_Framework_TestCase;
+use Phpoaipmh\HttpAdapter\CurlAdapter;
 
-class CurlTest extends PHPUnit_Framework_TestCase
+/**
+ * Class CurlAdapterTest
+ *
+ * @package Phpoaipmh\Http
+ */
+class CurlAdapterTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
      * Simple Instantiation Test
      *
      * Tests that no syntax or runtime errors occur during object insantiation,
-     * and that the class implements the Http\Client interface
+     * and that the class implements the HttpAdapter\HttpAdapterInterface interface
      */
     public function testInsantiateCreatesNewObject()
     {    
-        $obj = new Curl();
-        $this->assertInstanceOf('Phpoaipmh\Http\Curl', $obj);
-        $this->assertInstanceOf('Phpoaipmh\Http\Client', $obj);
+        $obj = new CurlAdapter();
+        $this->assertInstanceOf('Phpoaipmh\HttpAdapter\CurlAdapter', $obj);
     }
 
     // -------------------------------------------------------------------------
@@ -28,7 +32,7 @@ class CurlTest extends PHPUnit_Framework_TestCase
      */
     public function testGoodRequestReturnsContentBody()
     {
-        $obj = new Curl();
+        $obj = new CurlAdapter();
         $res = $obj->request('http://example.org');
         $this->assertTrue(strpos($res, "<body>") != false, "The response should include a <body> tag, since it is a HTML document");
     }
@@ -40,9 +44,9 @@ class CurlTest extends PHPUnit_Framework_TestCase
      */
     public function test404ResponseThrowsAnException()
     {
-        $this->setExpectedException('Phpoaipmh\Http\RequestException');
+        $this->setExpectedException('Phpoaipmh\Exception\HttpException');
 
-        $obj = new Curl();
+        $obj = new CurlAdapter();
         $obj->request('http://w3.org/doesnotexistyo');
     }
 
@@ -53,8 +57,9 @@ class CurlTest extends PHPUnit_Framework_TestCase
      */
     public function testNonExistentServerThrowsException()
     {
-        $this->setExpectedException('Phpoaipmh\Http\RequestException');
-        $obj = new Curl();
+        $this->setExpectedException('Phpoaipmh\Exception\HttpException');
+
+        $obj = new CurlAdapter();
         $obj->request('http://doesnotexist.blargasdf');
     }
 }

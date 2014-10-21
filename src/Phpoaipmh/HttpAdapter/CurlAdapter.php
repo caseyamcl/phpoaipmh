@@ -2,6 +2,8 @@
 
 namespace Phpoaipmh\HttpAdapter;
 
+use Phpoaipmh\Exception\HttpException;
+
 /**
  * CurlAdapter HttpAdapter HttpAdapterInterface Adapter
  *
@@ -70,10 +72,10 @@ class CurlAdapter implements HttpAdapterInterface
         $httpCode = (string) $info->http_code;
         if ($httpCode{0} != '2') {
             $msg = sprintf('HTTP Request Failed (code %s): %s', $info->http_code, $resp);
-            throw new RequestExceptionBase($msg);
+            throw new HttpException($msg);
         }
         elseif (strlen(trim($resp)) == 0) {
-            throw new RequestExceptionBase('HTTP Response Empty');
+            throw new HttpException('HTTP Response Empty');
         }
 
         return $resp;        

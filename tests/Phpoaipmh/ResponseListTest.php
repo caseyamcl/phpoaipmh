@@ -128,8 +128,8 @@ class ResponseListTest extends PHPUnit_Framework_TestCase
      * @param array $toReturn
      * Array of values to return for consecutive calls (send one for same every time)
      *
-     * @return Phpoaipmh\Client
-     * Mocked Phpoaipmh Client
+     * @return Phpoaipmh\HttpAdapterInterface
+     * Mocked Phpoaipmh HttpAdapterInterface
      */
     protected function getMockClient($toReturn = array())
     {

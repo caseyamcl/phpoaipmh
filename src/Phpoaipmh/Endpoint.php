@@ -2,7 +2,7 @@
 
 namespace Phpoaipmh;
 
-use Phpoaipmh\Exception\OaipmhException;
+use Phpoaipmh\Exception\BaseOaipmhException;
 
 
 /**
@@ -208,7 +208,7 @@ class Endpoint
      * @param ResponseList $rList  A response list object
      * @param int $max  Optional maximum number of records allowed
      * @return array  An array of SimpleXMLElement objects
-     * @throws OaipmhException  If response list is greater than the maximum
+     * @throws BaseOaipmhException  If response list is greater than the maximum
      */
     public function processList(ResponseList $rList, $max = 500) {
 
@@ -217,7 +217,7 @@ class Endpoint
         while ($rec = $rList->nextItem()) {
 
             if ($max > 0 && $rList->getNumProcessed() >= $max) {
-                throw new OaipmhException("Maximum entities reached for responseList!  Set max higher than $max");
+                throw new BaseOaipmhException("Maximum entities reached for responseList!  Set max higher than $max");
             }
 
             $outArr[] = $rec;
@@ -227,4 +227,4 @@ class Endpoint
     }
 }
 
-/* EOF: Client.php */
+/* EOF: HttpAdapterInterface.php */

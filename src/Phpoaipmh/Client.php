@@ -2,13 +2,15 @@
 
 namespace Phpoaipmh;
 
-use Phpoaipmh\Http\Client as HttpClient;
-use Phpoaipmh\Http\Guzzle;
-use Phpoaipmh\Http\Curl;
+use Phpoaipmh\Exception\HttpException;
+use Phpoaipmh\Exception\OaipmhException;
+use Phpoaipmh\Exception\ResponseMalformedException;
+use Phpoaipmh\HttpAdapter\HttpAdapterInterface;
+
 use RuntimeException;
 
 /**
- * A simple HTTP Client that performs only GET requests to
+ * A simple HTTP HttpAdapterInterface that performs only GET requests to
  * OAI Endpoints
  */
 class Client
@@ -29,9 +31,9 @@ class Client
      * Constructor
      *
      * @param string $url  The URL of the OAI-PMH Endpoint
-     * @param Http\Client $httpClient  Optional HTTP Client class; attempt to auto-build dependency if not passed
+     * @param HttpAdapterInterface $httpClient  Optional HTTP HttpAdapterInterface class; attempt to auto-build dependency if not passed
      */
-    public function __construct($url = null, HttpClient $httpClient = null)
+    public function __construct($url = null, HttpAdapterInterface $httpClient = null)
     {
         $this->setUrl($url);
 
@@ -95,19 +97,19 @@ class Client
         try {
             $xml = @new \SimpleXMLElement($resp);
         } catch (\Exception $e) {
-            throw new Http\RequestException(sprintf("Could not decode XML Response: %s", $e->getMessage()));
+            throw new ResponseMalformedException(sprintf("Could not decode XML Response: %s", $e->getMessage()));
         }
 
-        //If we get back a OAI-PMH error, throw a OaipmhRequestException
+        //If we get back a OAI-PMH error, throw a OaipmhException
         if (isset($xml->error)) {
             $code = (string) $xml->error['code'];
             $msg  = (string) $xml->error;
 
-            throw new OaipmhRequestException($code, $msg);
+            throw new OaipmhException($code, $msg);
         }
 
         return $xml;
     }
 }
 
-/* EOF: Client.php */
+/* EOF: HttpAdapterInterface.php */

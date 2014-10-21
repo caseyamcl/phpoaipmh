@@ -14,11 +14,12 @@
     ],    
     "license": "MIT",
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=5.4.0"
     },
     "require-dev": {
-        "guzzle/guzzle":   "~3.0",
-        "mockery/mockery": "dev-master"        
+        "guzzlehttp/guzzle": "~5.0",
+        "phpunit/phpunit":   "~4.0",
+        "mockery/mockery":   "~0.9"
     },
     "autoload": {
         "psr-0": {"Phpoaipmh": "src/"}
