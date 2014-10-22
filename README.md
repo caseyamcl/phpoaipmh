@@ -1,5 +1,5 @@
 PHPOAIPMH
-========
+=========
 
 A PHP OAI-PMH harvester client library
 --------------------------------------
@@ -32,50 +32,55 @@ Or, drop the `src` folder into your application and use a PSR-0 autoloader to in
 
 *Note:* Guzzle v5.0 or newer is strongly recommended, but if you choose not to use Guzzle, the
 library will fall back to using the PHP cURL extension.  If neither is installed, the library will
-throw an exception.  Alternatively, you can use a different HTTP client library by implementing the
-`Phpoaipmh\HttpAdapter\HttpAdapterInterface`.
+throw an exception.  Alternatively, you can use a different HTTP client library by passing your own
+implementation of the `Phpoaipmh\HttpAdapter\HttpAdapterInterface` to the `Phpoaipmh\Client` constructor.
 
 
 Upgrading from Version 1 to Version 2
 -------------------------------------
 
-There are lots of backwards-incompatible API improvements in version 2.0.  See UPGRADE.md for
-information about how to upgrade your client code.
+There are several backwards-incompatible API improvements in version 2.0.  See <UPGRADE.md> for
+information about how to upgrade your code to use the new version.
 
 
 Usage
 -----
-Setup a new endpoint:
+Setup a new endpoint client:
 
-    $client = new \Phpoaipmh\Client('http://some.service.com/oai');
-    $myEndpoint = new \Phpoaipmh\Endpoint($client)
-
+```php
+$client = new \Phpoaipmh\Client('http://some.service.com/oai');
+$myEndpoint = new \Phpoaipmh\Endpoint($client)
+```
 
 Get basic information:
 
-    // Result will be a SimpleXMLElement object
-    $result = $myEndpoint->identify();
-    var_dump($result);
+```php
+// Result will be a SimpleXMLElement object
+$result = $myEndpoint->identify();
+var_dump($result);
 
-    // Results will be iterator of SimpleXMLElement objects
-    $results = $myEndpoint->listMetadataFormats();
-    foreach($results as $item) {
-        var_dump($item);
-    }
-
+// Results will be iterator of SimpleXMLElement objects
+$results = $myEndpoint->listMetadataFormats();
+foreach($results as $item) {
+    var_dump($item);
+}
+```
 
 Get a lists of records:
 
-    // Recs will be an iterator of SimpleXMLElement objects
-    $recs = $myEndpoint->listRecords('someMetaDataFormat');
 
-    // The iterator will continue retrieving items across multiple HTTP requests.
-    // You can keep running this loop through the *entire* collection you
-    // are harvesting.  All OAI-PMH and HTTP pagination logic is hidden neatly
-    // behind the iterator API.
-    foreach($recs as $rec) {
-        var_dump($rec);
-    }
+```php
+// Recs will be an iterator of SimpleXMLElement objects
+$recs = $myEndpoint->listRecords('someMetaDataFormat');
+
+// The iterator will continue retrieving items across multiple HTTP requests.
+// You can keep running this loop through the *entire* collection you
+// are harvesting.  All OAI-PMH and HTTP pagination logic is hidden neatly
+// behind the iterator API.
+foreach($recs as $rec) {
+    var_dump($rec);
+}
+```
 
 Handling Results
 ----------------
@@ -103,7 +108,8 @@ All exceptions extend the `Phpoaipmh\Exception\BaseoaipmhException` class.
 Dealing with XML Namespaces
 ---------------------------
 
-..some discussion here..
+Many OAI-PMH XML documents make use of XML Namespaces.  For non-XML experts, it can be confusing to implement
+these in PHP.  SitePoint has a brief but excellent [overview of how to use Namespaces in SimpleXML](http://www.sitepoint.com/simplexml-and-namespaces/).
 
 
 Iterator Metadata
@@ -125,8 +131,8 @@ Handling 503 `Retry-After` Responses
 ------------------------------------
 
 Some OAI-PMH endpoints employ rate-limiting so that you can only make X number
-of requests in a given time period.  These endpoints will return a `503` HTTP status
-code if your code generates too many HTTP requests too quickly.
+of requests in a given time period.  These endpoints will return a `503 Retry-AFter`
+HTTP status code if your code generates too many HTTP requests too quickly.
 
 If you have installed [Guzzle](http://guzzlephp.org), then you can use the
 [Retry-Subscriber](https://github.com/guzzle/retry-subscriber) to automatically
@@ -135,27 +141,38 @@ adhere to the OAI-PMH endpoint rate-limiting rules.
 First, make sure you include the retry-subscriber as a dependency in your
 `composer.json`:
 
-    require: {
-        /* ... */
-       "guzzlehttp/retry-subscriber": "~1.0"
-    }
+```json
+require: {
+    /* ... */
+   "guzzlehttp/retry-subscriber": "~1.0"
+}
+```
     
 Then, when loading the Phpoaipmh libraries, instantiate the Guzzle adapter
 manually, and add the subscriber as indicated in the code below:
 
-    // Create a Retry Guzzle Subscriber
-    $retrySubscriber = new \GuzzleHttp\Subscriber\Retry\RetrySubscriber([
-        'delay' => function($numRetries, \GuzzleHttp\Event\AbstractTransferEvent $event) {
-            $waitSecs = $event->getResponse()->getHeader('Retry-After') ?: '5';
-            return ($waitSecs * 1000) + 1000; // wait one second longer than the server said to
-        }
-    ]);
+```php
+// Create a Retry Guzzle Subscriber
+$retrySubscriber = new \GuzzleHttp\Subscriber\Retry\RetrySubscriber([
+    'delay' => function($numRetries, \GuzzleHttp\Event\AbstractTransferEvent $event) {
+        $waitSecs = $event->getResponse()->getHeader('Retry-After') ?: '5';
+        return ($waitSecs * 1000) + 1000; // wait one second longer than the server said to
+    }
+]);
 
-    // Manually create a Guzzle HTTP adapter
-    $guzzleAdapter = new \Phpoaipmh\HttpAdapter\Guzzle();
-    $guzzleAdapter->getGuzzleClient()->attach($retrySubscriber);
-    
-    $client  = new \Phpoaipmh\Client('http://some.service.com/oai', $guzzleAdapter);
+// Manually create a Guzzle HTTP adapter
+$guzzleAdapter = new \Phpoaipmh\HttpAdapter\Guzzle();
+$guzzleAdapter->getGuzzleClient()->attach($retrySubscriber);
 
-This will create a client that sends requests that adhere to the rate-limiting rules
-enforced by the OAI-PMH record provider.
+$client  = new \Phpoaipmh\Client('http://some.service.com/oai', $guzzleAdapter);
+```
+
+This will create a client that adheres to the rate-limiting rules enforced by the OAI-PMH record provider.
+
+
+Implementation Tips
+-------------------
+
+Harvesting data from a OAI-PMH endpoint can be a time-consuming task, especially when there are lots of records.
+Typically, this kind of task is done via a CLI script or background process that can run for a long time.
+It is not normally a good idea to make it part of a web request.
