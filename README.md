@@ -124,7 +124,7 @@ The `Phpoaipmh\RecordIterator` iterator contains some helper methods:
       can change while the records are being retrieved, so it is not guaranteed to be accurate.
       Also, many OAI-PMH endpoints do not provide this information, in which case, this method will
       return `null`.
-* `reset` - Resets the iterator, which will restart the record retrieval from scratch.
+* `reset()` - Resets the iterator, which will restart the record retrieval from scratch.
 
 
 Handling 503 `Retry-After` Responses
