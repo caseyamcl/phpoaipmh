@@ -19,7 +19,7 @@ Features:
 
 Installation Options
 --------------------
-Install via [Composer](http://getcomposer.org/) by including the following in your composer.json file: 
+**Composer** - Install via [Composer](http://getcomposer.org/) by including the following in your composer.json file: 
  
     {
         "require": {
@@ -28,7 +28,7 @@ Install via [Composer](http://getcomposer.org/) by including the following in yo
         }
     }
 
-Then drop the `src` folder into your application and use a PSR-0 autoloader to include the files.
+**Manually** - Download the source code, drop the `src` folder into your application, and use a PSR-0 autoloader to include the files.
 
 
 Usage
