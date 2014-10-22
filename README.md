@@ -39,7 +39,7 @@ implementation of the `Phpoaipmh\HttpAdapter\HttpAdapterInterface` to the `Phpoa
 Upgrading from Version 1 to Version 2
 -------------------------------------
 
-There are several backwards-incompatible API improvements in version 2.0.  See <UPGRADE.md> for
+There are several backwards-incompatible API improvements in version 2.0.  See UPGRADE.md for
 information about how to upgrade your code to use the new version.
 
 
