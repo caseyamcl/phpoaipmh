@@ -11,9 +11,9 @@ from any [OAI 2.0 compliant endpoint](http://www.openarchives.org/OAI/openarchiv
 
 Features:
 * PSR-0 thru PSR-2 Compliant
-* Composer/Packagist compatible
+* Composer-compatible
 * Unit-tested
-* Swappable HTTP library (in case you want to use Guzzle or something besides CURL)
+* Prefers Guzzle for HTTP transport layer, but can fall back to cURL
 * Easy-to-use iterator that hides all the HTTP junk necessary to get paginated records
 
 
@@ -24,11 +24,23 @@ Install via [Composer](http://getcomposer.org/) by including the following in yo
     {
         "require": {
             "caseyamcl/phpoaipmh": "~1.1",
-            ...
+            "guzzlehttp/guzzle":   "~5.0"
         }
     }
 
-Then drop the `src` folder into your application and use a PSR-0 autoloader to include the files.
+Or, drop the `src` folder into your application and use a PSR-0 autoloader to include the files.
+
+*Note:* Guzzle v5.0 or newer is strongly recommended, but if you choose not to use Guzzle, the
+library will fall back to using the PHP cURL extension.  If neither is installed, the library will
+throw an exception.  Alternatively, you can use a different HTTP client library by implementing the
+`Phpoaipmh\HttpAdapter\HttpAdapterInterface`.
+
+
+Upgrading from Version 1 to Version 2
+-------------------------------------
+
+There are lots of backwards-incompatible API improvements in version 2.0.  See UPGRADE.md for
+information about how to upgrade your client code.
 
 
 Usage
@@ -39,53 +51,111 @@ Setup a new endpoint:
     $myEndpoint = new \Phpoaipmh\Endpoint($client)
 
 
-Getting basic information:
+Get basic information:
 
-
-    //Result will be a SimpleXMLElement object
+    // Result will be a SimpleXMLElement object
     $result = $myEndpoint->identify();
     var_dump($result);
 
-    //Results will be an array of SimpleXMLElement objects
+    // Results will be iterator of SimpleXMLElement objects
     $results = $myEndpoint->listMetadataFormats();
     foreach($results as $item) {
         var_dump($item);
     }
 
 
-Getting lists of records:
+Get a lists of records:
 
-    //recs will be a Phpoaipmh\ResponseList object
+    // Recs will be an iterator of SimpleXMLElement objects
     $recs = $myEndpoint->listRecords('someMetaDataFormat');
 
-    //nextItem will continue retrieving items even across HTTP requests.
-    //You can keep running this loop through the *entire* collection you
-    //are harvesting.  It returns a SimpleXMLElement object, or false when
-    //there are no more records.
-    while($rec = $recs->nextItem()) {
+    // The iterator will continue retrieving items across multiple HTTP requests.
+    // You can keep running this loop through the *entire* collection you
+    // are harvesting.  All OAI-PMH and HTTP pagination logic is hidden neatly
+    // behind the iterator API.
+    foreach($recs as $rec) {
         var_dump($rec);
     }
 
-
 Handling Results
 ----------------
-Depending on the verb used, the library will send back one of three types of
-variables:
+Depending on the verb you use, the library will send back either a `SimpleXMLELement`
+or an iterator containing `SimpleXMLElement` objects.
 
 * For `identify` and `getRecord`, a `SimpleXMLElement` object is returned
-* For `listMetadataFormats` and `listSets`, an array of `SimpleXMLElement` objects is returned
-* For `listIdentifiers` and `listRecords`, a `Phpoaipmh\ResponseList` object is returned
+* For `listMetadataFormats`, `listSets`, `listIdentifiers`, and `listRecords` a `Phpoaipmh\ResponseIterator` is returned
 
-The `ResponseList` object encapsulates the logic needed to paginate through a large set of records over multiple HTTP requests.  You can extract a single record at a time from the object by calling the `nextItem()` method.  The `nextItem()` method returns a `\SimpleXMLElement` object, or `false` when there are no more records.
+The `Phpoaipmh\ResponseIterator` object encapsulates the logic to iterate through paginated sets of records.
 
 
 Handling Errors
 ---------------
-* For any HTTP request errors, the library will throw a `Phpoaipmh\Http\RequestException`
-* For any OAI-PMH errors (e.g. invalid verb or missing params), the library will throw a `Phpoaipmh\OaipmhRequestException`
+
+This library will throw different exceptions under different circumstances:
+
+* HTTP request errors will generate a `Phpoaipmh\Exception\HttpException`
+* Response body parsing issues (e.g. invalid XML) will generate a `Phpoaipmh\Exception\MalformedResponseException`
+* OAI-PMH protocol errors (e.g. invalid verb or missing params) will generate a `Phpoaipmh\Exception\OaipmhException`
+
+All exceptions extend the `Phpoaipmh\Exception\BaseoaipmhException` class.
 
 
+Dealing with XML Namespaces
+---------------------------
 
-More Info
----------
-For a full list of public API methods, refer to the inline documentation inside of `src/Phpoaipmh/Endpoint.php`
+..some discussion here..
+
+
+Iterator Metadata
+-----------------
+
+The `Phpoaipmh\RecordIterator` iterator contains some helper methods:
+
+* `getNumRequests()` - Returns the number of HTTP requests made thus far
+* `getNumRetrieved()` - Returns the number of individual records retrieved
+* `getTotalRecordsInCollection()` - Returns the total number of records in the collection
+    * *Note* - This number should be treated as an estimate at best.  The number of records
+      can change while the records are being retrieved, so it is not guaranteed to be accurate.
+      Also, many OAI-PMH endpoints do not provide this information, in which case, this method will
+      return `null`.
+* `reset` - Resets the iterator, which will restart the record retrieval from scratch.
+
+
+Handling 503 `Retry-After` Responses
+------------------------------------
+
+Some OAI-PMH endpoints employ rate-limiting so that you can only make X number
+of requests in a given time period.  These endpoints will return a `503` HTTP status
+code if your code generates too many HTTP requests too quickly.
+
+If you have installed [Guzzle](http://guzzlephp.org), then you can use the
+[Retry-Subscriber](https://github.com/guzzle/retry-subscriber) to automatically
+adhere to the OAI-PMH endpoint rate-limiting rules.
+
+First, make sure you include the retry-subscriber as a dependency in your
+`composer.json`:
+
+    require: {
+        /* ... */
+       "guzzlehttp/retry-subscriber": "~1.0"
+    }
+    
+Then, when loading the Phpoaipmh libraries, instantiate the Guzzle adapter
+manually, and add the subscriber as indicated in the code below:
+
+    // Create a Retry Guzzle Subscriber
+    $retrySubscriber = new \GuzzleHttp\Subscriber\Retry\RetrySubscriber([
+        'delay' => function($numRetries, \GuzzleHttp\Event\AbstractTransferEvent $event) {
+            $waitSecs = $event->getResponse()->getHeader('Retry-After') ?: '5';
+            return ($waitSecs * 1000) + 1000; // wait one second longer than the server said to
+        }
+    ]);
+
+    // Manually create a Guzzle HTTP adapter
+    $guzzleAdapter = new \Phpoaipmh\HttpAdapter\Guzzle();
+    $guzzleAdapter->getGuzzleClient()->attach($retrySubscriber);
+    
+    $client  = new \Phpoaipmh\Client('http://some.service.com/oai', $guzzleAdapter);
+
+This will create a client that sends requests that adhere to the rate-limiting rules
+enforced by the OAI-PMH record provider.

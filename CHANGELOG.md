@@ -12,6 +12,7 @@ PHPOAIPMH Changelog
   - `Endpoint` class now uses `DateTime` objects instead of strings for temporal parameters
   - Removed `processList` method in `Endpoint` class, since `RecordIterator` itself is now an iterator
   - Lots of minor PHPDoc comment improvements
+  - Added documentation
 * v1.2.1 - 2014 Oct 21
   - Updated this changelog
 * v1.2 - 2014 Oct 21
