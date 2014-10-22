@@ -1,9 +1,18 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: casey
- * Date: 10/21/14
- * Time: 2:28 PM
+ * PHPOAIPMH Library
+ *
+ * @license http://opensource.org/licenses/MIT
+ * @link https://github.com/caseyamcl/phpoaipmh
+ * @version 2.0
+ * @package caseyamcl/phpoaipmh
+ * @author Casey McLaughlin <caseyamcl@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * ------------------------------------------------------------------
  */
 
 namespace Phpoaipmh\Exception;
@@ -11,7 +20,8 @@ namespace Phpoaipmh\Exception;
 /**
  * Base exception class for Phpoaipmh Library
  *
- * @package Phpoaipmh
+ * @author Casey McLaughlin <caseyamcl@gmail.com>
+ * @since v2.0
  */
 class BaseOaipmhException extends \RuntimeException
 {

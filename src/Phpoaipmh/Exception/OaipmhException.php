@@ -1,11 +1,27 @@
 <?php
 
+/**
+ * PHPOAIPMH Library
+ *
+ * @license http://opensource.org/licenses/MIT
+ * @link https://github.com/caseyamcl/phpoaipmh
+ * @version 2.0
+ * @package caseyamcl/phpoaipmh
+ * @author Casey McLaughlin <caseyamcl@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * ------------------------------------------------------------------
+ */
+
 namespace Phpoaipmh\Exception;
 
 /**
- * OAI-PMH protocol Exception Class
+ * OAI-PMH protocol Exception Class thrown when OAI-PMH protocol errors occur
  *
- * Thrown when OAI-PMH protocol errors occur
+ * @author Casey McLaughlin <caseyamcl@gmail.com>
+ * @since v2.0
  */
 class OaipmhException extends BaseOaipmhException
 {
@@ -27,4 +43,4 @@ class OaipmhException extends BaseOaipmhException
     }
 }
 
-/* OaipmhException.php */
+/* EOF: OaipmhException.php */

@@ -1,10 +1,20 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: casey
- * Date: 10/21/14
- * Time: 3:35 PM
+ * PHPOAIPMH Library
+ *
+ * @license http://opensource.org/licenses/MIT
+ * @link https://github.com/caseyamcl/phpoaipmh
+ * @version 2.0
+ * @package caseyamcl/phpoaipmh
+ * @author Casey McLaughlin <caseyamcl@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * ------------------------------------------------------------------
  */
+
 
 namespace Phpoaipmh\Exception;
 
@@ -12,6 +22,9 @@ namespace Phpoaipmh\Exception;
  * Class MalformedResponseException
  *
  * Thrown when the HTTP response body cannot be parsed into valid OAI-PMH (usually XML errors)
+ *
+ * @author Casey McLaughlin <caseyamcl@gmail.com>
+ * @since v2.0
  */
 class MalformedResponseException extends BaseOaipmhException
 {
