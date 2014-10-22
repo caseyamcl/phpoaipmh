@@ -141,12 +141,10 @@ adhere to the OAI-PMH endpoint rate-limiting rules.
 First, make sure you include the retry-subscriber as a dependency in your
 `composer.json`:
 
-```json
-require: {
-    /* ... */
-   "guzzlehttp/retry-subscriber": "~1.0"
-}
-```
+    require: {
+        /* ... */
+       "guzzlehttp/retry-subscriber": "~1.0"
+    }
     
 Then, when loading the Phpoaipmh libraries, instantiate the Guzzle adapter
 manually, and add the subscriber as indicated in the code below:
