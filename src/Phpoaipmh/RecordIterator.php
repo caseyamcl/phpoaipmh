@@ -3,7 +3,7 @@
 namespace Phpoaipmh;
 
 use Phpoaipmh\Exception\BaseOaipmhException;
-use Phpoaipmh\Exception\ResponseMalformedException;
+use Phpoaipmh\Exception\MalformedResponseException;
 
 /**
  * Response List Entity iterates over records returned from an OAI-PMH Endpoint
@@ -103,7 +103,7 @@ class RecordIterator implements \Iterator
      *
      * @return int  The number of records processed
      */
-    public function getNumProcessed()
+    public function getNumRetrieved()
     {
         return $this->numProcessed;
     }
@@ -187,7 +187,7 @@ class RecordIterator implements \Iterator
 
         //Result format error?
         if ( ! isset($resp->$verb->$nodeName)) {
-            throw new ResponseMalformedException(sprintf("Expected XML element list '%s' missing for verb '%s'", $nodeName, $verb));
+            throw new MalformedResponseException(sprintf("Expected XML element list '%s' missing for verb '%s'", $nodeName, $verb));
         }
 
         //Process the results
@@ -271,7 +271,7 @@ class RecordIterator implements \Iterator
             $this->nextItem();
         }
 
-        return $this->getNumProcessed();
+        return $this->getNumRetrieved();
     }
 
     public function valid()

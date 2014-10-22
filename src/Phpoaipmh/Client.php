@@ -3,7 +3,7 @@
 namespace Phpoaipmh;
 
 use Phpoaipmh\Exception\OaipmhException;
-use Phpoaipmh\Exception\ResponseMalformedException;
+use Phpoaipmh\Exception\MalformedResponseException;
 use Phpoaipmh\HttpAdapter\CurlAdapter;
 use Phpoaipmh\HttpAdapter\GuzzleAdapter;
 use Phpoaipmh\HttpAdapter\HttpAdapterInterface;
@@ -42,7 +42,9 @@ class Client
             $this->httpClient = $httpClient;
         }
         else {
-            $this->httpClient = (class_exists('Guzzle\Http\Client')) ? new GuzzleAdapter() : new CurlAdapter();
+            $this->httpClient = (class_exists('GuzzleHttp\Client'))
+                ? new GuzzleAdapter()
+                : new CurlAdapter();
         }
     }
 
@@ -98,7 +100,7 @@ class Client
         try {
             $xml = @new \SimpleXMLElement($resp);
         } catch (\Exception $e) {
-            throw new ResponseMalformedException(sprintf("Could not decode XML Response: %s", $e->getMessage()));
+            throw new MalformedResponseException(sprintf("Could not decode XML Response: %s", $e->getMessage()));
         }
 
         //If we get back a OAI-PMH error, throw a OaipmhException
