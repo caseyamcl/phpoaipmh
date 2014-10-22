@@ -63,14 +63,12 @@ class Endpoint
      * is provided), or the entire repository (if no arguments are provided)
      *
      * @param string $identifier If specified, will return only those metadata formats that a particular record supports
-     * @param boolean $asResponseList If true, will return a ResponseList object instead of an array
-     * @return array|ResponseList An array of SimpleXMLElement objects (or responseList object)
+     * @return RecordIterator
      */
-    public function listMetadataFormats($identifier = null, $asResponseList = false)
+    public function listMetadataFormats($identifier = null)
     {
         $params = ($identifier) ? array('identifier' => $identifier) : array();
-        $rList = new ResponseList($this->client, 'ListMetadataFormats', $params);
-        return ($asResponseList) ? $rList : $this->processList($rList);
+        return new RecordIterator($this->client, 'ListMetadataFormats', $params);
     }
 
     // -------------------------------------------------------------------------
@@ -78,13 +76,11 @@ class Endpoint
     /**
      * List Record Sets
      *
-     * @param boolean $asResponseList If true, will return a ResponseList object instead of an array
-     * @return array|ResponseList An array of SimpleXMLElement objects (or responseList object)
+     * @return RecordIterator
      */
-    public function listSets($asResponseList = false)
+    public function listSets()
     {
-        $rList = new ResponseList($this->client, 'ListSets');
-        return ($asResponseList) ? $rList : $this->processList($rList, 0);
+        return new RecordIterator($this->client, 'ListSets');
     }
 
     // -------------------------------------------------------------------------
@@ -117,7 +113,7 @@ class Endpoint
      * @param DateTime $from   An optional 'from' date for selective harvesting
      * @param DateTime $until  An optional 'from' date for selective harvesting
      * @param string $set An optional setSpec for selective harvesting
-     * @return ResponseList A ResponseList object that encapsulates the records and flow control
+     * @return RecordIterator
      */
     public function listIdentifiers($metadataPrefix, DateTime $from = null, DateTime $until = null, $set = null)
     {
@@ -133,7 +129,7 @@ class Endpoint
             $params['set'] = $set;
         }
 
-        return new ResponseList($this->client, 'ListIdentifiers', $params);
+        return new RecordIterator($this->client, 'ListIdentifiers', $params);
     }
 
     // -------------------------------------------------------------------------
@@ -147,7 +143,7 @@ class Endpoint
      * @param DateTime $from   An optional 'from' date for selective harvesting
      * @param DateTime $until  An optional 'from' date for selective harvesting
      * @param string $set An optional setSpec for selective harvesting
-     * @return ResponseList A ResponseList object that encapsulates the records and flow control
+     * @return RecordIterator
      */
     public function listRecords($metadataPrefix, DateTime $from = null, DateTime $until = null, $set = null)
     {
@@ -163,37 +159,7 @@ class Endpoint
             $params['set'] = $set;
         }
         
-        return new ResponseList($this->client, 'ListRecords', $params);
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Convert a ResponseList object into an array
-     *
-     * Stores the entire array in memory, so this is not particularly useful
-     * for listRecords or listIdentifiers, but is useful for small lists,
-     * such as you would get back from listSets or listMetadataformats
-     *
-     * @param ResponseList $rList  A response list object
-     * @param int $max  Optional maximum number of records allowed
-     * @return array  An array of SimpleXMLElement objects
-     * @throws BaseOaipmhException  If response list is greater than the maximum
-     */
-    public function processList(ResponseList $rList, $max = 500) {
-
-        $outArr = array();
-
-        while ($rec = $rList->nextItem()) {
-
-            if ($max > 0 && $rList->getNumProcessed() >= $max) {
-                throw new BaseOaipmhException("Maximum entities reached for responseList!  Set max higher than $max");
-            }
-
-            $outArr[] = $rec;
-        }
-
-        return $outArr;
+        return new RecordIterator($this->client, 'ListRecords', $params);
     }
 }
 

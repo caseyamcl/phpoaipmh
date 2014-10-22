@@ -10,7 +10,7 @@ use Phpoaipmh\Exception\ResponseMalformedException;
  *
  * @author Casey McLaughlin <caseyamcl@gmail.com>
  */
-class ResponseList implements \Iterator
+class RecordIterator implements \Iterator
 {
     /**
      * @var Client

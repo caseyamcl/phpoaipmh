@@ -19,8 +19,8 @@ class ResponseListTest extends PHPUnit_Framework_TestCase
      */
     public function testInsantiateCreatesNewObject()
     {    
-        $obj = new ResponseList($this->getMockClient(), 'ListIdentifiers');
-        $this->assertInstanceOf('Phpoaipmh\ResponseList', $obj);
+        $obj = new RecordIterator($this->getMockClient(), 'ListIdentifiers');
+        $this->assertInstanceOf('Phpoaipmh\RecordIterator', $obj);
     }
 
     // -------------------------------------------------------------------------
@@ -32,7 +32,7 @@ class ResponseListTest extends PHPUnit_Framework_TestCase
     {
         //Single page sample file contains 162 results in a valid ListRecords response
         $output = $this->generateSampleXML(array('GoodResponseSinglePage.xml'));
-        $obj = new ResponseList($this->getMockClient($output), 'ListRecords');
+        $obj = new RecordIterator($this->getMockClient($output), 'ListRecords');
 
         while($rec = $obj->nextItem()) {
             $respArr[] = $rec;
@@ -106,7 +106,7 @@ class ResponseListTest extends PHPUnit_Framework_TestCase
     {
         $this->setExpectedException('RuntimeException');
         $output = $this->generateSampleXML(array('GoodResponseSinglePage.xml'));
-        new ResponseList($this->getMockClient($output), 'Identify');
+        new RecordIterator($this->getMockClient($output), 'Identify');
     }
 
     // -------------------------------------------------------------------------
@@ -121,14 +121,14 @@ class ResponseListTest extends PHPUnit_Framework_TestCase
     {
         $this->setExpectedException('RuntimeException');
         $output = $this->generateSampleXML(array('GoodResponseSinglePage.xml'));
-        $obj = new ResponseList($this->getMockClient($output), 'ListIdentifiers');
+        $obj = new RecordIterator($this->getMockClient($output), 'ListIdentifiers');
         $obj->nextItem();        
     }
 
     // ----------------------------------------------------------------
 
     /**
-     * @return ResponseList  Consists of 733 records over 4 requests
+     * @return RecordIterator  Consists of 733 records over 4 requests
      */
     protected function getSampleMultiPageResponseList()
     {
@@ -140,7 +140,7 @@ class ResponseListTest extends PHPUnit_Framework_TestCase
             'GoodResponseFourPage_4.xml'
         ]);
 
-        return new ResponseList($this->getMockClient($output), 'ListIdentifiers');
+        return new RecordIterator($this->getMockClient($output), 'ListIdentifiers');
     }
 
     // -------------------------------------------------------------------------

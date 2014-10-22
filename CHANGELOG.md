@@ -3,14 +3,15 @@ PHPOAIPMH Changelog
 
 * v2.0
   - Bumped PHP requirement to v5.4 or newer
-  - Updated to Guzzle v5
-  - ResponseList object now implements the Iterator interface
-  - Renamed `Phpoaipmh\Http` classes to `HttpAdapter` for clarity and sanity
-  - Added `getTotalRecordsInCollection` method to `ResponseList`
-  - Added `reset` method to `ResponseList`
+  - Renamed `Phpoaipmh\Http` classes to `HttpAdapter` for better clarity
+  - Updated  Guzzle HTTP adapter to use Guzzle version 5
+  - Renamed `ResponseList` class to `RecordIterator` and made it implement the `Iterator` interface (w00t!)
+  - Added `getTotalRecordsInCollection` method in `RecordIterator`
+  - Added `reset` method to `RecordIterator`
+  - Refactored Exception classes to make more sense
+  - `Endpoint` class now uses `DateTime` objects instead of strings for temporal parameters
+  - Removed `processList` method in `Endpoint` class, since `RecordIterator` itself is now an iterator
   - Lots of minor PHPDoc comment improvements
-  - Refactored Exception classes to be more sensible
-  - `Endpoint` class now uses `DateTime` class instead of strings for temporal parameters
 * v1.2.1 - 2014 Oct 21
   - Updated this changelog
 * v1.2 - 2014 Oct 21
