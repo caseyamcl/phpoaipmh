@@ -1,21 +1,46 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: casey
- * Date: 10/21/14
- * Time: 2:28 PM
+ * PHPOAIPMH Library
+ *
+ * @license http://opensource.org/licenses/MIT
+ * @link https://github.com/caseyamcl/phpoaipmh
+ * @version 2.0
+ * @package caseyamcl/phpoaipmh
+ * @author Casey McLaughlin <caseyamcl@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * ------------------------------------------------------------------
  */
 
 namespace Phpoaipmh\Exception;
 
 /**
- * Class OaipmhException
+ * OAI-PMH protocol Exception Class thrown when OAI-PMH protocol errors occur
  *
- * @package Phpoaipmh
+ * @author Casey McLaughlin <caseyamcl@gmail.com>
+ * @since v2.0
  */
-class OaipmhException extends \RuntimeException
+class OaipmhException extends BaseOaipmhException
 {
-    // pass..
+    private $oaiErrorCode;
+
+    // -------------------------------------------------------------------------
+
+    public function __construct($oaiErrorCode, $message, $code = 0, \Exception $previous = null)
+    {
+        $this->oaiErrorCode = $oaiErrorCode;
+        parent::__construct($message, $code, $previous);
+    }
+
+    // -------------------------------------------------------------------------
+
+    public function __toString()
+    {
+        return __CLASS__ . ": [{$this->code}]: ({$this->oaiErrorCode}) {$this->message}\n";
+    }
 }
 
 /* EOF: OaipmhException.php */

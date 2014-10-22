@@ -15,21 +15,17 @@
  * ------------------------------------------------------------------
  */
 
-namespace Phpoaipmh;
-
-require_once __DIR__ . '/EndpointCurlTest.php';
+namespace Phpoaipmh\Exception;
 
 /**
- * Endpoint Guzzle Test
+ * HttpAdapter Protocol Exception Class thrown when HTTP transmission errors occur
  *
  * @author Casey McLaughlin <caseyamcl@gmail.com>
+ * @since v2.0
  */
-class EndpointGuzzleTest extends EndpointCurlTest
+class HttpException extends BaseOaipmhException
 {
-    protected function getHttpAdapterObj()
-    {
-        return new HttpAdapter\GuzzleAdapter();
-    }    
+    /* pass */
 }
 
-/* EOF: EndpointGuzzleTest.php */
+/* EOF: HttpException.php */

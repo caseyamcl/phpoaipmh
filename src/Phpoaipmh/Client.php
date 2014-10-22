@@ -1,15 +1,34 @@
 <?php
 
+/**
+ * PHPOAIPMH Library
+ *
+ * @license http://opensource.org/licenses/MIT
+ * @link https://github.com/caseyamcl/phpoaipmh
+ * @version 2.0
+ * @package caseyamcl/phpoaipmh
+ * @author Casey McLaughlin <caseyamcl@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * ------------------------------------------------------------------
+ */
+
 namespace Phpoaipmh;
 
-use Phpoaipmh\Http\Client as HttpClient;
-use Phpoaipmh\Http\Guzzle;
-use Phpoaipmh\Http\Curl;
+use Phpoaipmh\Exception\OaipmhException;
+use Phpoaipmh\Exception\MalformedResponseException;
+use Phpoaipmh\HttpAdapter\CurlAdapter;
+use Phpoaipmh\HttpAdapter\GuzzleAdapter;
+use Phpoaipmh\HttpAdapter\HttpAdapterInterface;
 use RuntimeException;
 
 /**
- * A simple HTTP Client that performs only GET requests to
- * OAI Endpoints
+ * OAI-PMH Client class retrieves and decodes OAI-PMH from a given URL
+ *
+ * @since v1.0
+ * @author Casey McLaughlin <caseyamcl@gmail.com>
  */
 class Client
 {
@@ -19,7 +38,7 @@ class Client
     private $url;
 
     /**
-     * @var object
+     * @var HttpAdapterInterface
      */
     private $httpClient;
 
@@ -29,9 +48,9 @@ class Client
      * Constructor
      *
      * @param string $url  The URL of the OAI-PMH Endpoint
-     * @param Http\Client $httpClient  Optional HTTP Client class; attempt to auto-build dependency if not passed
+     * @param HttpAdapterInterface $httpClient  Optional HTTP HttpAdapterInterface class; attempt to auto-build dependency if not passed
      */
-    public function __construct($url = null, HttpClient $httpClient = null)
+    public function __construct($url = null, HttpAdapterInterface $httpClient = null)
     {
         $this->setUrl($url);
 
@@ -39,7 +58,9 @@ class Client
             $this->httpClient = $httpClient;
         }
         else {
-            $this->httpClient = (class_exists('Guzzle\Http\Client')) ? new Guzzle() : new Curl();
+            $this->httpClient = (class_exists('GuzzleHttp\Client'))
+                ? new GuzzleAdapter()
+                : new CurlAdapter();
         }
     }
 
@@ -89,21 +110,21 @@ class Client
      * @param string $resp  The response body from a HTTP request
      * @return \SimpleXMLElement  An XML document
      */
-    private function decodeResponse($resp)
+    protected function decodeResponse($resp)
     {
         //Setup a SimpleXML Document
         try {
             $xml = @new \SimpleXMLElement($resp);
         } catch (\Exception $e) {
-            throw new Http\RequestException(sprintf("Could not decode XML Response: %s", $e->getMessage()));
+            throw new MalformedResponseException(sprintf("Could not decode XML Response: %s", $e->getMessage()));
         }
 
-        //If we get back a OAI-PMH error, throw a OaipmhRequestException
+        //If we get back a OAI-PMH error, throw a OaipmhException
         if (isset($xml->error)) {
             $code = (string) $xml->error['code'];
             $msg  = (string) $xml->error;
 
-            throw new OaipmhRequestException($code, $msg);
+            throw new OaipmhException($code, $msg);
         }
 
         return $xml;

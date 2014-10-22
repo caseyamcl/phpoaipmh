@@ -15,21 +15,17 @@
  * ------------------------------------------------------------------
  */
 
-namespace Phpoaipmh;
-
-require_once __DIR__ . '/EndpointCurlTest.php';
+namespace Phpoaipmh\Exception;
 
 /**
- * Endpoint Guzzle Test
+ * Base exception class for Phpoaipmh Library
  *
  * @author Casey McLaughlin <caseyamcl@gmail.com>
+ * @since v2.0
  */
-class EndpointGuzzleTest extends EndpointCurlTest
+class BaseOaipmhException extends \RuntimeException
 {
-    protected function getHttpAdapterObj()
-    {
-        return new HttpAdapter\GuzzleAdapter();
-    }    
+    // pass..
 }
 
-/* EOF: EndpointGuzzleTest.php */
+/* EOF: BaseOaipmhException.php */

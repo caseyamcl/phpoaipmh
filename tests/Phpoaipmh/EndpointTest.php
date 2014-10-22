@@ -1,8 +1,29 @@
 <?php
 
+/**
+ * PHPOAIPMH Library
+ *
+ * @license http://opensource.org/licenses/MIT
+ * @link https://github.com/caseyamcl/phpoaipmh
+ * @version 2.0
+ * @package caseyamcl/phpoaipmh
+ * @author Casey McLaughlin <caseyamcl@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * ------------------------------------------------------------------
+ */
+
 namespace Phpoaipmh;
+
 use PHPUnit_Framework_TestCase;
 
+/**
+ * Endpoint Test
+ *
+ * @package Phpoaipmh
+ */
 class EndpointTest extends PHPUnit_Framework_TestCase
 {
 
@@ -42,8 +63,7 @@ class EndpointTest extends PHPUnit_Framework_TestCase
     // -------------------------------------------------------------------------
 
     /**
-     * LEFT OFF HERE LEFT OFF HERE
-     * @TODO: Determine a way to mock to the responseList object (factory pattern?)
+     * Test that list MetaDataFormats resturns valid array
      */
     public function testListMetaDataFormatsReturnsValidArray() 
     {
@@ -70,4 +90,4 @@ class EndpointTest extends PHPUnit_Framework_TestCase
     }
 }
 
-/* EndpointTest.php */
+/* EOF: EndpointTest.php */

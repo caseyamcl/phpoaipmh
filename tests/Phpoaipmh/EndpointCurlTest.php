@@ -1,9 +1,30 @@
 <?php
 
-namespace Phpoaipmh;
-use PHPUnit_Framework_TestCase;
-use Guzzle\Http\Client as GuzzleHttpClient;
+/**
+ * PHPOAIPMH Library
+ *
+ * @license http://opensource.org/licenses/MIT
+ * @link https://github.com/caseyamcl/phpoaipmh
+ * @version 2.0
+ * @package caseyamcl/phpoaipmh
+ * @author Casey McLaughlin <caseyamcl@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * ------------------------------------------------------------------
+ */
 
+namespace Phpoaipmh;
+
+use PHPUnit_Framework_TestCase;
+use GuzzleHttp\Client as GuzzleHttpClient;
+
+/**
+ * Endpoint CURL Test
+ *
+ * @author Casey McLaughlin <caseyamcl@gmail.com>
+ */
 class EndpointCurlTest extends PHPUnit_Framework_TestCase
 {
     // --------------------------------------------------------------
@@ -16,9 +37,9 @@ class EndpointCurlTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        //Send a request to the endpoint
-        $guzzle = new GuzzleHttpClient(self::ENDPOINT_URL);
-        $response = $guzzle->get('?verb=Identify')->send();
+        //Send a request to the endpoint to compare..
+        $guzzle = new GuzzleHttpClient();
+        $response = $guzzle->get(self::ENDPOINT_URL . '?verb=Identify');
 
         //Search for a known string to ensure the endpoint works before testing it
         $searchFor = "<Identify>";
@@ -31,10 +52,10 @@ class EndpointCurlTest extends PHPUnit_Framework_TestCase
 
     public function testGetRecordWorksForCorrectRecord()
     {
-        //First, make sure the record actually exists
-        $guzzle   = new GuzzleHttpClient(self::ENDPOINT_URL);
-        $uri      = sprintf("?verb=GetRecord&identifier=%s&metadataPrefix=%s", self::RECORD_ID, self::METADATA_PREFIX);
-        $response = $guzzle->get($uri)->send();
+        //First, make sure the record actually exists using Guzzle
+        $guzzle   = new GuzzleHttpClient();
+        $uri      = sprintf(self::ENDPOINT_URL . "?verb=GetRecord&identifier=%s&metadataPrefix=%s", self::RECORD_ID, self::METADATA_PREFIX);
+        $response = $guzzle->get($uri);
 
         //Search for a known string to ensure the endpoint works before testing it
         $searchFor = "<GetRecord>";
@@ -54,7 +75,7 @@ class EndpointCurlTest extends PHPUnit_Framework_TestCase
 
     /**
      * @depends testGetRecordWorksForCorrectRecord
-     * @expectedException \Phpoaipmh\OaipmhRequestException
+     * @expectedException \Phpoaipmh\Exception\OaipmhException
      */
     public function testGetRecordThrowsOAIExceptionForInvalidRecord()
     {
@@ -64,17 +85,25 @@ class EndpointCurlTest extends PHPUnit_Framework_TestCase
 
     // --------------------------------------------------------------
 
+    /**
+     * Get the Endpoint Object
+     *
+     * @return Endpoint
+     */
     protected function getObj()
     {
-        return new Endpoint(new Client(self::ENDPOINT_URL, $this->getHttpClientObj()));
+        return new Endpoint(new Client(self::ENDPOINT_URL, $this->getHttpAdapterObj()));
     }
 
     // --------------------------------------------------------------
 
-    protected function getHttpClientObj()
+    /**
+     * @return \Phpoaipmh\HttpAdapter\HttpAdapterInterface
+     */
+    protected function getHttpAdapterObj()
     {
-        return new Http\Curl();
+        return new HttpAdapter\CurlAdapter();
     }
 }
 
-/* EOF: EndpointRealTest.php */
+/* EOF: EndpointCurlTest.php */

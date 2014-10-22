@@ -15,21 +15,20 @@
  * ------------------------------------------------------------------
  */
 
-namespace Phpoaipmh;
 
-require_once __DIR__ . '/EndpointCurlTest.php';
+namespace Phpoaipmh\Exception;
 
 /**
- * Endpoint Guzzle Test
+ * Class MalformedResponseException
+ *
+ * Thrown when the HTTP response body cannot be parsed into valid OAI-PMH (usually XML errors)
  *
  * @author Casey McLaughlin <caseyamcl@gmail.com>
+ * @since v2.0
  */
-class EndpointGuzzleTest extends EndpointCurlTest
+class MalformedResponseException extends BaseOaipmhException
 {
-    protected function getHttpAdapterObj()
-    {
-        return new HttpAdapter\GuzzleAdapter();
-    }    
+    // pass..
 }
 
-/* EOF: EndpointGuzzleTest.php */
+/* EOF: MalformedResponseException.php */

@@ -1,13 +1,15 @@
 <?php
 
-namespace Phpoaipmh\Http;
+namespace Phpoaipmh\HttpAdapter;
+
+use Phpoaipmh\Exception\HttpException;
 
 /**
- * Curl Http Client Adapter
+ * CurlAdapter HttpAdapter HttpAdapterInterface Adapter
  *
- * @package Phpoaipmh\Http
+ * @package Phpoaipmh\HttpAdapter
  */
-class Curl implements Client
+class CurlAdapter implements HttpAdapterInterface
 {
     /**
      * @var int  The maximum number of redirects
@@ -39,7 +41,7 @@ class Curl implements Client
     public function __construct()
     {
         if ( ! is_callable('curl_exec')) {
-            throw new \Exception("OAI-PMH Curl HTTP Client requires the CURL PHP Extension");
+            throw new \Exception("OAI-PMH CurlAdapter HTTP HttpAdapterInterface requires the CURL PHP Extension");
         }
     }
 
@@ -70,14 +72,14 @@ class Curl implements Client
         $httpCode = (string) $info->http_code;
         if ($httpCode{0} != '2') {
             $msg = sprintf('HTTP Request Failed (code %s): %s', $info->http_code, $resp);
-            throw new RequestException($msg);
+            throw new HttpException($msg);
         }
         elseif (strlen(trim($resp)) == 0) {
-            throw new RequestException('HTTP Response Empty');
+            throw new HttpException('HTTP Response Empty');
         }
 
         return $resp;        
     }
 }
 
-/* EOF: Curl.php */
+/* EOF: CurlAdapter.php */
