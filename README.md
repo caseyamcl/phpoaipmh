@@ -23,7 +23,7 @@ Installation Options
  
     {
         "require": {
-            "caseyamcl/phpoaipmh": "~1.1",
+            "caseyamcl/phpoaipmh": "~1.2",
             ...
         }
     }
