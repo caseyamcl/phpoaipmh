@@ -62,7 +62,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
     {
         $mockClient = new HttpMockClient;
         $mockClient->toReturn = 'thisIs&NotXML!!';
-        $this->setExpectedException('Phpoaipmh\Exception\ResponseMalformedException');
+        $this->setExpectedException('Phpoaipmh\Exception\MalformedResponseException');
 
         $obj = new Client('http://nsdl.org/oai', $mockClient);
         $obj->request('Identify');

@@ -39,7 +39,7 @@ class ResponseListTest extends PHPUnit_Framework_TestCase
         }
 
         $this->assertEquals(162, count($respArr));
-        $this->assertEquals(162, $obj->getNumProcessed());
+        $this->assertEquals(162, $obj->getNumRetrieved());
         $this->assertEquals(1, $obj->getNumRequests());
     }
 
@@ -57,7 +57,7 @@ class ResponseListTest extends PHPUnit_Framework_TestCase
         }
 
         $this->assertEquals(733, count($respArr));
-        $this->assertEquals(733, $obj->getNumProcessed());
+        $this->assertEquals(733, $obj->getNumRetrieved());
         $this->assertEquals(4, $obj->getNumRequests());        
     }
 
