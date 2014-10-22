@@ -1,7 +1,7 @@
 PHPOAIPMH Changelog
 ===================
 
-* v2.0
+* v2.0 - 2014 Oct 22
   - Bumped PHP requirement to v5.4 or newer
   - Renamed `Phpoaipmh\Http` classes to `HttpAdapter` for better clarity
   - Updated  Guzzle HTTP adapter to use Guzzle version 5
