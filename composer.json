@@ -11,7 +11,7 @@
             "homepage": "http://caseymclaughlin.com",
             "role":     "Developer"
         }
-    ],    
+    ],
     "license": "MIT",
     "require": {
         "php": ">=5.4.0"
@@ -19,7 +19,8 @@
     "require-dev": {
         "guzzlehttp/guzzle": "~5.0",
         "phpunit/phpunit":   "~4.0",
-        "mockery/mockery":   "~0.9"
+        "mockery/mockery":   "~0.9",
+        "symfony/console": "~2.5"
     },
     "autoload": {
         "psr-0": {
