@@ -8,6 +8,7 @@
  * @version 2.0
  * @package caseyamcl/phpoaipmh
  * @author Casey McLaughlin <caseyamcl@gmail.com>
+ * @author Matthias Vandermaesen <matthias.vandermaesen@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -20,6 +21,7 @@ namespace Phpoaipmh\Example;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Helper\Table;
 use Phpoaipmh\Example\Example;
 
 class ExampleCommand extends Command {
@@ -45,5 +47,23 @@ class ExampleCommand extends Command {
           $line = $formatter->formatSection($key, $value);
           $output->writeln($line);
         }
+
+        $data = $this->example->getAvailableMetadataFormats();
+        $table = new Table($output);
+        $output->writeln("Metadata formats: ");
+
+        $table->setHeaders($data['header']);
+        $table->setRows($data['rows']);
+        $table->render();
+
+        $data = $this->example->getRecords();
+        $table = new Table($output);
+        $output->writeln("Ten records: ");
+
+        $table->setHeaders($data['header']);
+        $table->setRows($data['rows']);
+        $table->render();
+
+        $data = $this->example->tryAnException();
     }
 }
