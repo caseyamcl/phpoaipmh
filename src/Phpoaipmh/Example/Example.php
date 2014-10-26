@@ -1,20 +1,4 @@
 <?php
-
-/**
- * PHPOAIPMH Library
- *
- * @license http://opensource.org/licenses/MIT
- * @link https://github.com/caseyamcl/phpoaipmh
- * @version 2.0
- * @package caseyamcl/phpoaipmh
- * @author Casey McLaughlin <caseyamcl@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- *
- * ------------------------------------------------------------------
- */
-
 /**
  * Example CLI application
  *
@@ -25,6 +9,35 @@
  * --------------------------------------------------
  */
 
+namespace Phpoaipmh\Example;
+
+use Phpoaipmh\Client;
+use Phpoaipmh\Endpoint;
+
+class Example {
+
+    private $endpoint;
+
+    public function __construct() {
+        $oaiUrl   = 'http://nsdl.org/oai';
+        $client = new Client($oaiUrl);
+        $this->endpoint = new Endpoint($client);
+    }
+
+    public function getBasicInformation() {
+        $data = array();
+
+        $xml = $this->endpoint->identify();
+
+        $data['Base URL'] = $xml->Identify->baseURL;
+        $data['Repository Name'] = $xml->Identify->repositoryName;
+        $data['Administrator'] = $xml->Identify->adminEmail;
+
+        return $data;
+    }
+}
+
+/*
 // Params
 $oaiUrl   = 'http://nsdl.org/oai';
 
@@ -47,6 +60,7 @@ require_once(__DIR__ . '/../vendor/autoload.php');
 $client   = new Phpoaipmh\Client($oaiUrl);
 $endpoint = new Phpoaipmh\Endpoint($client);
 
+1////
 // Get basic information about the endpoint
 $xml = $endpoint->identify();
 
@@ -61,6 +75,8 @@ echo "\n";
 // List identifiers
 $metadataIterator = $endpoint->listMetadataFormats();
 
+2/////
+
 // Print metadata formats
 echo "\nMetadata Formats\n=========================";
 foreach ($metadataIterator as $rec) {
@@ -69,6 +85,8 @@ foreach ($metadataIterator as $rec) {
     echo "\nNamespace: " . $rec->metadataNamespace;
     echo "\n-------------------------";
 }
+
+3/////
 
 // Get first 10 records from endpoint
 echo "\n\nFirst 10 Record Identifiers\n=========================";
