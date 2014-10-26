@@ -20,7 +20,10 @@
         "guzzlehttp/guzzle": "~5.0",
         "phpunit/phpunit":   "~4.0",
         "mockery/mockery":   "~0.9",
-        "symfony/console": "~2.5"
+        "symfony/console": "~2.5",
+        "symfony/dependency-injection": "~2.5",
+        "symfony/config": "~2.5",
+        "symfony/yaml": "~2.5"
     },
     "autoload": {
         "psr-0": {
