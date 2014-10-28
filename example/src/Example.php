@@ -14,19 +14,21 @@ namespace Phpoaipmh\Example;
 use Phpoaipmh\Client;
 use Phpoaipmh\Endpoint;
 
-class Example {
-
+class Example
+{
     private $endpoint;
 
     private $metadataIterator;
 
-    public function __construct() {
+    public function __construct()
+    {
         $oaiUrl   = 'http://nsdl.org/oai';
         $client = new Client($oaiUrl);
         $this->endpoint = new Endpoint($client);
     }
 
-    public function getBasicInformation() {
+    public function getBasicInformation()
+    {
         $data = array();
 
         $xml = $this->endpoint->identify();
@@ -38,7 +40,8 @@ class Example {
         return $data;
     }
 
-    public function getAvailableMetadataFormats() {
+    public function getAvailableMetadataFormats()
+    {
         $data = array();
 
         // List identifiers
@@ -62,14 +65,14 @@ class Example {
         return $data;
     }
 
-    public function getRecords() {
+    public function getRecords()
+    {
         $data = array();
 
         // List identifiers
         if (empty($this->metadataIterator)) {
             $this->metadataIterator = $this->endpoint->listMetadataFormats();
-        }
-        else {
+        } else {
             $this->metadataIterator->rewind(); // rewind the iterator
         }
 
@@ -96,12 +99,12 @@ class Example {
         return $data;
     }
 
-    public function tryAnException() {
+    public function tryAnException()
+    {
         try {
             $iterator = $this->endpoint->listRecords('foobardoesnotexist');
             $iterator->current();
-        }
-        catch (\Phpoaipmh\Exception\OaipmhException $e) {
+        } catch (\Phpoaipmh\Exception\OaipmhException $e) {
             throw $e;
         }
     }

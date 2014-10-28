@@ -23,24 +23,26 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\Table;
-use Phpoaipmh\Example\Example;
 
-class ExampleCommand extends Command {
-
+class ExampleCommand extends Command
+{
     private $example;
 
-    public function __construct(Example $example) {
+    public function __construct(Example $example)
+    {
       $this->example = $example;
       parent::__construct();
     }
 
-    protected function configure() {
+    protected function configure()
+    {
         $this->setName("phpoaipmh:example")
             ->addOption('call', null, InputOption::VALUE_OPTIONAL, '', 'all')
             ->setDescription("Example implementation of the OAI-PMH library.");
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output) {
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
         $formatter = $this->getHelper('formatter');
         $call = $input->getOption('call');
 
