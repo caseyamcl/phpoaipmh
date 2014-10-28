@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Example CLI application
  *
@@ -14,12 +15,29 @@ namespace Phpoaipmh\Example;
 use Phpoaipmh\Client;
 use Phpoaipmh\Endpoint;
 
+/**
+ * A generic Example class containing the business logic for the Example
+ * console command. This class wraps the Phpoaipmh library in a concrete
+ * implementation as Symfony service.
+ *
+ * @since v1.0
+ * @author Matthias Vandermaesen <matthias.vandermaesen@gmail.com>
+ */
 class Example
 {
+    /**
+     * @var Endpoint
+     */
     private $endpoint;
 
+    /**
+     * @var RecordIterator
+     */
     private $metadataIterator;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $oaiUrl   = 'http://nsdl.org/oai';
@@ -27,6 +45,11 @@ class Example
         $this->endpoint = new Endpoint($client);
     }
 
+    /**
+     * Retrieves the basic information from the endpoint.
+     *
+     * @return array An array of properties.
+     */
     public function getBasicInformation()
     {
         $data = array();
@@ -40,6 +63,11 @@ class Example
         return $data;
     }
 
+    /**
+     * Retrieve a list of available metadata format schemas from the endpoint.
+     *
+     * @return array An array containing data in a tabular format.
+     */
     public function getAvailableMetadataFormats()
     {
         $data = array();
@@ -65,6 +93,12 @@ class Example
         return $data;
     }
 
+    /**
+     * Get a list of the first 10 records from the first available metadata
+     * format.
+     *
+     * @return array An array containing data in a tabular format.
+     */
     public function getRecords()
     {
         $data = array();
@@ -99,6 +133,11 @@ class Example
         return $data;
     }
 
+    /**
+     * Throws a deliberate exception for a non existing schema.
+     *
+     * @return void
+     */
     public function tryAnException()
     {
         try {
