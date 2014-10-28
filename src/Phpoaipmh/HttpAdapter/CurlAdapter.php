@@ -32,7 +32,7 @@ class CurlAdapter implements HttpAdapterInterface
     protected $responseTimeout = 60;
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Constructor
      *
@@ -46,12 +46,12 @@ class CurlAdapter implements HttpAdapterInterface
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Do CURL Request
      *
-     * @param  string $url  The full URL
-     * @return string  The response body
+     * @param  string $url The full URL
+     * @return string The response body
      */
     public function request($url)
     {
@@ -61,7 +61,7 @@ class CurlAdapter implements HttpAdapterInterface
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $this->connectTimeout);
         curl_setopt($ch, CURLOPT_DNS_CACHE_TIMEOUT, $this->dnsCacheTimeout);
         curl_setopt($ch, CURLOPT_TIMEOUT, $this->responseTimeout);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($ch, CURLOPT_MAXREDIRS, $this->maxRedirects);
         curl_setopt($ch, CURLOPT_USERAGENT, 'PHP OAI-PMH Library');
         $resp = curl_exec($ch);
@@ -73,12 +73,11 @@ class CurlAdapter implements HttpAdapterInterface
         if ($httpCode{0} != '2') {
             $msg = sprintf('HTTP Request Failed (code %s): %s', $info->http_code, $resp);
             throw new HttpException($msg);
-        }
-        elseif (strlen(trim($resp)) == 0) {
+        } elseif (strlen(trim($resp)) == 0) {
             throw new HttpException('HTTP Response Empty');
         }
 
-        return $resp;        
+        return $resp;
     }
 }
 

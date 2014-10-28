@@ -17,6 +17,8 @@
 
 namespace Phpoaipmh;
 
+use DateTime;
+
 /**
  * OAI-PMH Endpoint Class
  *
@@ -35,7 +37,7 @@ class Endpoint
     /**
      * Constructor
      *
-     * @param Client $client  Optional; will attempt to auto-build dependency if not passed
+     * @param Client $client Optional; will attempt to auto-build dependency if not passed
      */
     public function __construct(Client $client = null)
     {
@@ -64,6 +66,7 @@ class Endpoint
     public function identify()
     {
         $resp = $this->client->request('Identify');
+
         return $resp;
     }
 
@@ -75,12 +78,13 @@ class Endpoint
      * Return the list of supported metadata format for a particular record (if $identifier
      * is provided), or the entire repository (if no arguments are provided)
      *
-     * @param string $identifier If specified, will return only those metadata formats that a particular record supports
+     * @param  string         $identifier If specified, will return only those metadata formats that a particular record supports
      * @return RecordIterator
      */
     public function listMetadataFormats($identifier = null)
     {
         $params = ($identifier) ? array('identifier' => $identifier) : array();
+
         return new RecordIterator($this->client, 'ListMetadataFormats', $params);
     }
 
@@ -101,9 +105,9 @@ class Endpoint
     /**
      * Get a single record
      *
-     * @param string $id Record Identifier
-     * @param string $metadataPrefix Required by OAI-PMH endpoint
-     * @return \SimpleXMLElement  An XML document corresponding to the record
+     * @param  string            $id             Record Identifier
+     * @param  string            $metadataPrefix Required by OAI-PMH endpoint
+     * @return \SimpleXMLElement An XML document corresponding to the record
      */
     public function getRecord($id, $metadataPrefix)
     {
@@ -122,10 +126,10 @@ class Endpoint
      *
      * Corresponds to OAI Verb to list record identifiers
      *
-     * @param string $metadataPrefix Required by OAI-PMH endpoint
-     * @param DateTime $from   An optional 'from' date for selective harvesting
-     * @param DateTime $until  An optional 'from' date for selective harvesting
-     * @param string $set An optional setSpec for selective harvesting
+     * @param  string         $metadataPrefix Required by OAI-PMH endpoint
+     * @param  DateTime       $from           An optional 'from' date for selective harvesting
+     * @param  DateTime       $until          An optional 'from' date for selective harvesting
+     * @param  string         $set            An optional setSpec for selective harvesting
      * @return RecordIterator
      */
     public function listIdentifiers($metadataPrefix, DateTime $from = null, DateTime $until = null, $set = null)
@@ -152,10 +156,10 @@ class Endpoint
      *
      * Corresponds to OAI Verb to list records
      *
-     * @param string $metadataPrefix Required by OAI-PMH endpoint
-     * @param DateTime $from   An optional 'from' date for selective harvesting
-     * @param DateTime $until  An optional 'from' date for selective harvesting
-     * @param string $set An optional setSpec for selective harvesting
+     * @param  string         $metadataPrefix Required by OAI-PMH endpoint
+     * @param  DateTime       $from           An optional 'from' date for selective harvesting
+     * @param  DateTime       $until          An optional 'from' date for selective harvesting
+     * @param  string         $set            An optional setSpec for selective harvesting
      * @return RecordIterator
      */
     public function listRecords($metadataPrefix, DateTime $from = null, DateTime $until = null, $set = null)
@@ -171,7 +175,7 @@ class Endpoint
         if ($set) {
             $params['set'] = $set;
         }
-        
+
         return new RecordIterator($this->client, 'ListRecords', $params);
     }
 }

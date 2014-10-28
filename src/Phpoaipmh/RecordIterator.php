@@ -49,11 +49,11 @@ class RecordIterator implements \Iterator
     private $totalRecordsInCollection;
 
     /**
-     * @var DateTime  Recordset expiration date (if specified)
+     * @var \DateTime  Recordset expiration date (if specified)
      */
     private $expireDate;
 
-    /** 
+    /**
      * @var string  The resumption token
      */
     private $resumptionToken;
@@ -83,9 +83,9 @@ class RecordIterator implements \Iterator
     /**
      * Constructor
      *
-     * @param Client $httpClient  The client to use
-     * @param string $verb        The verb to use when retrieving results from the client
-     * @param array $params       Optional parameters passed to OAI-PMH
+     * @param Client $httpClient The client to use
+     * @param string $verb       The verb to use when retrieving results from the client
+     * @param array  $params     Optional parameters passed to OAI-PMH
      */
     public function __construct(Client $httpClient, $verb, array $params = array())
     {
@@ -97,7 +97,7 @@ class RecordIterator implements \Iterator
         //Node name error?
         if ( ! $this->getItemNodeName()) {
             throw new BaseOaipmhException('Cannot determine item name for verb: ' . $this->verb);
-        }        
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -105,7 +105,7 @@ class RecordIterator implements \Iterator
     /**
      * Get the total number of requests made during this run
      *
-     * @return int  The number of HTTP requests made
+     * @return int The number of HTTP requests made
      */
     public function getNumRequests()
     {
@@ -117,7 +117,7 @@ class RecordIterator implements \Iterator
     /**
      * Get the total number of records processed during this run
      *
-     * @return int  The number of records processed
+     * @return int The number of records processed
      */
     public function getNumRetrieved()
     {
@@ -146,7 +146,6 @@ class RecordIterator implements \Iterator
         return $this->totalRecordsInCollection;
     }
 
-
     // -------------------------------------------------------------------------
 
     /**
@@ -160,8 +159,8 @@ class RecordIterator implements \Iterator
     public function nextItem()
     {
         //If no items in batch, and we have a resumptionToken or need to make initial request...
-        if (count($this->batch) == 0 && ($this->resumptionToken OR $this->numRequests == 0)) {
-            $this->retrieveBatch();            
+        if (count($this->batch) == 0 && ($this->resumptionToken or $this->numRequests == 0)) {
+            $this->retrieveBatch();
         }
 
         //if still items in current batch, return one
@@ -170,8 +169,7 @@ class RecordIterator implements \Iterator
 
             $item = array_shift($this->batch);
             $this->currItem = new \SimpleXMLElement($item->asXML());
-        }
-        else {
+        } else {
             $this->currItem = false;
         }
 
@@ -183,10 +181,10 @@ class RecordIterator implements \Iterator
     /**
      * Do a request to get the next batch of items
      *
-     * @return int  The number of items in the batch after the retrieve
+     * @return int The number of items in the batch after the retrieve
      */
-    private function retrieveBatch() {
-
+    private function retrieveBatch()
+    {
         // Set OAI-PMH parameters for request
         // If resumptionToken, then we ignore params and just use that
         $params = ($this->resumptionToken)
@@ -198,7 +196,7 @@ class RecordIterator implements \Iterator
         $verb = $this->verb;
 
         //Do it..
-        $resp = $this->httpClient->request($verb, $params); 
+        $resp = $this->httpClient->request($verb, $params);
         $this->numRequests++;
 
         //Result format error?
@@ -207,7 +205,7 @@ class RecordIterator implements \Iterator
         }
 
         //Process the results
-        foreach($resp->$verb->$nodeName as $node) {
+        foreach ($resp->$verb->$nodeName as $node) {
             $this->batch[] = $node;
         }
 
@@ -235,10 +233,10 @@ class RecordIterator implements \Iterator
      *
      * Map the item node name based on the verb
      *
-     * @return string|boolean  The element name for the mapping, or false if unmapped
+     * @return string|boolean The element name for the mapping, or false if unmapped
      */
-    private function getItemNodeName() {
-
+    private function getItemNodeName()
+    {
         $mappings = array(
             'ListMetadataFormats' => 'metadataFormat',
             'ListSets'            => 'set',

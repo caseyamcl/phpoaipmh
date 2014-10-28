@@ -47,7 +47,7 @@ class GuzzleAdapter implements HttpAdapterInterface
     /**
      * Do the request with GuzzleAdapter
      *
-     * @param string $url
+     * @param  string        $url
      * @return string
      * @throws HttpException
      */
@@ -55,9 +55,9 @@ class GuzzleAdapter implements HttpAdapterInterface
     {
         try {
             $resp = $this->guzzle->get($url);
+
             return (string) $resp->getBody();
-        }
-        catch (GuzzleException $e) {
+        } catch (GuzzleException $e) {
             throw new HttpException($e->getMessage(), $e->getCode(), $e);
         }
     }

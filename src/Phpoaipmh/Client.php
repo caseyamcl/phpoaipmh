@@ -47,8 +47,8 @@ class Client
     /**
      * Constructor
      *
-     * @param string $url  The URL of the OAI-PMH Endpoint
-     * @param HttpAdapterInterface $httpClient  Optional HTTP HttpAdapterInterface class; attempt to auto-build dependency if not passed
+     * @param string               $url        The URL of the OAI-PMH Endpoint
+     * @param HttpAdapterInterface $httpClient Optional HTTP HttpAdapterInterface class; attempt to auto-build dependency if not passed
      */
     public function __construct($url = null, HttpAdapterInterface $httpClient = null)
     {
@@ -56,8 +56,7 @@ class Client
 
         if ($httpClient) {
             $this->httpClient = $httpClient;
-        }
-        else {
+        } else {
             $this->httpClient = (class_exists('GuzzleHttp\Client'))
                 ? new GuzzleAdapter()
                 : new CurlAdapter();
@@ -81,20 +80,20 @@ class Client
     /**
      * Perform a request and return a OAI SimpleXML Document
      *
-     * @param string $verb  Which OAI-PMH verb to use
-     * @param array $params  An array of key/value parameters
-     * @return \SimpleXMLElement  An XML document
+     * @param  string            $verb   Which OAI-PMH verb to use
+     * @param  array             $params An array of key/value parameters
+     * @return \SimpleXMLElement An XML document
      */
     public function request($verb, array $params = array())
     {
-        if ( ! $this->url) {
+        if (! $this->url) {
             throw new RuntimeException("Cannot perform request when URL not set.  Use setUrl() method");
         }
 
         //Build the URL
         $params = array_merge(array('verb' => $verb), $params);
         $url = $this->url . '?' . http_build_query($params);
-        
+
         //Do the request
         $resp = $this->httpClient->request($url);
 
@@ -107,8 +106,8 @@ class Client
     /**
      * Decode the response into XML
      *
-     * @param string $resp  The response body from a HTTP request
-     * @return \SimpleXMLElement  An XML document
+     * @param  string            $resp The response body from a HTTP request
+     * @return \SimpleXMLElement An XML document
      */
     protected function decodeResponse($resp)
     {
