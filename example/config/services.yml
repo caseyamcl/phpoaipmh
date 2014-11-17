@@ -1,0 +1,7 @@
+services:
+    phpoaipmh.example.command :
+        class: Phpoaipmh\Example\ExampleCommand
+        arguments: ['@phpoaipmh.example.example']
+    phpoaipmh.example.example :
+        class: Phpoaipmh\Example\Example
+
