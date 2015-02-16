@@ -17,8 +17,6 @@
 
 namespace Phpoaipmh;
 
-use DateTime;
-
 /**
  * OAI-PMH Endpoint Class
  *
@@ -32,16 +30,37 @@ class Endpoint
      */
     private $client;
 
+    /**
+     * @var string
+     */
+    private $granularity;
+
     // -------------------------------------------------------------------------
 
     /**
      * Constructor
      *
      * @param Client $client Optional; will attempt to auto-build dependency if not passed
+     * @param string $granularity Optional; the OAI date format for fetching records, use constants from Granularity class
      */
-    public function __construct(Client $client = null)
+    public function __construct(Client $client = null, $granularity = null)
     {
         $this->client = $client ?: new Client();
+        $this->granularity = $granularity ? $granularity : $this->fetchGranularity();
+    }
+
+    /**
+     * Load date format from Identify
+     *
+     * @return string
+     */
+    private function fetchGranularity() {
+        $response = $this->identify();
+        if (isset($response->Identify->granularity)) {
+            $this->granularity = $response->Identify->granularity;
+        } else {
+            $this->granularity = Granularity::DATE; // Default
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -132,15 +151,15 @@ class Endpoint
      * @param  string         $set            An optional setSpec for selective harvesting
      * @return RecordIterator
      */
-    public function listIdentifiers($metadataPrefix, \DateTime $from = null, \DateTime $until = null, $set = null)
+    public function listIdentifiers($metadataPrefix, $from = null, $until = null, $set = null)
     {
         $params = array('metadataPrefix' => $metadataPrefix);
 
-        if ($from) {
-            $params['from'] = $from->format(\DateTime::ISO8601);
+        if ($from instanceof \DateTime) {
+            $params['from'] = Granularity::formatDate($from, $this->granularity);
         }
-        if ($until) {
-            $params['until'] = $until->format(\DateTime::ISO8601);
+        if ($until instanceof \DateTime) {
+            $params['until'] = Granularity::formatDate($until, $this->granularity);
         }
         if ($set) {
             $params['set'] = $set;
@@ -162,15 +181,15 @@ class Endpoint
      * @param  string         $set            An optional setSpec for selective harvesting
      * @return RecordIterator
      */
-    public function listRecords($metadataPrefix, \DateTime $from = null, \DateTime $until = null, $set = null)
+    public function listRecords($metadataPrefix, $from = null, $until = null, $set = null)
     {
         $params = array('metadataPrefix' => $metadataPrefix);
 
-        if ($from) {
-            $params['from'] = $from->format(\DateTime::ISO8601);
+        if ($from instanceof \DateTime) {
+            $params['from'] = Granularity::formatDate($from, $this->granularity);
         }
-        if ($until) {
-            $params['until'] = $until->format(\DateTime::ISO8601);
+        if ($until instanceof \DateTime) {
+            $params['until'] = Granularity::formatDate($until, $this->granularity);
         }
         if ($set) {
             $params['set'] = $set;
