@@ -140,7 +140,7 @@ class Endpoint
             $params['from'] = $from->format(\DateTime::ISO8601);
         }
         if ($until) {
-            $params['until'] = $until>format(\DateTime::ISO8601);
+            $params['until'] = $until->format(\DateTime::ISO8601);
         }
         if ($set) {
             $params['set'] = $set;
@@ -170,7 +170,7 @@ class Endpoint
             $params['from'] = $from->format(\DateTime::ISO8601);
         }
         if ($until) {
-            $params['until'] = $until>format(\DateTime::ISO8601);
+            $params['until'] = $until->format(\DateTime::ISO8601);
         }
         if ($set) {
             $params['set'] = $set;
