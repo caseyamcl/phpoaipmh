@@ -127,12 +127,12 @@ class Endpoint
      * Corresponds to OAI Verb to list record identifiers
      *
      * @param  string         $metadataPrefix Required by OAI-PMH endpoint
-     * @param  DateTime       $from           An optional 'from' date for selective harvesting
-     * @param  DateTime       $until          An optional 'from' date for selective harvesting
+     * @param  \DateTime       $from           An optional 'from' date for selective harvesting
+     * @param  \DateTime       $until          An optional 'from' date for selective harvesting
      * @param  string         $set            An optional setSpec for selective harvesting
      * @return RecordIterator
      */
-    public function listIdentifiers($metadataPrefix, DateTime $from = null, DateTime $until = null, $set = null)
+    public function listIdentifiers($metadataPrefix, \DateTime $from = null, \DateTime $until = null, $set = null)
     {
         $params = array('metadataPrefix' => $metadataPrefix);
 
@@ -157,12 +157,12 @@ class Endpoint
      * Corresponds to OAI Verb to list records
      *
      * @param  string         $metadataPrefix Required by OAI-PMH endpoint
-     * @param  DateTime       $from           An optional 'from' date for selective harvesting
-     * @param  DateTime       $until          An optional 'from' date for selective harvesting
+     * @param  \DateTime       $from           An optional 'from' date for selective harvesting
+     * @param  \DateTime       $until          An optional 'from' date for selective harvesting
      * @param  string         $set            An optional setSpec for selective harvesting
      * @return RecordIterator
      */
-    public function listRecords($metadataPrefix, DateTime $from = null, DateTime $until = null, $set = null)
+    public function listRecords($metadataPrefix, \DateTime $from = null, \DateTime $until = null, $set = null)
     {
         $params = array('metadataPrefix' => $metadataPrefix);
 
