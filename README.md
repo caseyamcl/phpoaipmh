@@ -143,7 +143,7 @@ First, make sure you include the retry-subscriber as a dependency in your
 
     require: {
         /* ... */
-       "guzzlehttp/retry-subscriber": "~1.0"
+       "guzzlehttp/retry-subscriber": "~2.0"
     }
     
 Then, when loading the Phpoaipmh libraries, instantiate the Guzzle adapter
@@ -155,12 +155,13 @@ $retrySubscriber = new \GuzzleHttp\Subscriber\Retry\RetrySubscriber([
     'delay' => function($numRetries, \GuzzleHttp\Event\AbstractTransferEvent $event) {
         $waitSecs = $event->getResponse()->getHeader('Retry-After') ?: '5';
         return ($waitSecs * 1000) + 1000; // wait one second longer than the server said to
-    }
+    },
+    'filter' => \GuzzleHttp\Subscriber\Retry\RetrySubscriber::createStatusFilter(),
 ]);
 
 // Manually create a Guzzle HTTP adapter
 $guzzleAdapter = new \Phpoaipmh\HttpAdapter\Guzzle();
-$guzzleAdapter->getGuzzleClient()->attach($retrySubscriber);
+$guzzleAdapter->getGuzzleClient()->getEmitter()->attach($retrySubscriber);
 
 $client  = new \Phpoaipmh\Client('http://some.service.com/oai', $guzzleAdapter);
 ```
