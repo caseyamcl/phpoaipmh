@@ -220,6 +220,9 @@ class RecordIterator implements \Iterator
                 $t = $resp->$verb->resumptionToken['expirationDate'];
                 $this->expireDate = \DateTime::createFromFormat(\DateTime::ISO8601, $t);
             }
+        } else {
+            //Unset the resumption token when we're at the end of the list
+            $this->resumptionToken = null;
         }
 
         //Return a count
