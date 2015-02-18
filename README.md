@@ -4,7 +4,7 @@ PHPOAIPMH
 A PHP OAI-PMH harvester client library
 --------------------------------------
 
-[![Latest Version](https://img.shields.io/github/release/caseyamcl/Phpoaipmh.svg?style=flat-square?style=flat-square)](https://github.com/caseyamcl/Phpoiapmh/releases)
+[![Latest Version](https://img.shields.io/github/release/caseyamcl/phpoaipmh.svg?style=flat-square?style=flat-square)](https://github.com/caseyamcl/phpoaipmh/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Build Status](https://travis-ci.org/caseyamcl/Phpoiapmh.png)](https://travis-ci.org/caseyamcl/Phpoiapmh.png)
 [![Total Downloads](https://img.shields.io/packagist/dt/caseyamcl/Phpoaipmh.svg?style=flat-square)](https://packagist.org/packages/caseyamcl/Phpoaipmh)
