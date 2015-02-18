@@ -29,9 +29,9 @@ class EndpointCurlTest extends PHPUnit_Framework_TestCase
 {
     // --------------------------------------------------------------
 
-    const ENDPOINT_URL    = 'http://nsdl.org/oai';
+    const ENDPOINT_URL    = 'http://openscholarship.wustl.edu/do/oai/';
     const METADATA_PREFIX = 'oai_dc';
-    const RECORD_ID       = 'oai:nsdl.org:2200/20121012134007915T';
+    const RECORD_ID       = 'oai:openscholarship.wustl.edu:undergrad_research-1005';
 
     // --------------------------------------------------------------
 
