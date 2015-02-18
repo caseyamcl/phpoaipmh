@@ -63,6 +63,55 @@ class EndpointTest extends PHPUnit_Framework_TestCase
     // -------------------------------------------------------------------------
 
     /**
+     * Test meta data format being returned
+     */
+    public function testListMetadataFormatsReturnsRecordIterator()
+    {
+        $client = $this->getMockClient();
+        $obj = new Endpoint($client);
+
+        $returnValue = $obj->listMetadataFormats();
+
+        //Check results
+        $expectedRecordIterator = new RecordIterator($client, "ListMetadataFormats");
+        $this->assertEquals($expectedRecordIterator, $returnValue);
+    }
+
+    /**
+     * Test meta data format for record being returned
+     */
+    public function testListMetadataFormatsForRecordReturnsRecordIterator()
+    {
+        $client = $this->getMockClient();
+        $obj = new Endpoint($client);
+
+        $returnValue = $obj->listMetadataFormats("recordId");
+
+        //Check results
+        $expectedRecordIterator = new RecordIterator($client, "ListMetadataFormats", array('identifier' => "recordId"));
+        $this->assertEquals($expectedRecordIterator, $returnValue);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Test meta data format being returned
+     */
+    public function testListSetsReturnsRecordIterator()
+    {
+        $client = $this->getMockClient();
+        $obj = new Endpoint($client);
+
+        $returnValue = $obj->listSets();
+
+        //Check results
+        $expectedRecordIterator = new RecordIterator($client, "ListSets");
+        $this->assertEquals($expectedRecordIterator, $returnValue);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
      * Test that client is called correctly
      */
     public function testGetRecordCallsClient()
