@@ -1,6 +1,10 @@
 PHPOAIPMH Changelog
 ===================
 
+* v2.1 - In Development
+  - Changed test code repository to use OpenScholarship repository (NSDL not working)
+  - Unset the `RecordIterator` resumption token if end of list is reached so that last page is not repeated indefinitely
+   - Added `.gitattributes`, `.scrutinizer`, and `CONTRIBUTING.md` files
 * v2.0 - 2014 Oct 22
   - Bumped PHP requirement to v5.4 or newer
   - Renamed `Phpoaipmh\Http` classes to `HttpAdapter` for better clarity

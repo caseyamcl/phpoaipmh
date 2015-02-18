@@ -4,7 +4,10 @@ PHPOAIPMH
 A PHP OAI-PMH harvester client library
 --------------------------------------
 
+[![Latest Version](https://img.shields.io/github/release/caseyamcl/Phpoaipmh.svg?style=flat-square?style=flat-square)](https://github.com/caseyamcl/Phpoiapmh/releases)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Build Status](https://travis-ci.org/caseyamcl/Phpoiapmh.png)](https://travis-ci.org/caseyamcl/Phpoiapmh.png)
+[![Total Downloads](https://img.shields.io/packagist/dt/caseyamcl/Phpoaipmh.svg?style=flat-square)](https://packagist.org/packages/caseyamcl/Phpoaipmh)
 
 This library provides an interface to harvest OAI-PMH metadata
 from any [OAI 2.0 compliant endpoint](http://www.openarchives.org/OAI/openarchivesprotocol.html#ListMetadataFormats).
@@ -175,3 +178,16 @@ Implementation Tips
 Harvesting data from a OAI-PMH endpoint can be a time-consuming task, especially when there are lots of records.
 Typically, this kind of task is done via a CLI script or background process that can run for a long time.
 It is not normally a good idea to make it part of a web request.
+
+Credits
+-------
+
+* [Casey McLaughlin](http://github.com/caseyamcl)
+* [Christian Scheb](https://github.com/scheb)
+* [Matthias Vandermaesen](https://github.com/netsensei)
+* [All Contributors](https://github.com/caseyamcl/phpoaipmh/contributors)
+
+License
+-------
+
+MIT License; see <LICENSE> file for details
