@@ -27,5 +27,3 @@ class HttpException extends BaseOaipmhException
 {
     /* pass */
 }
-
-/* EOF: HttpException.php */

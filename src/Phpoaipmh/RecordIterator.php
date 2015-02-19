@@ -95,7 +95,7 @@ class RecordIterator implements \Iterator
         $this->params     = $params;
 
         //Node name error?
-        if ( ! $this->getItemNodeName()) {
+        if (! $this->getItemNodeName()) {
             throw new BaseOaipmhException('Cannot determine item name for verb: ' . $this->verb);
         }
     }
@@ -200,7 +200,7 @@ class RecordIterator implements \Iterator
         $this->numRequests++;
 
         //Result format error?
-        if ( ! isset($resp->$verb->$nodeName)) {
+        if (! isset($resp->$verb->$nodeName)) {
             throw new MalformedResponseException(sprintf("Expected XML element list '%s' missing for verb '%s'", $nodeName, $verb));
         }
 
@@ -301,5 +301,3 @@ class RecordIterator implements \Iterator
         $this->reset();
     }
 }
-
-/* EOF: RecordIterator.php */

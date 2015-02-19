@@ -80,7 +80,7 @@ class EndpointCurlTest extends PHPUnit_Framework_TestCase
     public function testGetRecordThrowsOAIExceptionForInvalidRecord()
     {
         $endpoint = $this->getObj();
-         $endpoint->getRecord('thisISTotalFake'. rand(1000, 4000), self::METADATA_PREFIX);
+        $endpoint->getRecord('thisISTotalFake'. rand(1000, 4000), self::METADATA_PREFIX);
     }
 
     // --------------------------------------------------------------
@@ -105,5 +105,3 @@ class EndpointCurlTest extends PHPUnit_Framework_TestCase
         return new HttpAdapter\CurlAdapter();
     }
 }
-
-/* EOF: EndpointCurlTest.php */

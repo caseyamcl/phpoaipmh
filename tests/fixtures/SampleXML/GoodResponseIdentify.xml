@@ -29,7 +29,7 @@
 
 <deletedRecord>no</deletedRecord>
 
-<granularity>YYYY-MM-DDThh:mm:ssZ</granularity> 
+<granularity>YYYY-MM-DDThh:mm:ssZ</granularity>
 
 
 
@@ -39,7 +39,7 @@
 
 <description>
 
-<oai-identifier 
+<oai-identifier
 
    xmlns="http://www.openarchives.org/OAI/2.0/oai-identifier"
 
@@ -49,11 +49,11 @@
 
    http://www.openarchives.org/OAI/2.0/oai-identifier.xsd">
 
-  <scheme>oai</scheme> 
+  <scheme>oai</scheme>
 
-  <repositoryIdentifier>nsdl.org</repositoryIdentifier>    
+  <repositoryIdentifier>nsdl.org</repositoryIdentifier>
 
-  <delimiter>:</delimiter> 
+  <delimiter>:</delimiter>
 
   <sampleIdentifier>oai:nsdl.org:1477460</sampleIdentifier>
 

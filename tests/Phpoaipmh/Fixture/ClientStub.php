@@ -60,5 +60,3 @@ class ClientStub extends Client
         return $toReturn;
     }
 }
-
-/* EOF: ClientStub.php */

@@ -34,7 +34,7 @@ class GuzzleAdapterTest extends PHPUnit_Framework_TestCase
      * and that the class implements the HttpAdapter\HttpAdapterInterface interface
      */
     public function testInsantiateCreatesNewObject()
-    {    
+    {
         $obj = new GuzzleAdapter();
         $this->assertInstanceOf('Phpoaipmh\HttpAdapter\GuzzleAdapter', $obj);
     }
@@ -86,7 +86,5 @@ class GuzzleAdapterTest extends PHPUnit_Framework_TestCase
 
         $obj = new GuzzleAdapter();
         $obj->request('http://doesnotexist.blargasdf');
-    }    
+    }
 }
-
-/* EOF: HttpGuzzleTest.php */

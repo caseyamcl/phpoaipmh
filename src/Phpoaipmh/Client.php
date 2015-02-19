@@ -129,5 +129,3 @@ class Client
         return $xml;
     }
 }
-
-/* EOF: Client.php */

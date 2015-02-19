@@ -27,5 +27,3 @@ class BaseOaipmhException extends \RuntimeException
 {
     // pass..
 }
-
-/* EOF: BaseOaipmhException.php */

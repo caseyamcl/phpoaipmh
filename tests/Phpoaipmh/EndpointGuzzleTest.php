@@ -29,7 +29,5 @@ class EndpointGuzzleTest extends EndpointCurlTest
     protected function getHttpAdapterObj()
     {
         return new HttpAdapter\GuzzleAdapter();
-    }    
+    }
 }
-
-/* EOF: EndpointGuzzleTest.php */

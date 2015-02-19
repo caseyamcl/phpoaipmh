@@ -62,5 +62,3 @@ class GuzzleAdapter implements HttpAdapterInterface
         }
     }
 }
-
-/* EOF: GuzzleAdapter.php */

@@ -35,7 +35,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
      * Tests that no syntax or runtime errors occur during object insantiation
      */
     public function testIntantiateCreatesNewObject()
-    {    
+    {
         $obj = new Client('http://example.com/oai', new HttpMockClient);
         $this->assertInstanceOf('Phpoaipmh\Client', $obj);
     }
@@ -44,7 +44,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
 
     public function testInstantiateCreatesNewObjectWhenNoConstructorArgsPassed()
     {
-        if ( ! function_exists('curl_exec') && ! class_exists('\GuzzleHttp\Client')) {
+        if (! function_exists('curl_exec') && ! class_exists('\GuzzleHttp\Client')) {
             $this->markTestSkipped("Skipping this test, because both CURL and Guzzle are missing on this system");
         }
 
@@ -121,6 +121,3 @@ class HttpMockClient implements HttpAdapterInterface
         return $this->toReturn;
     }
 }
-
-
-/* EOF: ClientTest.php */

@@ -29,5 +29,3 @@ class MalformedResponseException extends BaseOaipmhException
 {
     // pass..
 }
-
-/* EOF: MalformedResponseException.php */

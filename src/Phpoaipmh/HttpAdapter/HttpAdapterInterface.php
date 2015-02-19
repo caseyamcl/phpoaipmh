@@ -20,5 +20,3 @@ interface HttpAdapterInterface
      */
     public function request($url);
 }
-
-/* EOF: HttpAdapterInterface.php */

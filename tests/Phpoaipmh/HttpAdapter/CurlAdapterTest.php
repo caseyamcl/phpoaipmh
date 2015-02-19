@@ -34,7 +34,7 @@ class CurlAdapterTest extends \PHPUnit_Framework_TestCase
      * and that the class implements the HttpAdapter\HttpAdapterInterface interface
      */
     public function testInsantiateCreatesNewObject()
-    {    
+    {
         $obj = new CurlAdapter();
         $this->assertInstanceOf('Phpoaipmh\HttpAdapter\CurlAdapter', $obj);
     }
@@ -79,5 +79,3 @@ class CurlAdapterTest extends \PHPUnit_Framework_TestCase
         $obj->request('http://doesnotexist.blargasdf');
     }
 }
-
-/* EOF: CurlAdapterTest.php */

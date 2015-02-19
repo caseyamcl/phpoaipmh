@@ -33,7 +33,7 @@ class ResponseListTest extends PHPUnit_Framework_TestCase
      * Tests that no syntax or runtime errors occur during object insantiation
      */
     public function testInsantiateCreatesNewObject()
-    {    
+    {
         $obj = new RecordIterator($this->getMockClient(), 'ListIdentifiers');
         $this->assertInstanceOf('Phpoaipmh\RecordIterator', $obj);
     }
@@ -49,7 +49,7 @@ class ResponseListTest extends PHPUnit_Framework_TestCase
         $output = $this->generateSampleXML(array('GoodResponseSinglePage.xml'));
         $obj = new RecordIterator($this->getMockClient($output), 'ListRecords');
 
-        while($rec = $obj->nextItem()) {
+        while ($rec = $obj->nextItem()) {
             $respArr[] = $rec;
         }
 
@@ -67,13 +67,13 @@ class ResponseListTest extends PHPUnit_Framework_TestCase
     {
         $obj = $this->getSampleMultiPageResponseList();
 
-        while($rec = $obj->nextItem()) {
+        while ($rec = $obj->nextItem()) {
             $respArr[] = $rec;
         }
 
         $this->assertEquals(733, count($respArr));
         $this->assertEquals(733, $obj->getNumRetrieved());
-        $this->assertEquals(4, $obj->getNumRequests());        
+        $this->assertEquals(4, $obj->getNumRequests());
     }
 
     // -------------------------------------------------------------------------
@@ -100,7 +100,7 @@ class ResponseListTest extends PHPUnit_Framework_TestCase
         for ($i = 0; $i < 202; $i++) {
             $currRec = $obj->next();
         }
-        $this->assertEquals( 'oai:nsdl.org:2200/20061003062907355T', (string) $currRec->identifier);
+        $this->assertEquals('oai:nsdl.org:2200/20061003062907355T', (string) $currRec->identifier);
 
         // Now rewind..
         $obj->rewind();
@@ -108,7 +108,6 @@ class ResponseListTest extends PHPUnit_Framework_TestCase
         // ..and ensure the record we get is the first one.
         $currRec = $obj->current();
         $this->assertEquals('oai:nsdl.org:2200/20120614151514710T', (string) $currRec->identifier);
-
     }
 
 
@@ -137,7 +136,7 @@ class ResponseListTest extends PHPUnit_Framework_TestCase
         $this->setExpectedException('RuntimeException');
         $output = $this->generateSampleXML(array('GoodResponseSinglePage.xml'));
         $obj = new RecordIterator($this->getMockClient($output), 'ListIdentifiers');
-        $obj->nextItem();        
+        $obj->nextItem();
     }
 
     // ---------------------------------------------------------------
@@ -189,10 +188,9 @@ class ResponseListTest extends PHPUnit_Framework_TestCase
     protected function generateSampleXML($sampleFiles)
     {
         foreach ($sampleFiles as $file) {
-
             $obj = simplexml_load_file(__DIR__ . '/../fixtures/SampleXML/' . $file);
 
-            if ( ! $obj) {
+            if (! $obj) {
                 user_error(sprintf("Could not load sampel XML file: %s", $file));
             }
 
@@ -213,13 +211,9 @@ class ResponseListTest extends PHPUnit_Framework_TestCase
     protected function getMockClient($toReturn = array())
     {
         $stub = new ClientStub();
-        $stub->retVals = $toReturn;    
+        $stub->retVals = $toReturn;
         return $stub;
     }
 }
 
 // =============================================================================
-
-
-
-/* EOF: ResponseListTest.php */

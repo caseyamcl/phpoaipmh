@@ -40,7 +40,7 @@ class CurlAdapter implements HttpAdapterInterface
      */
     public function __construct()
     {
-        if ( ! is_callable('curl_exec')) {
+        if (! is_callable('curl_exec')) {
             throw new \Exception("OAI-PMH CurlAdapter HTTP HttpAdapterInterface requires the CURL PHP Extension");
         }
     }
@@ -80,5 +80,3 @@ class CurlAdapter implements HttpAdapterInterface
         return $resp;
     }
 }
-
-/* EOF: CurlAdapter.php */

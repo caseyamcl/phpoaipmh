@@ -185,8 +185,7 @@ class Endpoint
 
         if ($from instanceof \DateTime) {
             $params['from'] = Granularity::formatDate($from, $this->getGranularity());
-        }
-        elseif (null !== $from) {
+        } elseif (null !== $from) {
             trigger_error(sprintf(
                 'Deprecated: %s::%s \'from\' parameter should be an instance of \DateTime (string param support to be removed in v3.0)',
                 get_called_class(),
@@ -196,8 +195,7 @@ class Endpoint
 
         if ($until instanceof \DateTime) {
             $params['until'] = Granularity::formatDate($until, $this->getGranularity());
-        }
-        elseif (null !== $from) {
+        } elseif (null !== $from) {
             trigger_error(sprintf(
                 'Deprecated: %s::%s \'until\' parameter should be an instance of \DateTime (string param support to be removed in v3.0)',
                 get_called_class(),
@@ -244,5 +242,3 @@ class Endpoint
             : Granularity::DATE;
     }
 }
-
-/* EOF: Endpoint.php */
