@@ -43,5 +43,3 @@ class OaipmhException extends BaseOaipmhException
         return $refl->getShortName() . ": [{$this->code}]: ({$this->oaiErrorCode}) {$this->message}";
     }
 }
-
-/* EOF: OaipmhException.php */
