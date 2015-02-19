@@ -46,21 +46,7 @@ class Endpoint
     public function __construct(Client $client = null, $granularity = null)
     {
         $this->client = $client ?: new Client();
-        $this->granularity = $granularity ? $granularity : $this->fetchGranularity();
-    }
-
-    /**
-     * Load date format from Identify
-     *
-     * @return string
-     */
-    private function fetchGranularity() {
-        $response = $this->identify();
-        if (isset($response->Identify->granularity)) {
-            return (string) $response->Identify->granularity;
-        } else {
-            return Granularity::DATE; // Default
-        }
+        $this->granularity = $granularity;
     }
 
     // -------------------------------------------------------------------------
@@ -189,16 +175,43 @@ class Endpoint
         $params = array('metadataPrefix' => $metadataPrefix);
 
         if ($from instanceof \DateTime) {
-            $params['from'] = Granularity::formatDate($from, $this->granularity);
+            $params['from'] = Granularity::formatDate($from, $this->getGranularity());
         }
         if ($until instanceof \DateTime) {
-            $params['until'] = Granularity::formatDate($until, $this->granularity);
+            $params['until'] = Granularity::formatDate($until, $this->getGranularity());
         }
         if ($set) {
             $params['set'] = $set;
         }
 
         return new RecordIterator($this->client, $verb, $params);
+    }
+
+    /**
+     * Lazy load granularity from Identify, if necessary
+     *
+     * @return string
+     */
+    private function getGranularity() {
+        if ($this->granularity === null) {
+            $this->granularity = $this->fetchGranularity();
+        }
+
+        return $this->granularity;
+    }
+
+    /**
+     * Load date format from Identify
+     *
+     * @return string
+     */
+    private function fetchGranularity() {
+        $response = $this->identify();
+        if (isset($response->Identify->granularity)) {
+            return (string) $response->Identify->granularity;
+        } else {
+            return Granularity::DATE; // Default
+        }
     }
 }
 

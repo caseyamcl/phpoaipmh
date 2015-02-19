@@ -118,7 +118,7 @@ class EndpointTest extends PHPUnit_Framework_TestCase
     {
         $client = $this->getMockClient();
         $client
-            ->expects($this->at(1))
+            ->expects($this->once())
             ->method("request")
             ->with("GetRecord", array(
                 'identifier' => "recordId",
