@@ -16,16 +16,23 @@ namespace Phpoaipmh;
  * ------------------------------------------------------------------
  */
 
-class Granularity {
-
+/**
+ * Granularity class provides utility for specifying date and constraint precision
+ *
+ * @author Christian Scheb
+ */
+class Granularity
+{
     const DATE = "YYYY-MM-DD";
     const DATE_AND_TIME = "YYYY-MM-DDThh:mm:ssZ";
+
+    // ---------------------------------------------------------------
 
     /**
      * Format DateTime string based on granularity
      *
      * @param \DateTime $dateTime
-     * @param string $format
+     * @param string $format       Either self::DATE or self::DATE_AND_TIME
      *
      * @return string
      */
