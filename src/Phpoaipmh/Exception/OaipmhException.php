@@ -39,7 +39,8 @@ class OaipmhException extends BaseOaipmhException
 
     public function __toString()
     {
-        return __CLASS__ . ": [{$this->code}]: ({$this->oaiErrorCode}) {$this->message}\n";
+        $refl = new \ReflectionClass($this);
+        return $refl->getShortName() . ": [{$this->code}]: ({$this->oaiErrorCode}) {$this->message}";
     }
 }
 
