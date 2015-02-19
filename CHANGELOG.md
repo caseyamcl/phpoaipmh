@@ -38,6 +38,7 @@ PHPOAIPMH Changelog
   
 ### Removed
   - Removed `processList` method in `Endpoint` class, since `RecordIterator` itself is now an iterator
+  - Removed `.idea` directory
    
 ## v1.2.1 - 2014-10-21
 
