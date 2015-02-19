@@ -6,6 +6,7 @@ PHPOAIPMH Changelog
 ### Fixed
   - Unset the `RecordIterator` resumption token if end of list is reached so that last page is not repeated indefinitely
   - Fixed syntax errors fixed in `Endpoint` class when using date/time constraints
+  - Fixed installation instructions in `README.md` (use correct version in Composer)
   
 ### Added
   - `Endpoint` constructor now accepts optional `granularity` string parameter to specify date/time granularity for record retrieval
@@ -18,6 +19,7 @@ PHPOAIPMH Changelog
 ### Changed
   - Changed test code to use OpenScholarship repository (the previously-used NSDL endpoint is not working)
   - PSR-2 code style improvements
+  - Removed `.idea` directory
 
 ## v2.0 - 2014-10-22
 
@@ -38,7 +40,6 @@ PHPOAIPMH Changelog
   
 ### Removed
   - Removed `processList` method in `Endpoint` class, since `RecordIterator` itself is now an iterator
-  - Removed `.idea` directory
    
 ## v1.2.1 - 2014-10-21
 
