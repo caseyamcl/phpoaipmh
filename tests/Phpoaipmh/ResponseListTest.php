@@ -140,6 +140,26 @@ class ResponseListTest extends PHPUnit_Framework_TestCase
         $obj->nextItem();        
     }
 
+    // ---------------------------------------------------------------
+
+    public function testGetRecordsInCollectionReturnsValueIfSuppliedByEndpoint()
+    {
+        $obj = $this->getSampleMultiPageResponseList();
+        $this->assertEquals(733, $obj->getTotalRecordsInCollection());
+    }
+
+    // ---------------------------------------------------------------
+
+    public function testGetRecordsInCollectionReturnsNullifNotSuppliedByEndpoint()
+    {
+        //Single page sample file contains 162 results in a valid ListRecords response
+        $output = $this->generateSampleXML(array('GoodResponseSinglePage.xml'));
+        $obj = new RecordIterator($this->getMockClient($output), 'ListRecords');
+
+        // The single page records do not supply a number
+        $this->assertNull($obj->getTotalRecordsInCollection());
+    }
+
     // ----------------------------------------------------------------
 
     /**
