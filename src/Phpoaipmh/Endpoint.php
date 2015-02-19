@@ -17,6 +17,8 @@
 
 namespace Phpoaipmh;
 
+use DateTime;
+
 /**
  * OAI-PMH Endpoint Class
  *
@@ -25,6 +27,10 @@ namespace Phpoaipmh;
  */
 class Endpoint
 {
+    const AUTO = null;
+
+    // ---------------------------------------------------------------
+
     /**
      * @var Client
      */
@@ -40,10 +46,10 @@ class Endpoint
     /**
      * Constructor
      *
-     * @param Client $client Optional; will attempt to auto-build dependency if not passed
-     * @param string $granularity Optional; the OAI date format for fetching records, use constants from Granularity class
+     * @param Client $client       Optional; will attempt to auto-build dependency if not passed
+     * @param string $granularity  Optional; the OAI date format for fetching records, use constants from Granularity class
      */
-    public function __construct(Client $client = null, $granularity = null)
+    public function __construct(Client $client = null, $granularity = self::AUTO)
     {
         $this->client = $client ?: new Client();
         $this->granularity = $granularity;
@@ -133,7 +139,7 @@ class Endpoint
      *
      * @param  string         $metadataPrefix Required by OAI-PMH endpoint
      * @param  \DateTime      $from           An optional 'from' date for selective harvesting
-     * @param  \DateTime      $until          An optional 'from' date for selective harvesting
+     * @param  \DateTime      $until          An optional 'until' date for selective harvesting
      * @param  string         $set            An optional setSpec for selective harvesting
      * @return RecordIterator
      */
@@ -163,6 +169,8 @@ class Endpoint
     // -------------------------------------------------------------------------
 
     /**
+     * Create a record iterator
+     *
      * @param  string         $verb           OAI Verb
      * @param  string         $metadataPrefix Required by OAI-PMH endpoint
      * @param  \DateTime      $from           An optional 'from' date for selective harvesting
@@ -178,9 +186,25 @@ class Endpoint
         if ($from instanceof \DateTime) {
             $params['from'] = Granularity::formatDate($from, $this->getGranularity());
         }
+        elseif (null !== $from) {
+            trigger_error(sprintf(
+                'Deprecated: %s::%s \'from\' parameter should be an instance of \DateTime (string param support to be removed in v3.0)',
+                get_called_class(),
+                lcfirst($verb)
+            ), E_USER_DEPRECATED);
+        }
+
         if ($until instanceof \DateTime) {
             $params['until'] = Granularity::formatDate($until, $this->getGranularity());
         }
+        elseif (null !== $from) {
+            trigger_error(sprintf(
+                'Deprecated: %s::%s \'until\' parameter should be an instance of \DateTime (string param support to be removed in v3.0)',
+                get_called_class(),
+                lcfirst($verb)
+            ), E_USER_DEPRECATED);
+        }
+
         if ($set) {
             $params['set'] = $set;
         }
@@ -188,8 +212,10 @@ class Endpoint
         return new RecordIterator($this->client, $verb, $params);
     }
 
+    // ---------------------------------------------------------------
+
     /**
-     * Lazy load granularity from Identify, if necessary
+     * Lazy load granularity from Identify, if not specified
      *
      * @return string
      */
@@ -202,19 +228,20 @@ class Endpoint
         return $this->granularity;
     }
 
+    // ---------------------------------------------------------------
+
     /**
-     * Load date format from Identify
+     * Attempt to fetch date format from Identify endpoint (or use default)
      *
      * @return string
      */
     private function fetchGranularity()
     {
         $response = $this->identify();
-        if (isset($response->Identify->granularity)) {
-            return (string) $response->Identify->granularity;
-        } else {
-            return Granularity::DATE; // Default
-        }
+
+        return (isset($response->Identify->granularity))
+            ? (string) $response->Identify->granularity
+            : Granularity::DATE;
     }
 }
 

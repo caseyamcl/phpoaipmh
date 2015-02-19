@@ -220,7 +220,17 @@ class EndpointTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expectedRecordIterator, $returnValue);
     }
 
-    // -------------------------------------------------------------------------
+    // ---------------------------------------------------------------
+
+    public function testStringDatesGenerateDeprecatedWarnings()
+    {
+        $this->setExpectedException('PHPUnit_Framework_Error_Deprecated');
+
+        $obj = new Endpoint($this->getMockClient());
+        $obj->listRecords('oai_dc', '2014-01-01', '2015-01-01');
+    }
+
+    // ---------------------------------------------------------------
 
     /**
      * Shortcut to load contents of a sample XML file
