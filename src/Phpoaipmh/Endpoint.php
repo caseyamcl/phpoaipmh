@@ -171,7 +171,8 @@ class Endpoint
      *
      * @return RecordIterator
      */
-    private function createRecordIterator($verb, $metadataPrefix, $from, $until, $set) {
+    private function createRecordIterator($verb, $metadataPrefix, $from, $until, $set)
+    {
         $params = array('metadataPrefix' => $metadataPrefix);
 
         if ($from instanceof \DateTime) {
@@ -192,7 +193,8 @@ class Endpoint
      *
      * @return string
      */
-    private function getGranularity() {
+    private function getGranularity()
+    {
         if ($this->granularity === null) {
             $this->granularity = $this->fetchGranularity();
         }
@@ -205,7 +207,8 @@ class Endpoint
      *
      * @return string
      */
-    private function fetchGranularity() {
+    private function fetchGranularity()
+    {
         $response = $this->identify();
         if (isset($response->Identify->granularity)) {
             return (string) $response->Identify->granularity;
