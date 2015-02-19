@@ -98,6 +98,16 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $obj = new Client('http://nsdl.org/oai', $mockClient);
         $obj->request('NonexistentVerb');
     }
+
+    // ----------------------------------------------------------------
+
+    public function testRequestThrowsExceptionIfUrlNotSet()
+    {
+        $this->setExpectedException('\RuntimeException');
+
+        $obj = new Client();
+        $obj->request('Identify');
+    }
 }
 
 // =============================================================================
