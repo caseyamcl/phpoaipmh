@@ -35,10 +35,10 @@ class EndpointTest extends PHPUnit_Framework_TestCase
      * Tests that no syntax or runtime errors occur during object insantiation
      */
     public function testInsantiateCreatesNewObject()
-    {    
+    {
         $obj = new Endpoint($this->getMockClient());
         $this->assertInstanceOf('Phpoaipmh\Endpoint', $obj);
-    }    
+    }
 
     // -------------------------------------------------------------------------
 
@@ -63,11 +63,161 @@ class EndpointTest extends PHPUnit_Framework_TestCase
     // -------------------------------------------------------------------------
 
     /**
-     * Test that list MetaDataFormats resturns valid array
+     * Test meta data format being returned
      */
-    public function testListMetaDataFormatsReturnsValidArray() 
+    public function testListMetadataFormatsReturnsRecordIterator()
     {
+        $client = $this->getMockClient();
+        $obj = new Endpoint($client);
 
+        $returnValue = $obj->listMetadataFormats();
+
+        //Check results
+        $expectedRecordIterator = new RecordIterator($client, "ListMetadataFormats");
+        $this->assertEquals($expectedRecordIterator, $returnValue);
+    }
+
+    /**
+     * Test meta data format for record being returned
+     */
+    public function testListMetadataFormatsForRecordReturnsRecordIterator()
+    {
+        $client = $this->getMockClient();
+        $obj = new Endpoint($client);
+
+        $returnValue = $obj->listMetadataFormats("recordId");
+
+        //Check results
+        $expectedRecordIterator = new RecordIterator($client, "ListMetadataFormats", array('identifier' => "recordId"));
+        $this->assertEquals($expectedRecordIterator, $returnValue);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Test meta data format being returned
+     */
+    public function testListSetsReturnsRecordIterator()
+    {
+        $client = $this->getMockClient();
+        $obj = new Endpoint($client);
+
+        $returnValue = $obj->listSets();
+
+        //Check results
+        $expectedRecordIterator = new RecordIterator($client, "ListSets");
+        $this->assertEquals($expectedRecordIterator, $returnValue);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Test that client is called correctly
+     */
+    public function testGetRecordCallsClient()
+    {
+        $client = $this->getMockClient();
+        $client
+            ->expects($this->once())
+            ->method("request")
+            ->with("GetRecord", array(
+                'identifier' => "recordId",
+                'metadataPrefix' => "metadataPrefix",
+            ));
+
+        $obj = new Endpoint($client);
+        $obj->getRecord("recordId", "metadataPrefix");
+    }
+
+    /**
+     * Test that record is returned
+     */
+    public function testGetRecordReturnsRecord()
+    {
+        $retVal = simplexml_load_file($this->getSampleXML('GoodResponseSingleRecord.xml'));
+        $client = $this->getMockClient($retVal);
+
+        $obj = new Endpoint($client);
+
+        $response = $obj->getRecord("recordId", "metadataPrefix");
+
+        //Check results
+        $this->assertInstanceof('SimpleXMLElement', $response);
+        $this->assertObjectHasAttribute('GetRecord', $response);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Test that ListIdentifiers returns a RecordIterator
+     */
+    public function testListIdentifiersReturnsRecordIterator()
+    {
+        $client = $this->getMockClient();
+        $obj = new Endpoint($client);
+
+        $returnValue = $obj->listIdentifiers("metadataPrefix");
+
+        $expectedParams = array('metadataPrefix' => "metadataPrefix",);
+        $expectedRecordIterator = new RecordIterator($client, "ListIdentifiers", $expectedParams);
+        $this->assertEquals($expectedRecordIterator, $returnValue);
+    }
+
+    /**
+     * Test that ListIdentifiers returns a RecordIterator
+     */
+    public function testListIdentifiersReturnsRecordIteratorWithParameters()
+    {
+        $client = $this->getMockClient();
+        $obj = new Endpoint($client);
+
+        $returnValue = $obj->listIdentifiers("metadataPrefix", new \DateTime("2014-01-01"), new \DateTime("2015-01-01"), "setSpec");
+
+        $expectedParams = array(
+            'metadataPrefix' => "metadataPrefix",
+            'from' => "2014-01-01",
+            'until' => "2015-01-01",
+            'set' => "setSpec",
+        );
+        $expectedRecordIterator = new RecordIterator($client, "ListIdentifiers", $expectedParams);
+        $this->assertEquals($expectedRecordIterator, $returnValue);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Test that list ListRecords returns a RecordIterator
+     */
+    public function testListRecordsReturnsRecordIterator()
+    {
+        $client = $this->getMockClient();
+        $obj = new Endpoint($client);
+
+        $returnValue = $obj->listRecords("metadataPrefix");
+
+        $expectedParams = array('metadataPrefix' => "metadataPrefix",);
+        $expectedRecordIterator = new RecordIterator($client, "ListRecords", $expectedParams);
+        $this->assertEquals($expectedRecordIterator, $returnValue);
+    }
+
+    /**
+     * Test that list ListRecords returns a RecordIterator
+     */
+    public function testListRecordsReturnsRecordIteratorWithParameters()
+    {
+        $client = $this->getMockClient();
+        $obj = new Endpoint($client);
+
+        $returnValue = $obj->listRecords("metadataPrefix", new \DateTime("2014-01-01"), new \DateTime("2015-01-01"), "setSpec");
+
+        $expectedParams = array(
+            'metadataPrefix' => "metadataPrefix",
+            'from' => "2014-01-01",
+            'until' => "2015-01-01",
+            'set' => "setSpec",
+        );
+        $expectedRecordIterator = new RecordIterator($client, "ListRecords", $expectedParams);
+        $this->assertEquals($expectedRecordIterator, $returnValue);
     }
 
     // -------------------------------------------------------------------------
@@ -78,7 +228,7 @@ class EndpointTest extends PHPUnit_Framework_TestCase
     protected function getSampleXML($file)
     {
         return __DIR__ . '/../fixtures/SampleXML/' . $file;
-    }  
+    }
 
     // -------------------------------------------------------------------------
 
