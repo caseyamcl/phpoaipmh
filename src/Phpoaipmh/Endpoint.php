@@ -17,8 +17,6 @@
 
 namespace Phpoaipmh;
 
-use DateTime;
-
 /**
  * OAI-PMH Endpoint Class
  *
@@ -32,16 +30,23 @@ class Endpoint
      */
     private $client;
 
+    /**
+     * @var string
+     */
+    private $granularity;
+
     // -------------------------------------------------------------------------
 
     /**
      * Constructor
      *
      * @param Client $client Optional; will attempt to auto-build dependency if not passed
+     * @param string $granularity Optional; the OAI date format for fetching records, use constants from Granularity class
      */
-    public function __construct(Client $client = null)
+    public function __construct(Client $client = null, $granularity = null)
     {
         $this->client = $client ?: new Client();
+        $this->granularity = $granularity;
     }
 
     // -------------------------------------------------------------------------
@@ -122,31 +127,19 @@ class Endpoint
     // -------------------------------------------------------------------------
 
     /**
-     * List Records
+     * List Record identifiers
      *
      * Corresponds to OAI Verb to list record identifiers
      *
      * @param  string         $metadataPrefix Required by OAI-PMH endpoint
-     * @param  DateTime       $from           An optional 'from' date for selective harvesting
-     * @param  DateTime       $until          An optional 'from' date for selective harvesting
+     * @param  \DateTime      $from           An optional 'from' date for selective harvesting
+     * @param  \DateTime      $until          An optional 'from' date for selective harvesting
      * @param  string         $set            An optional setSpec for selective harvesting
      * @return RecordIterator
      */
-    public function listIdentifiers($metadataPrefix, DateTime $from = null, DateTime $until = null, $set = null)
+    public function listIdentifiers($metadataPrefix, $from = null, $until = null, $set = null)
     {
-        $params = array('metadataPrefix' => $metadataPrefix);
-
-        if ($from) {
-            $params['from'] = $from->format(\DateTime::ISO8601);
-        }
-        if ($until) {
-            $params['until'] = $until>format(\DateTime::ISO8601);
-        }
-        if ($set) {
-            $params['set'] = $set;
-        }
-
-        return new RecordIterator($this->client, 'ListIdentifiers', $params);
+        return $this->createRecordIterator("ListIdentifiers", $metadataPrefix, $from, $until, $set);
     }
 
     // -------------------------------------------------------------------------
@@ -157,26 +150,71 @@ class Endpoint
      * Corresponds to OAI Verb to list records
      *
      * @param  string         $metadataPrefix Required by OAI-PMH endpoint
-     * @param  DateTime       $from           An optional 'from' date for selective harvesting
-     * @param  DateTime       $until          An optional 'from' date for selective harvesting
+     * @param  \DateTime      $from           An optional 'from' date for selective harvesting
+     * @param  \DateTime      $until          An optional 'from' date for selective harvesting
      * @param  string         $set            An optional setSpec for selective harvesting
      * @return RecordIterator
      */
-    public function listRecords($metadataPrefix, DateTime $from = null, DateTime $until = null, $set = null)
+    public function listRecords($metadataPrefix, $from = null, $until = null, $set = null)
+    {
+        return $this->createRecordIterator("ListRecords", $metadataPrefix, $from, $until, $set);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * @param  string         $verb           OAI Verb
+     * @param  string         $metadataPrefix Required by OAI-PMH endpoint
+     * @param  \DateTime      $from           An optional 'from' date for selective harvesting
+     * @param  \DateTime      $until          An optional 'from' date for selective harvesting
+     * @param  string         $set            An optional setSpec for selective harvesting
+     *
+     * @return RecordIterator
+     */
+    private function createRecordIterator($verb, $metadataPrefix, $from, $until, $set)
     {
         $params = array('metadataPrefix' => $metadataPrefix);
 
-        if ($from) {
-            $params['from'] = $from->format(\DateTime::ISO8601);
+        if ($from instanceof \DateTime) {
+            $params['from'] = Granularity::formatDate($from, $this->getGranularity());
         }
-        if ($until) {
-            $params['until'] = $until>format(\DateTime::ISO8601);
+        if ($until instanceof \DateTime) {
+            $params['until'] = Granularity::formatDate($until, $this->getGranularity());
         }
         if ($set) {
             $params['set'] = $set;
         }
 
-        return new RecordIterator($this->client, 'ListRecords', $params);
+        return new RecordIterator($this->client, $verb, $params);
+    }
+
+    /**
+     * Lazy load granularity from Identify, if necessary
+     *
+     * @return string
+     */
+    private function getGranularity()
+    {
+        if ($this->granularity === null) {
+            $this->granularity = $this->fetchGranularity();
+        }
+
+        return $this->granularity;
+    }
+
+    /**
+     * Load date format from Identify
+     *
+     * @return string
+     */
+    private function fetchGranularity()
+    {
+        $response = $this->identify();
+        if (isset($response->Identify->granularity)) {
+            return (string) $response->Identify->granularity;
+        } else {
+            return Granularity::DATE; // Default
+        }
     }
 }
 
