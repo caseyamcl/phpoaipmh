@@ -26,7 +26,7 @@ Install via [Composer](http://getcomposer.org/) by including the following in yo
  
     {
         "require": {
-            "caseyamcl/phpoaipmh": "~1.1",
+            "caseyamcl/phpoaipmh": "~2.0",
             "guzzlehttp/guzzle":   "~5.0"
         }
     }
@@ -52,7 +52,7 @@ Setup a new endpoint client:
 
 ```php
 $client = new \Phpoaipmh\Client('http://some.service.com/oai');
-$myEndpoint = new \Phpoaipmh\Endpoint($client)
+$myEndpoint = new \Phpoaipmh\Endpoint($client);
 ```
 
 Get basic information:
@@ -83,6 +83,17 @@ $recs = $myEndpoint->listRecords('someMetaDataFormat');
 foreach($recs as $rec) {
     var_dump($rec);
 }
+```
+
+Optionally, specify a date/time granularity level to use for date-based queries:
+
+```php
+use Phpoaipmh\Client,
+    Phpoaipmh\Endpoint,
+    Phpoaipmh\Granularity;
+
+$client = new Client('http://some.service.com/oai');
+$myEndpoint = new Endpoint($client, Granularity::DATE_AND_TIME);
 ```
 
 Handling Results
