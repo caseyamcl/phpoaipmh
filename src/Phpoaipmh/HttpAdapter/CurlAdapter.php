@@ -72,9 +72,9 @@ class CurlAdapter implements HttpAdapterInterface
         $httpCode = (string) $info->http_code;
         if ($httpCode{0} != '2') {
             $msg = sprintf('HTTP Request Failed (code %s): %s', $info->http_code, $resp);
-            throw new HttpException($msg);
+            throw new HttpException($resp, $msg, $httpCode);
         } elseif (strlen(trim($resp)) == 0) {
-            throw new HttpException('HTTP Response Empty');
+            throw new HttpException($resp, 'HTTP Response Empty');
         }
 
         return $resp;
