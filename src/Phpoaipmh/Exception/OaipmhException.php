@@ -42,4 +42,8 @@ class OaipmhException extends BaseOaipmhException
         $refl = new \ReflectionClass($this);
         return $refl->getShortName() . ": [{$this->code}]: ({$this->oaiErrorCode}) {$this->message}";
     }
+
+    public function getOaiErrorCode() {
+        return $this->oaiErrorCode;
+    }
 }
