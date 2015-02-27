@@ -40,7 +40,7 @@ class Granularity
     {
         $phpFormats = array(
             self::DATE => "Y-m-d",
-            self::DATE_AND_TIME => \DateTime::ISO8601,
+            self::DATE_AND_TIME => 'Y-m-d\TH:i:s\Z',
         );
         $phpFormat = $phpFormats[$format];
 

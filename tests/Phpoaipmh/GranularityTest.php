@@ -42,7 +42,7 @@ class GranularityTest extends PHPUnit_Framework_TestCase
     {
         return array(
             array(Granularity::DATE, "2015-02-01"),
-            array(Granularity::DATE_AND_TIME, "2015-02-01T12:15:30+0000"),
+            array(Granularity::DATE_AND_TIME, "2015-02-01T12:15:30Z"),
         );
     }
 }
