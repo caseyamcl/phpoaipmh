@@ -116,7 +116,8 @@ class Client
      *
      * @param HttpException $httpException
      */
-    private function checkForOaipmhException(HttpException $httpException) {
+    private function checkForOaipmhException(HttpException $httpException)
+    {
         try {
             if ($resp = $httpException->getBody()) {
                 $this->decodeResponse($resp); // Throw OaipmhException in case of an error

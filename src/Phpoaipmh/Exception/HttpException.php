@@ -44,7 +44,8 @@ class HttpException extends BaseOaipmhException
     /**
      * @return string
      */
-    public function getBody() {
+    public function getBody()
+    {
         return $this->body;
     }
 }
