@@ -1,6 +1,15 @@
 PHPOAIPMH Changelog
 ===================
 
+## v2.2 - 2015-03-02
+
+### Fixed
+  - Fixed Deprecated warning bug for `until` in `Endpoint` class (thanks @igor-kamil)
+  - Fixed date/time format in new `Granularity` helper (thanks @scheb)
+  
+### Changed
+  - Improved error handling; if well-formed OAI-PMH errors accompany HTTP error codes, a `OaiPmhException` is thrown instead of `HttpException` (thanks @scheb)
+
 ## v2.1 - 2015-02-19
 
 ### Fixed
