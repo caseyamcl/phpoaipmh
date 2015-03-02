@@ -96,11 +96,11 @@ class Client
         $url = $this->url . '?' . http_build_query($params);
 
         //Do the request
-        $resp = '';
         try {
             $resp = $this->httpClient->request($url);
         } catch (HttpException $e) {
             $this->checkForOaipmhException($e);
+            $resp = '';
         }
 
         return $this->decodeResponse($resp);
@@ -108,6 +108,14 @@ class Client
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Check for OAI-PMH Exception from HTTP Exception
+     *
+     * Converts a HttpException into an OAI-PMH exception if there is an
+     * OAI-PMH Error Code.
+     *
+     * @param HttpException $httpException
+     */
     private function checkForOaipmhException(HttpException $httpException) {
         try {
             if ($resp = $httpException->getBody()) {

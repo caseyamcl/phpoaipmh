@@ -3,7 +3,8 @@
 namespace Phpoaipmh\HttpAdapter;
 
 use GuzzleHttp\Client as GuzzleClient;
-use GuzzleHttp\Exception\RequestException as GuzzleException;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\TransferException;
 use Phpoaipmh\Exception\HttpException;
 
 /**
@@ -55,11 +56,12 @@ class GuzzleAdapter implements HttpAdapterInterface
     {
         try {
             $resp = $this->guzzle->get($url);
-
             return (string) $resp->getBody();
-        } catch (GuzzleException $e) {
+        } catch (RequestException $e) {
             $response = $e->getResponse();
             throw new HttpException($response ? $response->getBody() : null, $e->getMessage(), $e->getCode(), $e);
+        } catch (TransferException $e) {
+            throw new HttpException('', $e->getMessage(), $e->getCode(), $e);
         }
     }
 }

@@ -27,7 +27,16 @@ class HttpException extends BaseOaipmhException
 {
     private $body;
 
-    public function __construct($responseBody, $message, $code = 0, \Exception $previous = null) {
+    /**
+     * Constructor
+     *
+     * @param string     $responseBody  Empty if no response body provided
+     * @param int        $message
+     * @param int        $code
+     * @param \Exception $previous
+     */
+    public function __construct($responseBody, $message, $code = 0, \Exception $previous = null)
+    {
         $this->body = $responseBody;
         parent::__construct($message, $code, $previous);
     }
