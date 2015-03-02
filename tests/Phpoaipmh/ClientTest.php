@@ -17,6 +17,7 @@
 
 namespace Phpoaipmh;
 
+use Phpoaipmh\Exception\HttpException;
 use Phpoaipmh\HttpAdapter\HttpAdapterInterface;
 use PHPUnit_Framework_TestCase;
 
@@ -87,7 +88,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
     // -------------------------------------------------------------------------
 
     /**
-     * Test that a XML response with a OAI-PMH error embedded throws an exception
+     * Test that a XML response with a OAI-PMH error embedded throws an OaipmhException
      */
     public function testRequestThrowsOAIPMHExceptionForInvalidVerbOrParams()
     {
@@ -97,6 +98,46 @@ class ClientTest extends PHPUnit_Framework_TestCase
 
         $obj = new Client('http://nsdl.org/oai', $mockClient);
         $obj->request('NonexistentVerb');
+    }
+
+    /**
+     * Test that a HTTP error response with a OAI-PMH error in body throws an OaipmhException
+     */
+    public function testHttpErrorStatusWithOaipmhErrorResponseThrowsOAIPMHException()
+    {
+        $response = '<?xml version="1.0" encoding="UTF-8" ?>  <OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/  http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd"> <responseDate>2012-08-06T19:33:31Z</responseDate> <request>http://nsdl.org/oai</request>      <error code="badVerb">The verb &#39;NotExist&#39; is illegal</error>  </OAI-PMH>';
+        $httpException = new HttpException($response, "Not found.", 404);
+
+        $mockClient = $this->getMock("Phpoaipmh\HttpAdapter\HttpAdapterInterface");
+        $mockClient
+            ->expects($this->any())
+            ->method("request")
+            ->will($this->throwException($httpException));
+
+        $this->setExpectedException('Phpoaipmh\Exception\OaipmhException');
+
+        $obj = new Client('http://nsdl.org/oai', $mockClient);
+        $obj->request('NonexistentVerb');
+    }
+
+    /**
+     * Test that a HTTP error response without a OAI-PMH error in body throws an HttpException
+     */
+    public function testHttpErrorStatusMissingOaipmhErrorResponseThrowsHttpException()
+    {
+        $response = 'thisIs&NotXML!!';
+        $httpException = new HttpException($response, "Not found.", 404);
+
+        $mockClient = $this->getMock("Phpoaipmh\HttpAdapter\HttpAdapterInterface");
+        $mockClient
+            ->expects($this->any())
+            ->method("request")
+            ->will($this->throwException($httpException));
+
+        $this->setExpectedException('Phpoaipmh\Exception\HttpException');
+
+        $obj = new Client('http://nsdl.org/oai', $mockClient);
+        $obj->request('Identify');
     }
 
     // ----------------------------------------------------------------

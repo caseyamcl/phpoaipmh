@@ -17,6 +17,7 @@
 
 namespace Phpoaipmh;
 
+use Phpoaipmh\Exception\HttpException;
 use Phpoaipmh\Exception\OaipmhException;
 use Phpoaipmh\Exception\MalformedResponseException;
 use Phpoaipmh\HttpAdapter\CurlAdapter;
@@ -95,10 +96,28 @@ class Client
         $url = $this->url . '?' . http_build_query($params);
 
         //Do the request
-        $resp = $this->httpClient->request($url);
+        $resp = '';
+        try {
+            $resp = $this->httpClient->request($url);
+        } catch (HttpException $e) {
+            $this->checkForOaipmhException($e);
+        }
 
-        //Decode the response
         return $this->decodeResponse($resp);
+    }
+
+    // -------------------------------------------------------------------------
+
+    private function checkForOaipmhException(HttpException $httpException) {
+        try {
+            if ($resp = $httpException->getBody()) {
+                $this->decodeResponse($resp); // Throw OaipmhException in case of an error
+            }
+        } catch (MalformedResponseException $e) {
+            // There was no valid OAI error in the response, therefore re-throw HttpException
+        }
+
+        throw $httpException;
     }
 
     // -------------------------------------------------------------------------

@@ -25,5 +25,17 @@ namespace Phpoaipmh\Exception;
  */
 class HttpException extends BaseOaipmhException
 {
-    /* pass */
+    private $body;
+
+    public function __construct($responseBody, $message, $code = 0, \Exception $previous = null) {
+        $this->body = $responseBody;
+        parent::__construct($message, $code, $previous);
+    }
+
+    /**
+     * @return string
+     */
+    public function getBody() {
+        return $this->body;
+    }
 }
