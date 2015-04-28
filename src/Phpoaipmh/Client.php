@@ -93,7 +93,7 @@ class Client
 
         //Build the URL
         $params = array_merge(array('verb' => $verb), $params);
-        $url = $this->url . '?' . http_build_query($params);
+        $url = $this->url . (parse_url($this->url, PHP_URL_QUERY) ? '&' : '?') . http_build_query($params);
 
         //Do the request
         try {
