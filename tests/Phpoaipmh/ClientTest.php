@@ -56,6 +56,29 @@ class ClientTest extends PHPUnit_Framework_TestCase
     // -------------------------------------------------------------------------
 
     /**
+     * Test that URL is built correctly
+     * @dataProvider getUrlsToTest
+     */
+    public function testRequestUrlBuildCorrectly($endpointUrl, $expectedRequestUrl)
+    {
+        $mockClient = new HttpMockClient;
+        $mockClient->toReturn = '<?xml version="1.0" encoding="UTF-8" ?>  <OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/  http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">  </OAI-PMH>';
+        $obj = new Client($endpointUrl, $mockClient);
+        $obj->request('Identify', array('param' => 'value'));
+
+        $this->assertEquals($expectedRequestUrl, $mockClient->lastRequestUrl);
+    }
+
+    public function getUrlsToTest() {
+        return array(
+            array('http://example.com/oai', 'http://example.com/oai?verb=Identify&param=value'),
+            array('http://example.com/?oai=1', 'http://example.com/?oai=1&verb=Identify&param=value'),
+        );
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
      * Test that a simple valid response is decoded correctly
      */
     public function testRequestDecodesValidResponseCorrectly()
@@ -155,10 +178,12 @@ class ClientTest extends PHPUnit_Framework_TestCase
 
 class HttpMockClient implements HttpAdapterInterface
 {
+    public $lastRequestUrl;
     public $toReturn = '';
 
     public function request($url)
     {
+        $this->lastRequestUrl = $url;
         return $this->toReturn;
     }
 }
