@@ -195,7 +195,22 @@ send them via the `\Phpoaipmh\Client` class:
 Alternatively, if you wish to send arbitrary parameters while taking advantage of the
 convenience of the `\Phpoaipmh\Endpoint` class, you can use the Guzzle event system:
 
+```php
+// Create a function or class to add parameters to a request
+$addParamsListener = function(\GuzzleHttp\Event\BeforeEvent $event) {
+   $req = $event->getRequest();
+   $req->getQuery()->add('api_key', 'xyz123');
 
+   // You could do other things to the request here, too, like adding a header..
+   $req->addHeader('Some-Header', 'some-header-value');
+};
+
+// Manually create a Guzzle HTTP adapter
+$guzzleAdapter = new \Phpoaipmh\HttpAdapter\Guzzle();
+$guzzleAdapter->getGuzzleClient()->getEmitter()->on('before', $addParamsListener);
+
+$client  = new \Phpoaipmh\Client('http://some.service.com/oai', $guzzleAdapter);
+```
 
 Implementation Tips
 -------------------
