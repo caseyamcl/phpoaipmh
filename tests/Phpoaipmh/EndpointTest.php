@@ -38,6 +38,7 @@ class EndpointTest extends PHPUnit_Framework_TestCase
     {
         $obj = new Endpoint($this->getMockClient());
         $this->assertInstanceOf('Phpoaipmh\Endpoint', $obj);
+        $this->assertInstanceOf('Phpoaipmh\EndpointInterface', $obj);
     }
 
     // -------------------------------------------------------------------------
