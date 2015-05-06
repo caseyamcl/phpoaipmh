@@ -25,7 +25,7 @@ use DateTime;
  * @since v1.0
  * @author Casey McLaughlin <caseyamcl@gmail.com>
  */
-class Endpoint
+class Endpoint implements EndpointInterface
 {
     const AUTO = null;
 
