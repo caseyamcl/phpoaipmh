@@ -1,6 +1,13 @@
 PHPOAIPMH Changelog
 ===================
 
+## v2.3 - 2015-05-05
+
+### Added
+  - Support arbitrary query parameters in `Client` class when making requests (thanks (@scheb)
+  - New `Phpoaipmh\EndpointInterface` to make decorating the Endpoint class easier
+  - Scrutinizer support
+
 ## v2.2 - 2015-03-02
 
 ### Fixed

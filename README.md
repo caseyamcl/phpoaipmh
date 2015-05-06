@@ -183,6 +183,20 @@ $client  = new \Phpoaipmh\Client('http://some.service.com/oai', $guzzleAdapter);
 This will create a client that adheres to the rate-limiting rules enforced by the OAI-PMH record provider.
 
 
+Sending Arbitrary Parameters
+----------------------------
+
+If you wish to send arbitrary HTTP query parameters with your requests, you can
+send them via the `\Phpoaipmh\Client` class:
+
+    $client = new \Phpoaipmh\Client('http://some.service.com/oai');
+    $client->request('Identify', ['some' => 'extra-param']);
+
+Alternatively, if you wish to send arbitrary parameters while taking advantage of the
+convenience of the `\Phpoaipmh\Endpoint` class, you can use the Guzzle event system:
+
+
+
 Implementation Tips
 -------------------
 

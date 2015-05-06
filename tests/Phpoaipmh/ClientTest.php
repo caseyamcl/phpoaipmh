@@ -18,7 +18,7 @@
 namespace Phpoaipmh;
 
 use Phpoaipmh\Exception\HttpException;
-use Phpoaipmh\HttpAdapter\HttpAdapterInterface;
+use Phpoaipmh\Fixture\HttpMockClient;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -66,7 +66,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $obj = new Client($endpointUrl, $mockClient);
         $obj->request('Identify', array('param' => 'value'));
 
-        $this->assertEquals($expectedRequestUrl, $mockClient->lastRequestUrl);
+        $this->assertEquals($expectedRequestUrl, $mockClient->getLastRequestUrl());
     }
 
     public function getUrlsToTest() {
@@ -176,14 +176,3 @@ class ClientTest extends PHPUnit_Framework_TestCase
 
 // =============================================================================
 
-class HttpMockClient implements HttpAdapterInterface
-{
-    public $lastRequestUrl;
-    public $toReturn = '';
-
-    public function request($url)
-    {
-        $this->lastRequestUrl = $url;
-        return $this->toReturn;
-    }
-}
