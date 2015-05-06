@@ -8,6 +8,7 @@ A PHP OAI-PMH harvester client library
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Build Status](https://travis-ci.org/caseyamcl/Phpoiapmh.png)](https://travis-ci.org/caseyamcl/Phpoiapmh.png)
 [![Total Downloads](https://img.shields.io/packagist/dt/caseyamcl/Phpoaipmh.svg?style=flat-square)](https://packagist.org/packages/caseyamcl/Phpoaipmh)
+[![Scrutinizer](https://img.shields.io/scrutinizer/g/caseyamcl/phpoaipmh.svg?style=flat-square)](https://scrutinizer-ci.com/g/caseyamcl/phpoaipmh/)
 
 This library provides an interface to harvest OAI-PMH metadata
 from any [OAI 2.0 compliant endpoint](http://www.openarchives.org/OAI/openarchivesprotocol.html#ListMetadataFormats).
