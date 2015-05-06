@@ -173,8 +173,8 @@ class Endpoint implements EndpointInterface
      *
      * @param  string         $verb           OAI Verb
      * @param  string         $metadataPrefix Required by OAI-PMH endpoint
-     * @param  \DateTime      $from           An optional 'from' date for selective harvesting
-     * @param  \DateTime      $until          An optional 'from' date for selective harvesting
+     * @param  \DateTime|null $from           An optional 'from' date for selective harvesting
+     * @param  \DateTime|null $until          An optional 'from' date for selective harvesting
      * @param  string         $set            An optional setSpec for selective harvesting
      *
      * @return RecordIterator

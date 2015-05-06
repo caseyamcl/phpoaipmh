@@ -154,7 +154,7 @@ class RecordIterator implements \Iterator
      * Return an item from the currently-retrieved batch, get next batch and
      * return first record from it, or return false if no more records
      *
-     * @return \SimpleXMLElement|boolean
+     * @return \SimpleXMLElement|bool
      */
     public function nextItem()
     {
