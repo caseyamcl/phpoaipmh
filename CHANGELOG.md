@@ -1,6 +1,12 @@
 PHPOAIPMH Changelog
 ===================
 
+## v2.4 - 2015-05-18
+
+### Added
+  - Ability to pass custom request parameters at runtime for cURL adapter
+  - Documentation for customizing request parameters in README.md
+
 ## v2.3 - 2015-05-05
 
 ### Added
