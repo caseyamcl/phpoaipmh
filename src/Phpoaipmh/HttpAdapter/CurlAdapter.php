@@ -31,7 +31,7 @@ class CurlAdapter implements HttpAdapterInterface
      *
      * Checks for CURL libraries
      *
-     * @param array $curlOpts Array of CURL directives and values (e.g. [CURLOPT_TIMEOUT => 50])
+     * @param array $curlOpts  Array of CURL directives and values (e.g. [CURLOPT_TIMEOUT => 120])
      * @throws \Exception  If CURL not installed.
      */
     public function __construct(array $curlOpts = [])
@@ -40,7 +40,25 @@ class CurlAdapter implements HttpAdapterInterface
             throw new \Exception("OAI-PMH CurlAdapter HTTP HttpAdapterInterface requires the CURL PHP Extension");
         }
 
-        $this->curlOpts = array_replace($this->curlOpts, $curlOpts);
+        $this->setCurlOpts($curlOpts);
+    }
+
+    // ---------------------------------------------------------------
+
+    /**
+     * Set cURL Options at runtime
+     *
+     * Sets cURL options.  If $merge is true, then merges desired params with existing.
+     * If $merge is false, then clobbers the existing cURL options
+     *
+     * @param array $opts
+     * @param bool  $merge
+     */
+    public function setCurlOpts(array $opts, $merge = true)
+    {
+        $this->curlOpts = ($merge)
+            ? array_replace($this->curlOpts, $opts)
+            : $opts;
     }
 
     // -------------------------------------------------------------------------

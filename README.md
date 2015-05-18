@@ -119,6 +119,37 @@ This library will throw different exceptions under different circumstances:
 
 All exceptions extend the `Phpoaipmh\Exception\BaseoaipmhException` class.
 
+Customizing Default Request Parameters
+--------------------------------------
+
+You can customize the default request parameters (for example, request timeout) for both cURL and Guzzle 
+clients by building the adapter objects manually.
+
+To customize cURL parameters, pass them in as an array of key/value items to `CurlAdapter::setCurlOpts()`:
+
+```php
+use Phpoaipmh\Client,
+    Phpoaipmh\HttpAdapter\CurlAdapter;
+
+$adapter = new CurlAdapter();
+$adapter->setCurlOpts([CURLOPT_TIMEOUT => 120]);
+$client = new Client('http://some.service.com/oai', $adapter);
+
+$myEndpoint = new Endpoint($client);
+```
+
+If you're using Guzzle, you can set the parameters in a similar way:
+
+```php
+use Phpoaipmh\Client,
+    Phpoaipmh\HttpAdapter\GuzzleAdapter;
+
+$adapter = new GuzzleAdapter();
+$adapter->getGuzzleClient()->setDefaultOption('timeout', 120);
+$client = new Client('http://some.service.com/oai', $adapter);
+
+$myEndpoint = new Endpoint($client);
+```
 
 Dealing with XML Namespaces
 ---------------------------
@@ -184,8 +215,8 @@ $client  = new \Phpoaipmh\Client('http://some.service.com/oai', $guzzleAdapter);
 This will create a client that adheres to the rate-limiting rules enforced by the OAI-PMH record provider.
 
 
-Sending Arbitrary Parameters
-----------------------------
+Sending Arbitrary Query Parameters
+----------------------------------
 
 If you wish to send arbitrary HTTP query parameters with your requests, you can
 send them via the `\Phpoaipmh\Client` class:
