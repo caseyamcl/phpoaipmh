@@ -204,11 +204,6 @@ class RecordIterator implements \Iterator
             throw new MalformedResponseException(sprintf("Expected XML element list '%s' missing for verb '%s'", $nodeName, $verb));
         }
 
-        //Process the results
-        foreach ($resp->$verb->$nodeName as $node) {
-            $this->batch[] = $node;
-        }
-
         //Set the resumption token and expiration date, if specified in the response
         if (isset($resp->$verb->resumptionToken)) {
             $this->resumptionToken = (string) $resp->$verb->resumptionToken;
@@ -223,6 +218,11 @@ class RecordIterator implements \Iterator
         } else {
             //Unset the resumption token when we're at the end of the list
             $this->resumptionToken = null;
+        }
+
+        //Process the results
+        foreach ($resp->$verb->$nodeName as $node) {
+            $this->batch[] = $node;
         }
 
         //Return a count
