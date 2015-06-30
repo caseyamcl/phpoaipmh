@@ -167,8 +167,7 @@ class RecordIterator implements \Iterator
         if (count($this->batch) > 0) {
             $this->numProcessed++;
 
-            $item = array_shift($this->batch);
-            $this->currItem = new \SimpleXMLElement($item->asXML());
+            $this->currItem = array_shift($this->batch);
         } else {
             $this->currItem = false;
         }
