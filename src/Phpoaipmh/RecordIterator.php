@@ -168,7 +168,18 @@ class RecordIterator implements \Iterator
             $this->numProcessed++;
 
             $item = array_shift($this->batch);
-            $this->currItem = new \SimpleXMLElement($item->asXML());
+            $namespaceAttributes = '';
+            // Add all namespaces until current node, in order to properly create new SimpleXMLElement
+            foreach ($item->getNamespaces(true) as $namespaceName => $namespaceValue) {
+                $namespaceName = $namespaceName ? ':'.$namespaceName : '';
+                $namespaceAttributes .= ' xmlns'.$namespaceName.'="'.$namespaceValue.'"';
+            }
+            $xmlStr = $item->asXML();
+            if ($namespaceAttributes) {
+                $pos = strpos($xmlStr, '>');
+                $xmlStr = substr($xmlStr, 0, $pos).$namespaceAttributes.substr($xmlStr, $pos);
+            }
+            $this->currItem = new \SimpleXMLElement($xmlStr);
         } else {
             $this->currItem = false;
         }
