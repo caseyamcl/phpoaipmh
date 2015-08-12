@@ -43,6 +43,11 @@ class Client
      */
     private $httpClient;
 
+    /**
+     * @var string
+     */
+    private $lastRequest;
+
     // -------------------------------------------------------------------------
 
     /**
@@ -94,6 +99,8 @@ class Client
         //Build the URL
         $params = array_merge(array('verb' => $verb), $params);
         $url = $this->url . (parse_url($this->url, PHP_URL_QUERY) ? '&' : '?') . http_build_query($params);
+
+        $this->lastRequest = $url;
 
         //Do the request
         try {
@@ -156,4 +163,16 @@ class Client
 
         return $xml;
     }
+
+    /**
+     * returns the last request done by client
+     *
+     * @return string
+     */
+    public function getLastRequest()
+    {
+        return $this->lastRequest;
+    }
+
+
 }
