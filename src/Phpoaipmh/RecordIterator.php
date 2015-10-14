@@ -168,7 +168,7 @@ class RecordIterator implements \Iterator
             $this->numProcessed++;
 
             $item = array_shift($this->batch);
-            $this->currItem = $item;
+            $this->currItem = clone $item;
         } else {
             $this->currItem = false;
         }
