@@ -40,7 +40,7 @@ class Example
      */
     public function __construct()
     {
-        $oaiUrl   = 'http://nsdl.org/oai';
+        $oaiUrl   = 'http://openscholarship.wustl.edu/do/oai/';
         $client = new Client($oaiUrl);
         $this->endpoint = new Endpoint($client);
     }
