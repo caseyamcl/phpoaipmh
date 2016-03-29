@@ -82,9 +82,11 @@ interface EndpointInterface
      *                                        selective harvesting
      * @param  string    $set                 An optional setSpec for selective
      *                                        harvesting
+     * @param  string    $resumptionToken     An optional resumptionToken for selective
+     *                                        harvesting
      * @return RecordIterator
      */
-    public function listIdentifiers($metadataPrefix, $from = null, $until = null, $set = null);
+    public function listIdentifiers($metadataPrefix, $from = null, $until = null, $set = null, $resumptionToken = null);
 
     /**
      * List Records
@@ -98,7 +100,9 @@ interface EndpointInterface
      *                                        selective harvesting
      * @param  string    $set                 An optional setSpec for selective
      *                                        harvesting
+     * @param  string    $resumptionToken     An optional resumptionToken for selective
+     *                                        harvesting
      * @return RecordIterator
      */
-    public function listRecords($metadataPrefix, $from = null, $until = null, $set = null);
+    public function listRecords($metadataPrefix, $from = null, $until = null, $set = null, $resumptionToken = null);
 }
