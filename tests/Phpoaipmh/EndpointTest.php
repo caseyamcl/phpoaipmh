@@ -172,13 +172,14 @@ class EndpointTest extends PHPUnit_Framework_TestCase
         $client = $this->getMockClient();
         $obj = new Endpoint($client);
 
-        $returnValue = $obj->listIdentifiers("metadataPrefix", new \DateTime("2014-01-01"), new \DateTime("2015-01-01"), "setSpec");
+        $returnValue = $obj->listIdentifiers("metadataPrefix", new \DateTime("2014-01-01"), new \DateTime("2015-01-01"), "setSpec", "0/200/733/nsdl_dc/null/2012-07-26/null");
 
         $expectedParams = array(
             'metadataPrefix' => "metadataPrefix",
             'from' => "2014-01-01",
             'until' => "2015-01-01",
             'set' => "setSpec",
+            'resumptionToken' => "0/200/733/nsdl_dc/null/2012-07-26/null",
         );
         $expectedRecordIterator = new RecordIterator($client, "ListIdentifiers", $expectedParams);
         $this->assertEquals($expectedRecordIterator, $returnValue);
@@ -209,13 +210,14 @@ class EndpointTest extends PHPUnit_Framework_TestCase
         $client = $this->getMockClient();
         $obj = new Endpoint($client);
 
-        $returnValue = $obj->listRecords("metadataPrefix", new \DateTime("2014-01-01"), new \DateTime("2015-01-01"), "setSpec");
+        $returnValue = $obj->listRecords("metadataPrefix", new \DateTime("2014-01-01"), new \DateTime("2015-01-01"), "setSpec", "0/200/733/nsdl_dc/null/2012-07-26/null");
 
         $expectedParams = array(
             'metadataPrefix' => "metadataPrefix",
             'from' => "2014-01-01",
             'until' => "2015-01-01",
             'set' => "setSpec",
+            'resumptionToken' => "0/200/733/nsdl_dc/null/2012-07-26/null",
         );
         $expectedRecordIterator = new RecordIterator($client, "ListRecords", $expectedParams);
         $this->assertEquals($expectedRecordIterator, $returnValue);
