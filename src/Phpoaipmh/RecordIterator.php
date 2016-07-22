@@ -87,12 +87,13 @@ class RecordIterator implements \Iterator
      * @param string $verb       The verb to use when retrieving results from the client
      * @param array  $params     Optional parameters passed to OAI-PMH
      */
-    public function __construct(Client $httpClient, $verb, array $params = array())
+    public function __construct(Client $httpClient, $verb, array $params = array(), $resumptionToken = null)
     {
         //Set parameters
-        $this->httpClient = $httpClient;
-        $this->verb       = $verb;
-        $this->params     = $params;
+        $this->httpClient       = $httpClient;
+        $this->verb             = $verb;
+        $this->params           = $params;
+        $this->resumptionToken  = $resumptionToken;
 
         //Node name error?
         if (! $this->getItemNodeName()) {
@@ -299,5 +300,15 @@ class RecordIterator implements \Iterator
     public function rewind()
     {
         $this->reset();
+    }
+
+    public function getBatch()
+    {
+        return $this->batch;
+    }
+
+    public function getResumptionToken()
+    {
+        return $this->resumptionToken;
     }
 }

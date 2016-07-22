@@ -138,14 +138,15 @@ class Endpoint implements EndpointInterface
      * Corresponds to OAI Verb to list record identifiers
      *
      * @param  string         $metadataPrefix Required by OAI-PMH endpoint
-     * @param  \DateTime      $from           An optional 'from' date for selective harvesting
-     * @param  \DateTime      $until          An optional 'until' date for selective harvesting
-     * @param  string         $set            An optional setSpec for selective harvesting
+     * @param  \DateTime      $from             An optional 'from' date for selective harvesting
+     * @param  \DateTime      $until            An optional 'until' date for selective harvesting
+     * @param  string         $set              An optional setSpec for selective harvesting
+     * @param  string         $resumptionToken  An optional resumptionToken for selective harvesting
      * @return RecordIterator
      */
-    public function listIdentifiers($metadataPrefix, $from = null, $until = null, $set = null)
+    public function listIdentifiers($metadataPrefix, $from = null, $until = null, $set = null, $resumptionToken = null)
     {
-        return $this->createRecordIterator("ListIdentifiers", $metadataPrefix, $from, $until, $set);
+        return $this->createRecordIterator("ListIdentifiers", $metadataPrefix, $from, $until, $set, $resumptionToken);
     }
 
     // -------------------------------------------------------------------------
@@ -156,14 +157,15 @@ class Endpoint implements EndpointInterface
      * Corresponds to OAI Verb to list records
      *
      * @param  string         $metadataPrefix Required by OAI-PMH endpoint
-     * @param  \DateTime      $from           An optional 'from' date for selective harvesting
-     * @param  \DateTime      $until          An optional 'from' date for selective harvesting
-     * @param  string         $set            An optional setSpec for selective harvesting
+     * @param  \DateTime      $from             An optional 'from' date for selective harvesting
+     * @param  \DateTime      $until            An optional 'from' date for selective harvesting
+     * @param  string         $set              An optional setSpec for selective harvesting
+     * @param  string         $resumptionToken  An optional resumptionToken for selective harvesting
      * @return RecordIterator
      */
-    public function listRecords($metadataPrefix, $from = null, $until = null, $set = null)
+    public function listRecords($metadataPrefix, $from = null, $until = null, $set = null, $resumptionToken = null)
     {
-        return $this->createRecordIterator("ListRecords", $metadataPrefix, $from, $until, $set);
+        return $this->createRecordIterator("ListRecords", $metadataPrefix, $from, $until, $set, $resumptionToken);
     }
 
     // -------------------------------------------------------------------------
@@ -171,15 +173,16 @@ class Endpoint implements EndpointInterface
     /**
      * Create a record iterator
      *
-     * @param  string         $verb           OAI Verb
-     * @param  string         $metadataPrefix Required by OAI-PMH endpoint
-     * @param  \DateTime|null $from           An optional 'from' date for selective harvesting
-     * @param  \DateTime|null $until          An optional 'from' date for selective harvesting
-     * @param  string         $set            An optional setSpec for selective harvesting
+     * @param  string         $verb             OAI Verb
+     * @param  string         $metadataPrefix   Required by OAI-PMH endpoint
+     * @param  \DateTime|null $from             An optional 'from' date for selective harvesting
+     * @param  \DateTime|null $until            An optional 'from' date for selective harvesting
+     * @param  string         $set              An optional setSpec for selective harvesting
+     * @param  string         $resumptionToken  An optional resumptionToken for selective harvesting
      *
      * @return RecordIterator
      */
-    private function createRecordIterator($verb, $metadataPrefix, $from, $until, $set)
+    private function createRecordIterator($verb, $metadataPrefix, $from, $until, $set, $resumptionToken)
     {
         $params = array('metadataPrefix' => $metadataPrefix);
 
@@ -207,7 +210,7 @@ class Endpoint implements EndpointInterface
             $params['set'] = $set;
         }
 
-        return new RecordIterator($this->client, $verb, $params);
+        return new RecordIterator($this->client, $verb, $params, $resumptionToken);
     }
 
     // ---------------------------------------------------------------
