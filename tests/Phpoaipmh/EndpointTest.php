@@ -179,9 +179,8 @@ class EndpointTest extends PHPUnit_Framework_TestCase
             'from' => "2014-01-01",
             'until' => "2015-01-01",
             'set' => "setSpec",
-            'resumptionToken' => "0/200/733/nsdl_dc/null/2012-07-26/null",
         );
-        $expectedRecordIterator = new RecordIterator($client, "ListIdentifiers", $expectedParams);
+        $expectedRecordIterator = new RecordIterator($client, "ListIdentifiers", $expectedParams, "0/200/733/nsdl_dc/null/2012-07-26/null");
         $this->assertEquals($expectedRecordIterator, $returnValue);
     }
 
@@ -217,9 +216,8 @@ class EndpointTest extends PHPUnit_Framework_TestCase
             'from' => "2014-01-01",
             'until' => "2015-01-01",
             'set' => "setSpec",
-            'resumptionToken' => "0/200/733/nsdl_dc/null/2012-07-26/null",
         );
-        $expectedRecordIterator = new RecordIterator($client, "ListRecords", $expectedParams);
+        $expectedRecordIterator = new RecordIterator($client, "ListRecords", $expectedParams, "0/200/733/nsdl_dc/null/2012-07-26/null");
         $this->assertEquals($expectedRecordIterator, $returnValue);
     }
 
