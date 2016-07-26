@@ -206,7 +206,7 @@ $retrySubscriber = new \GuzzleHttp\Subscriber\Retry\RetrySubscriber([
 ]);
 
 // Manually create a Guzzle HTTP adapter
-$guzzleAdapter = new \Phpoaipmh\HttpAdapter\Guzzle();
+$guzzleAdapter = new \Phpoaipmh\HttpAdapter\GuzzleAdapter();
 $guzzleAdapter->getGuzzleClient()->getEmitter()->attach($retrySubscriber);
 
 $client  = new \Phpoaipmh\Client('http://some.service.com/oai', $guzzleAdapter);
@@ -238,7 +238,7 @@ $addParamsListener = function(\GuzzleHttp\Event\BeforeEvent $event) {
 };
 
 // Manually create a Guzzle HTTP adapter
-$guzzleAdapter = new \Phpoaipmh\HttpAdapter\Guzzle();
+$guzzleAdapter = new \Phpoaipmh\HttpAdapter\GuzzleAdapter();
 $guzzleAdapter->getGuzzleClient()->getEmitter()->on('before', $addParamsListener);
 
 $client  = new \Phpoaipmh\Client('http://some.service.com/oai', $guzzleAdapter);
