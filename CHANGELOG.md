@@ -1,6 +1,14 @@
 PHPOAIPMH Changelog
 ===================
 
+## v2.5 - 2016-07-26
+
+### Added
+  - Added new parameter to `Phpoaipmh\EndpointInterface` and `Phpoaipmh\RecordIterator` to allow passing resumption token (thanks @sblommaert)
+  
+### Fixed
+  - Fixed example OAI URL in example implementation code
+
 ## v2.4 - 2015-05-18
 
 ### Added

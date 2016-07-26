@@ -257,6 +257,7 @@ Credits
 * [Casey McLaughlin](http://github.com/caseyamcl)
 * [Christian Scheb](https://github.com/scheb)
 * [Matthias Vandermaesen](https://github.com/netsensei)
+* [Sean Blommaert](https://github.com/sblommaert)
 * [All Contributors](https://github.com/caseyamcl/phpoaipmh/contributors)
 
 License
