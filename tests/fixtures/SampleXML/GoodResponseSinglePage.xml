@@ -22,7 +22,13 @@
       </header>
     <metadata>
     
-<nsdl_dc:nsdl_dc xmlns:nsdl_dc="http://ns.nsdl.org/nsdl_dc_v1.02/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dct="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:lar="http://ns.nsdl.org/schemas/dc/lar" schemaVersion="1.02.000" xsi:schemaLocation="http://ns.nsdl.org/nsdl_dc_v1.02/ http://ns.nsdl.org/schemas/nsdl_dc/nsdl_dc_v1.02.xsd">
+<nsdl_dc:nsdl_dc
+    xmlns:nsdl_dc="http://ns.nsdl.org/nsdl_dc_v1.02/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:dct="http://purl.org/dc/terms/"
+    xmlns:lar="http://ns.nsdl.org/schemas/dc/lar"
+    schemaVersion="1.02.000"
+    xsi:schemaLocation="http://ns.nsdl.org/nsdl_dc_v1.02/ http://ns.nsdl.org/schemas/nsdl_dc/nsdl_dc_v1.02.xsd">
   <dc:identifier>Reciprocal Net Sample id 27344140</dc:identifier>
   <dc:identifier>Common molecules Sample 50743</dc:identifier>
   <dc:identifier xsi:type="dct:URI">http://www.reciprocalnet.org/recipnet/showsample.jsp?sampleId=27344140</dc:identifier>
