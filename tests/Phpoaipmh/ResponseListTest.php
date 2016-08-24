@@ -159,6 +159,18 @@ class ResponseListTest extends PHPUnit_Framework_TestCase
         $this->assertNull($obj->getTotalRecordsInCollection());
     }
 
+    // ---------------------------------------------------------------
+
+    public function testGetRecordsWithNamespaces()
+    {
+        //Single page sample file contains 162 results in a valid ListRecords response
+        $output = $this->generateSampleXML(array('NamespacedSample.xml'));
+        $obj = new RecordIterator($this->getMockClient($output), 'ListRecords');
+
+        // The single page records do not supply a number
+        $this->assertEquals(2402263, $obj->getTotalRecordsInCollection());
+    }
+
     // ----------------------------------------------------------------
 
     /**

@@ -169,12 +169,39 @@ class RecordIterator implements \Iterator
             $this->numProcessed++;
 
             $item = array_shift($this->batch);
-            $this->currItem = new \SimpleXMLElement($item->asXML());
+            $this->currItem = self::xmlReduce($item);
         } else {
             $this->currItem = false;
         }
 
         return $this->currItem;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Reduce a SimpleXMLElement to its minimal, including namespaces at root
+     * @author Vincent Beauvivre <vincent@beauvivre.fr>
+     *
+     * @param \SimpleXMLElement $node The node to treate
+     *
+     * @return \SimpleXMLElement, the new xml with namespaces included
+     */
+    public static function xmlReduce(\SimpleXMLElement $node)
+    {
+        $namespaceAttributes = '';
+        // Add all namespaces until current node, in order to properly create new SimpleXMLElement
+        foreach ($node->getNamespaces(true) as $namespaceName => $namespaceValue) {
+            $namespaceName = $namespaceName ? ':'.$namespaceName : '';
+            $namespaceAttributes .= ' xmlns'.$namespaceName.'="'.$namespaceValue.'"';
+        }
+        $xmlStr = $node->asXML();
+        if ($namespaceAttributes) {
+            $pos = strpos($xmlStr, '>');
+            $xmlStr = substr($xmlStr, 0, $pos).$namespaceAttributes.substr($xmlStr, $pos);
+        }
+
+        return new \SimpleXMLElement($xmlStr);
     }
 
     // -------------------------------------------------------------------------
