@@ -1,6 +1,11 @@
 PHPOAIPMH Changelog
 ===================
 
+## v2.5.1 - 2016-09-17
+
+### Fixed
+  - Fixed issue where XML namespace settings get lost in the iterator (thanks @vbuch)
+
 ## v2.5 - 2016-07-26
 
 ### Added
