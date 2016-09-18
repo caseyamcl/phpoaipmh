@@ -169,7 +169,7 @@ class RecordIterator implements \Iterator
             $this->numProcessed++;
 
             $item = array_shift($this->batch);
-            $this->currItem = new \SimpleXMLElement($item->asXML());
+            $this->currItem = clone $item;
         } else {
             $this->currItem = false;
         }
