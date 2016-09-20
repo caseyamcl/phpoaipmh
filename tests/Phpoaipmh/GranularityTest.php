@@ -34,15 +34,15 @@ class GranularityTest extends PHPUnit_Framework_TestCase
     public function testGranularityFormatting($granularity, $expectedResult)
     {
         $testDate = new \DateTime("2015-02-01 12:15:30", new \DateTimeZone("UTC"));
-        $returnValue = Granularity::formatDate($testDate, $granularity);
+        $returnValue = DateGranularity::formatDate($testDate, $granularity);
         $this->assertEquals($expectedResult, $returnValue);
     }
 
     public function getFormatTests()
     {
         return array(
-            array(Granularity::DATE, "2015-02-01"),
-            array(Granularity::DATE_AND_TIME, "2015-02-01T12:15:30Z"),
+            array(DateGranularity::DATE, "2015-02-01"),
+            array(DateGranularity::DATE_AND_TIME, "2015-02-01T12:15:30Z"),
         );
     }
 }

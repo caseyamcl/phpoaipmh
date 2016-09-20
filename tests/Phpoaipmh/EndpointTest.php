@@ -17,6 +17,7 @@
 
 namespace Phpoaipmh;
 
+use Phpoaipmh\Endpoint\Endpoint;
 use PHPUnit_Framework_TestCase;
 
 /**

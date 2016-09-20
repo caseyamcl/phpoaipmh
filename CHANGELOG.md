@@ -1,6 +1,36 @@
 PHPOAIPMH Changelog
 ===================
 
+## 3.0 - Unreleased
+
+### Changed
+  - PHP 5.5 or newer now required
+  - Created interfaces for most service classes (all except `Factory`)
+  - Refactored `Client` class; merged `RecordIterator` functionality
+  - Upgraded to PSR-4 autoloader standard
+  - Moved Endpoint URL from Client service to RequestParameters model
+  - Guzzle implementation now uses Guzzle v6.0
+  - Made service classes immutable
+  - `Endpoint` class methods now returns `EndpointRequest` instances, which can be modified before running
+  - `Endpoint::listRecords` and `Endpoint::listIdentifiers` no require `\DateTime` instances for date constraints
+  - Renamed `DateGranularity` class and moved responsibility for it to the `Client`
+  
+### Added
+  - Added models for representing `RequestParameters`, `Record`, `RecordPage`, and `PaginationInfo` data
+  - Added sensible default options for Guzzle HTTP adapter
+  - Added `Factory` class to easily build instances with default configuration
+  - Added `CurlHttpException`, which provides rudimentary exceptions for the cURL adapter (replaces `HttpException`)
+
+### Removed
+  - Removed `RecordIterator` class. Use `ClientInterface::iterateRecords()` now
+  - Removed `HttpAdapter\CurlAdapter::setCurlOpts()`.  This service class is now immutable
+  - Removed `HttpException`. transport exceptions are no longer handled by this library; only OAI-PMH errors are handled
+  - Default Client class no longer auto-detects `HttpAdapter`; this was moved to `Factory::detectHttpAdapter`
+  
+### Fixed
+  - It is now much easier to provide custom query parameters when creating requests in the `Endpoint` class
+
+
 ## v2.5.1 - 2016-09-17
 
 ### Fixed
@@ -31,10 +61,10 @@ PHPOAIPMH Changelog
 
 ### Fixed
   - Fixed Deprecated warning bug for `until` in `Endpoint` class (thanks @igor-kamil)
-  - Fixed date/time format in new `Granularity` helper (thanks @scheb)
+  - Fixed date/time format in new `DateGranularity` helper (thanks @scheb)
   
 ### Changed
-  - Improved error handling; if well-formed OAI-PMH errors accompany HTTP error codes, a `OaiPmhException` is thrown instead of `HttpException` (thanks @scheb)
+  - Improved error handling; if well-formed OAI-PMH errors accompany HTTP error codes, a `OaiPmhException` is thrown instead of `CurlHttpException` (thanks @scheb)
 
 ## v2.1 - 2015-02-19
 
@@ -46,7 +76,7 @@ PHPOAIPMH Changelog
 ### Added
   - `Endpoint` constructor now accepts optional `granularity` string parameter to specify date/time granularity for record retrieval
   - `Endpoint` will now attempt to automatically fetch date/time granularity from the OAI-PMH provider if not explicitly specified
-  - Added `Granularity` helper class to define allowed date/time granularity levels
+  - Added `DateGranularity` helper class to define allowed date/time granularity levels
   - Added `.gitattributes`, `.scrutinizer`, and `CONTRIBUTING.md` files
   - Sending strings to `Endpoint` class for temporal (`from`, `until`) parameters will trigger a deprecation warning
   - Added additional unit tests

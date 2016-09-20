@@ -13,7 +13,7 @@
 namespace Phpoaipmh\Example;
 
 use Phpoaipmh\Client;
-use Phpoaipmh\Endpoint;
+use Phpoaipmh\Endpoint\Endpoint;
 
 /**
  * A generic Example class containing the business logic for the Example

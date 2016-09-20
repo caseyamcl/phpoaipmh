@@ -3,9 +3,6 @@
 namespace Phpoaipmh\HttpAdapter;
 
 use GuzzleHttp\Client as GuzzleClient;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Exception\TransferException;
-use Phpoaipmh\Exception\HttpException;
 
 /**
  * GuzzleAdapter HttpAdapter HttpAdapterInterface Adapter
@@ -15,11 +12,19 @@ use Phpoaipmh\Exception\HttpException;
 class GuzzleAdapter implements HttpAdapterInterface
 {
     /**
+     * @var array  Default Guzzle Options; these are ignored if GuzzleClient passed to constructor
+     */
+    private static $defaultGuzzleOptions = [
+        'connect_timeout'    => 10,
+        'timeout'            => 60,
+        'allow_redirects'    => 3,
+        'headers'            => ['User-Agent' => 'PHP OAI-PMH Library'],
+    ];
+
+    /**
      * @var GuzzleClient
      */
     private $guzzle;
-
-    // ----------------------------------------------------------------
 
     /**
      * Constructor
@@ -28,10 +33,8 @@ class GuzzleAdapter implements HttpAdapterInterface
      */
     public function __construct(GuzzleClient $guzzle = null)
     {
-        $this->guzzle = $guzzle ?: new GuzzleClient();
+        $this->guzzle = $guzzle ?: new GuzzleClient(static::$defaultGuzzleOptions);
     }
-
-    // ----------------------------------------------------------------
 
     /**
      * Get the Guzzle Client
@@ -43,25 +46,16 @@ class GuzzleAdapter implements HttpAdapterInterface
         return $this->guzzle;
     }
 
-    // ----------------------------------------------------------------
-
     /**
      * Do the request with GuzzleAdapter
      *
-     * @param  string        $url
+     * @param  string  $url
+     * @param  array   $queryParams
      * @return string
-     * @throws HttpException
      */
-    public function request($url)
+    public function request($url, array $queryParams = [])
     {
-        try {
-            $resp = $this->guzzle->get($url);
-            return (string) $resp->getBody();
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            throw new HttpException($response ? $response->getBody() : null, $e->getMessage(), $e->getCode(), $e);
-        } catch (TransferException $e) {
-            throw new HttpException('', $e->getMessage(), $e->getCode(), $e);
-        }
+        $response = $this->guzzle->get($url, ['query' => $queryParams]);
+        return (string) $response->getBody();
     }
 }

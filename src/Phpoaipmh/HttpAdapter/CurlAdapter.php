@@ -2,8 +2,6 @@
 
 namespace Phpoaipmh\HttpAdapter;
 
-use Phpoaipmh\Exception\HttpException;
-
 /**
  * CurlAdapter HttpAdapter HttpAdapterInterface Adapter
  *
@@ -24,8 +22,6 @@ class CurlAdapter implements HttpAdapterInterface
         CURLOPT_USERAGENT         => 'PHP OAI-PMH Library',
     ];
 
-    // -------------------------------------------------------------------------
-
     /**
      * Constructor
      *
@@ -40,37 +36,22 @@ class CurlAdapter implements HttpAdapterInterface
             throw new \Exception("OAI-PMH CurlAdapter HTTP HttpAdapterInterface requires the CURL PHP Extension");
         }
 
-        $this->setCurlOpts($curlOpts);
+        $this->curlOpts = array_replace($this->curlOpts, $curlOpts);
     }
-
-    // ---------------------------------------------------------------
-
-    /**
-     * Set cURL Options at runtime
-     *
-     * Sets cURL options.  If $merge is true, then merges desired params with existing.
-     * If $merge is false, then clobbers the existing cURL options
-     *
-     * @param array $opts
-     * @param bool  $merge
-     */
-    public function setCurlOpts(array $opts, $merge = true)
-    {
-        $this->curlOpts = ($merge)
-            ? array_replace($this->curlOpts, $opts)
-            : $opts;
-    }
-
-    // -------------------------------------------------------------------------
 
     /**
      * Do CURL Request
      *
      * @param  string $url The full URL
+     * @param array   $queryParams
      * @return string The response body
      */
-    public function request($url)
+    public function request($url, array $queryParams = [])
     {
+        // Add query parameters to URL
+        $url = $url . (parse_url($url, PHP_URL_QUERY) ? '&' : '?') . http_build_query($queryParams);
+
+        // Merge URL into curl options
         $curlOpts = array_replace($this->curlOpts, [CURLOPT_URL => $url]);
 
         $ch = curl_init();
@@ -78,17 +59,24 @@ class CurlAdapter implements HttpAdapterInterface
             curl_setopt($ch, $opt, $optVal);
         }
 
+        // Do the request
+
         $resp = curl_exec($ch);
         $info = (object) curl_getinfo($ch);
         curl_close($ch);
 
-        //Check response
-        $httpCode = (string) $info->http_code;
-        if ($httpCode{0} != '2') {
-            $msg = sprintf('HTTP Request Failed (code %s): %s', $info->http_code, $resp);
-            throw new HttpException($resp, $msg, $httpCode);
-        } elseif (strlen(trim($resp)) == 0) {
-            throw new HttpException($resp, 'HTTP Response Empty');
+        // Basic check response
+        if ($resp === false) {
+            throw new CurlHttpException(sprintf(
+                'HTTP request error (cURL error: %s)',
+                curl_error($ch)
+            ));
+        }
+        if (strlen(trim($resp)) == 0) {
+            throw new CurlHttpException(sprintf(
+                'Empty response body (HTTP code: %s)',
+                (string) $info->http_code
+            ));
         }
 
         return $resp;

@@ -15,7 +15,9 @@
  * ------------------------------------------------------------------
  */
 
-namespace Phpoaipmh;
+namespace Phpoaipmh\Endpoint;
+
+use Phpoaipmh\ClientInterface;
 
 /**
  * OAI-PMH Endpoint Interface
@@ -26,17 +28,19 @@ namespace Phpoaipmh;
 interface EndpointInterface
 {
     /**
-     * Set the URL in the client
-     *
-     * @param string $url
+     * @return string
      */
-    public function setUrl($url);
+    public function getUrl();
+
+    /**
+     * @return ClientInterface
+     */
+    public function getClient();
 
     /**
      * Identify the OAI-PMH Endpoint
      *
-     * @return \SimpleXMLElement A XML document with attributes describing the
-     *                           repository
+     * @return EndpointRecordRequest   A request to get a single record
      */
     public function identify();
 
@@ -50,14 +54,14 @@ interface EndpointInterface
      * @param  string $identifier         If specified, will return only those
      *                                    metadata formats that a particular
      *                                    record supports
-     * @return RecordIterator
+     * @return EndpointIteratorRequest   A request to get multiple records
      */
     public function listMetadataFormats($identifier = null);
 
     /**
      * List Record Sets
      *
-     * @return RecordIterator
+     * @return EndpointIteratorRequest   A request to get multiple records
      */
     public function listSets();
 
@@ -66,7 +70,7 @@ interface EndpointInterface
      *
      * @param  string $id             Record Identifier
      * @param  string $metadataPrefix Required by OAI-PMH endpoint
-     * @return \SimpleXMLElement An XML document corresponding to the record
+     * @return EndpointRecordRequest  A request to get a single record
      */
     public function getRecord($id, $metadataPrefix);
 
@@ -84,9 +88,9 @@ interface EndpointInterface
      *                                        harvesting
      * @param  string    $resumptionToken     An optional resumptionToken for selective
      *                                        harvesting
-     * @return RecordIterator
+     * @return EndpointIteratorRequest   A request to get multiple records
      */
-    public function listIdentifiers($metadataPrefix, $from = null, $until = null, $set = null, $resumptionToken = null);
+    public function listIdentifiers($metadataPrefix, \DateTime $from = null, \DateTime $until = null, $set = '', $resumptionToken = '');
 
     /**
      * List Records
@@ -102,7 +106,7 @@ interface EndpointInterface
      *                                        harvesting
      * @param  string    $resumptionToken     An optional resumptionToken for selective
      *                                        harvesting
-     * @return RecordIterator
+     * @return EndpointIteratorRequest   A request to get multiple records
      */
-    public function listRecords($metadataPrefix, $from = null, $until = null, $set = null, $resumptionToken = null);
+    public function listRecords($metadataPrefix, \DateTime $from = null, \DateTime $until = null, $set = '', $resumptionToken = '');
 }

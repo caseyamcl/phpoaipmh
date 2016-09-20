@@ -17,7 +17,6 @@
 
 namespace Phpoaipmh;
 
-use Phpoaipmh\Exception\HttpException;
 use Phpoaipmh\Fixture\HttpMockClient;
 use PHPUnit_Framework_TestCase;
 
@@ -96,7 +95,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
     // -------------------------------------------------------------------------
 
     /**
-     * Test that the client throws a HttpAdapter\HttpException for non-XML or non-parsable responses
+     * Test that the client throws a HttpAdapter\CurlHttpException for non-XML or non-parsable responses
      */
     public function testInvalidXMLResponseThrowsHttpRequestException()
     {
@@ -129,7 +128,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
     public function testHttpErrorStatusWithOaipmhErrorResponseThrowsOAIPMHException()
     {
         $response = '<?xml version="1.0" encoding="UTF-8" ?>  <OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/  http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd"> <responseDate>2012-08-06T19:33:31Z</responseDate> <request>http://nsdl.org/oai</request>      <error code="badVerb">The verb &#39;NotExist&#39; is illegal</error>  </OAI-PMH>';
-        $httpException = new HttpException($response, "Not found.", 404);
+        $httpException = new CurlHttpException($response, "Not found.", 404);
 
         $mockClient = $this->getMock("Phpoaipmh\HttpAdapter\HttpAdapterInterface");
         $mockClient
@@ -144,12 +143,12 @@ class ClientTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test that a HTTP error response without a OAI-PMH error in body throws an HttpException
+     * Test that a HTTP error response without a OAI-PMH error in body throws an CurlHttpException
      */
     public function testHttpErrorStatusMissingOaipmhErrorResponseThrowsHttpException()
     {
         $response = 'thisIs&NotXML!!';
-        $httpException = new HttpException($response, "Not found.", 404);
+        $httpException = new CurlHttpException($response, "Not found.", 404);
 
         $mockClient = $this->getMock("Phpoaipmh\HttpAdapter\HttpAdapterInterface");
         $mockClient

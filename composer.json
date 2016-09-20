@@ -14,23 +14,26 @@
     ],
     "license": "MIT",
     "require": {
-        "php": ">=5.4.0"
+        "php": ">=5.5.0"
     },
     "require-dev": {
-        "guzzlehttp/guzzle": "~5.0",
-        "phpunit/phpunit":   "~4.0",
-        "mockery/mockery":   "~0.9",
-        "symfony/console": "~2.5",
-        "symfony/dependency-injection": "~2.5",
-        "symfony/config": "~2.5",
-        "symfony/yaml": "~2.5"
+        "guzzlehttp/guzzle"       : "~6.0",
+        "phpunit/phpunit"         : "~4.0",
+        "mockery/mockery"         : "~0.9",
+        "symfony/console"         : "~3.1",
+        "symfony/config"          : "~3.1",
+        "symfony/yaml"            : "~3.1",
+        "illuminate/events"       : "~5.3",
+        "symfony/event-dispatcher": "~3.1",
+        "league/event"            : "~2.1",
+        "symfony/dependency-injection": "~3.1"
     },
     "autoload": {
-        "psr-0": {
-            "Phpoaipmh": ["src/", "tests"]
-        },
         "psr-4": {
-            "Phpoaipmh\\Example\\": "example/src/"
+            "Phpoaipmh": ["src/", "tests"]
         }
+    },
+    "suggest": {
+        "guzzlehttp/guzzle": "A more fully-featured, extensible HTTP client than cURL"
     }
 }

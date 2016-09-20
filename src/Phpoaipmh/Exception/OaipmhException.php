@@ -25,24 +25,37 @@ namespace Phpoaipmh\Exception;
  */
 class OaipmhException extends BaseOaipmhException
 {
+    /**
+     * @var string
+     */
     private $oaiErrorCode;
 
-    // -------------------------------------------------------------------------
-
+    /**
+     * OaipmhException constructor.
+     *
+     * @param string          $oaiErrorCode
+     * @param int             $message
+     * @param int             $code
+     * @param \Exception|null $previous
+     */
     public function __construct($oaiErrorCode, $message, $code = 0, \Exception $previous = null)
     {
         $this->oaiErrorCode = $oaiErrorCode;
         parent::__construct($message, $code, $previous);
     }
 
-    // -------------------------------------------------------------------------
-
+    /**
+     * @return string
+     */
     public function __toString()
     {
         $refl = new \ReflectionClass($this);
         return $refl->getShortName() . ": [{$this->code}]: ({$this->oaiErrorCode}) {$this->message}";
     }
 
+    /**
+     * @return string
+     */
     public function getOaiErrorCode()
     {
         return $this->oaiErrorCode;
