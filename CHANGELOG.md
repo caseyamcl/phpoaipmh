@@ -11,6 +11,7 @@ PHPOAIPMH Changelog
   - Moved Endpoint URL from Client service to RequestParameters model
   - Guzzle implementation now uses Guzzle v6.0
   - Made service classes immutable
+  - Moved Endpoint-related classes into `Endpoint` namespace
   - `Endpoint` class methods now returns `EndpointRequest` instances, which can be modified before running
   - `Endpoint::listRecords` and `Endpoint::listIdentifiers` no require `\DateTime` instances for date constraints
   - Renamed `DateGranularity` class and moved responsibility for it to the `Client`

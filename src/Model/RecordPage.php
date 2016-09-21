@@ -10,6 +10,9 @@ use Phpoaipmh\DateGranularity;
  */
 class RecordPage
 {
+    /**
+     * @var array
+     */
     private static $nodeNameMappings = [
         'ListMetadataFormats' => 'metadataFormat',
         'ListSets'            => 'set',
@@ -73,7 +76,7 @@ class RecordPage
         // Build records
         $records = [];
         foreach ($pageXml->$verb->$nodeName as $node) {
-            $records[] = new Record($node);
+            $records[] = $node;
         }
 
         // Build new object
@@ -83,9 +86,9 @@ class RecordPage
     /**
      * RecordPage constructor.
      *
-     * @param \Traversable|array|Record[] $records Record objects
-     * @param PaginationInfo              $paginationInfo
-     * @param RequestParameters           $params  OAI-PMH Request Parameters
+     * @param \Traversable|array|\SimpleXMLElement[] $records Record objects
+     * @param PaginationInfo                         $paginationInfo
+     * @param RequestParameters                      $params  OAI-PMH Request Parameters
      */
     public function __construct($records, PaginationInfo $paginationInfo, RequestParameters $params)
     {
@@ -95,7 +98,7 @@ class RecordPage
     }
 
     /**
-     * @return Record[]
+     * @return \SimpleXMLElement[]
      */
     public function getRecords()
     {

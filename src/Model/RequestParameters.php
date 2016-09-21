@@ -56,6 +56,8 @@ class RequestParameters
     }
 
     /**
+     * Does a parameter exist (excluding 'Verb')?
+     *
      * @param string $paramName
      * @return bool
      */
@@ -64,6 +66,12 @@ class RequestParameters
         return array_key_exists($paramName, $this->params);
     }
 
+    /**
+     * Get a custom parameter (excluding 'Verb'; use getVerb())
+     *
+     * @param string $paramName
+     * @return mixed
+     */
     public function get($paramName)
     {
         if ($this->has($paramName)) {
@@ -83,6 +91,10 @@ class RequestParameters
      */
     public function withParam($name, $value)
     {
+        if ($name == 'Verb') {
+            throw new \RuntimeException('Verb cannot be changed');
+        }
+
         $that = clone $this;
         $that->params[$name] = $value;
         return $that;

@@ -17,20 +17,17 @@
         "php": ">=5.5.0"
     },
     "require-dev": {
-        "guzzlehttp/guzzle"       : "~6.0",
-        "phpunit/phpunit"         : "~4.0",
-        "mockery/mockery"         : "~0.9",
-        "symfony/console"         : "~3.1",
-        "symfony/config"          : "~3.1",
-        "symfony/yaml"            : "~3.1",
-        "illuminate/events"       : "~5.3",
-        "symfony/event-dispatcher": "~3.1",
-        "league/event"            : "~2.1",
+        "guzzlehttp/guzzle"           : "~6.0",
+        "phpunit/phpunit"             : "~5.5",
+        "mockery/mockery"             : "~0.9",
+        "symfony/console"             : "~3.1",
+        "symfony/config"              : "~3.1",
+        "symfony/yaml"                : "~3.1",
         "symfony/dependency-injection": "~3.1"
     },
     "autoload": {
         "psr-4": {
-            "Phpoaipmh": ["src/", "tests"]
+            "Phpoaipmh\\": ["src/", "tests"]
         }
     },
     "suggest": {

@@ -15,6 +15,9 @@ namespace Phpoaipmh\Endpoint;
  */
 class EndpointIteratorRequest extends EndpointRecordRequest
 {
+    /**
+     * @return \Traversable|\SimpleXMLElement[]
+     */
     public function run()
     {
         return $this->getClient()->iterateRecords($this->getParameters());

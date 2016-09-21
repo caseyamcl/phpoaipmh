@@ -26,7 +26,6 @@ use Phpoaipmh\HttpAdapter\CurlAdapter;
  */
 class CurlAdapterTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * Simple Instantiation Test
      *
@@ -38,8 +37,6 @@ class CurlAdapterTest extends \PHPUnit_Framework_TestCase
         $obj = new CurlAdapter();
         $this->assertInstanceOf('Phpoaipmh\HttpAdapter\CurlAdapter', $obj);
     }
-
-    // -------------------------------------------------------------------------
 
     /**
      * Simple URL Call Test - Will fail with no internet connectivity
@@ -53,28 +50,13 @@ class CurlAdapterTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(strpos($res, "<body>") != false, "The response should include a <body> tag, since it is a HTML document");
     }
 
-    // -------------------------------------------------------------------------
-
-    /**
-     * Tests that a non-existent resource (HTTP 404) throws an exception
-     */
-    public function test404ResponseThrowsAnException()
-    {
-        $this->setExpectedException('Phpoaipmh\Exception\HttpException');
-
-        $obj = new CurlAdapter();
-        $obj->request('http://w3.org/doesnotexistyo');
-    }
-
-    // -------------------------------------------------------------------------
-
     /**
      * Tests that a non-existent server throws an exception
+     *
+     * @expectedException \Phpoaipmh\HttpAdapter\CurlHttpException
      */
     public function testNonExistentServerThrowsException()
     {
-        $this->setExpectedException('Phpoaipmh\Exception\HttpException');
-
         $obj = new CurlAdapter();
         $obj->request('http://doesnotexist.blargasdf');
     }

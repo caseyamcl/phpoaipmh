@@ -63,7 +63,6 @@ class CurlAdapter implements HttpAdapterInterface
 
         $resp = curl_exec($ch);
         $info = (object) curl_getinfo($ch);
-        curl_close($ch);
 
         // Basic check response
         if ($resp === false) {
@@ -78,6 +77,9 @@ class CurlAdapter implements HttpAdapterInterface
                 (string) $info->http_code
             ));
         }
+
+        // Close the cURL object
+        curl_close($ch);
 
         return $resp;
     }

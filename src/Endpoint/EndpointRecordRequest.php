@@ -9,7 +9,6 @@
 namespace Phpoaipmh\Endpoint;
 
 use Phpoaipmh\ClientInterface;
-use Phpoaipmh\Model\Record;
 use Phpoaipmh\Model\RequestParameters;
 
 /**
@@ -71,7 +70,7 @@ class EndpointRecordRequest
     }
 
     /**
-     * @return Record
+     * @return \SimpleXMLElement
      */
     public function run()
     {

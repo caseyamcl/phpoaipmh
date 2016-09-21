@@ -9,7 +9,6 @@
 namespace Phpoaipmh;
 
 use Phpoaipmh\Exception\OaipmhException;
-use Phpoaipmh\Model\Record;
 use Phpoaipmh\Model\RecordPage;
 use Phpoaipmh\Model\RequestParameters;
 
@@ -29,13 +28,13 @@ interface ClientInterface
 
     /**
      * @param RequestParameters $requestParameters
-     * @return Record
+     * @return \SimpleXMLElement
      */
     public function getRecord(RequestParameters $requestParameters);
 
     /**
      * @param RequestParameters $requestParameters
-     * @return Record[]
+     * @return \SimpleXMLElement[]
      * @throws OaipmhException  Thrown in the event an OAI-PMH error is generated
      */
     public function iterateRecords(RequestParameters $requestParameters);

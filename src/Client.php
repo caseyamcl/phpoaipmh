@@ -99,7 +99,7 @@ class Client implements ClientInterface
 
     /**
      * @param RequestParameters $requestParameters
-     * @return \Generator|Model\Record[]
+     * @return \Generator|\SimpleXMLElement[]
      */
     public function iterateRecords(RequestParameters $requestParameters)
     {
@@ -190,7 +190,7 @@ class Client implements ClientInterface
     {
         //Setup a SimpleXML (a.k.a. 'Record') Document
         try {
-            $xml = @new Record($resp);
+            $xml = @new \SimpleXMLElement($resp);
         } catch (\Exception $e) {
             throw new MalformedResponseException(sprintf("Could not decode XML Response: %s", $e->getMessage()));
         }

@@ -8,7 +8,8 @@ classes are now stateless, and generators are used instead of custom iterators.
   tested and runs on PHP7.
 * If you are using the Guzzle HTTP adapter, consider upgrading to Guzzle v6.0.
   A Guzzle 5.x adapter is still included for backwards compatibility, but all 
-  documentation has been updated for Guzzle 6.
+  documentation has been updated for Guzzle 6.  The Guzzle 5 adapter has been
+  renamed to `Phpoaipmh\HttpAdapter\Guzzle5Adapter`
 * All calls to `Phpoaipmh\Endpoint` now return request objects.  Call 
   the `run()` method on these to execute the request; e.g. 
   `$endpoint->identify()` becomes `$endpoint->identify()->run()`.

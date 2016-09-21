@@ -33,6 +33,5 @@ foreach ($checkFiles as $file) {
 }
 
 //Away we go
+const TEST_DIR = __DIR__;
 $autoload = require_once($checkFiles['autoload']);
-
-/* EOF: bootstrap.php */

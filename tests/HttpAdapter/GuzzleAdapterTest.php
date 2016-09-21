@@ -17,6 +17,11 @@
 
 namespace Phpoaipmh\Http;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Response;
 use Phpoaipmh\HttpAdapter\GuzzleAdapter;
 use PHPUnit_Framework_TestCase;
 
@@ -27,6 +32,19 @@ use PHPUnit_Framework_TestCase;
  */
 class GuzzleAdapterTest extends PHPUnit_Framework_TestCase
 {
+    protected function setUp()
+    {
+        if (! interface_exists('\GuzzleHttp\ClientInterface')) {
+            $this->markTestSkipped('Guzzle is not installed.  Skipping GuzzleAdapter tests.');
+        }
+        elseif ((int) substr(ClientInterface::VERSION, 0, 1) < 6) {
+            $this->markTestSkipped(sprintf(
+                'Guzzle is at version %s.  Skipping GuzzleAdapter tests.',
+                ClientInterface::VERSION
+            ));
+        }
+    }
+
     /**
      * Simple Instantiation Test
      *
@@ -39,8 +57,6 @@ class GuzzleAdapterTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Phpoaipmh\HttpAdapter\GuzzleAdapter', $obj);
     }
 
-    // -------------------------------------------------------------------------
-
     /**
      * Simple URL Call Test - Will fail with no internet connectivity
      *
@@ -48,13 +64,11 @@ class GuzzleAdapterTest extends PHPUnit_Framework_TestCase
      */
     public function testGoodRequestReturnsContentBody()
     {
-        $obj = new GuzzleAdapter();
-        $res = $obj->request('http://example.org');
+        $obj      = new GuzzleAdapter($this->getGuzzleObject(200, 'good'));
+        $response = $obj->request('http://example.org');
 
-        $this->assertTrue(strpos($res, "<body>") != false, "The response should include a <body> tag, since it is a HTML document");
+        $this->assertContains('good', $response);
     }
-
-    // ----------------------------------------------------------------
 
     public function testGetGuzzleClientReturnsGuzzleClientObject()
     {
@@ -62,29 +76,14 @@ class GuzzleAdapterTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\GuzzleHttp\Client', $obj->getGuzzleClient());
     }
 
-    // -------------------------------------------------------------------------
-
-    /**
-     * Tests that a non-existent resource (HTTP 404) throws an exception
-     */
-    public function test404ResponseThrowsAnException()
+    private function getGuzzleObject($code = 200, $responseBody = 'good-stuff')
     {
-        $this->setExpectedException('Phpoaipmh\Exception\HttpException');
+        // Create a mock and queue response
+        $mock = new MockHandler([
+            new Response($code, [], $responseBody),
+        ]);
 
-        $obj = new GuzzleAdapter();
-        $obj->request('http://w3.org/doesnotexistyo');
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Tests that a non-existent server throws an exception
-     */
-    public function testNonExistentServerThrowsException()
-    {
-        $this->setExpectedException('Phpoaipmh\Exception\HttpException');
-
-        $obj = new GuzzleAdapter();
-        $obj->request('http://doesnotexist.blargasdf');
+        $handler = HandlerStack::create($mock);
+        return new Client(['handler' => $handler]);
     }
 }
