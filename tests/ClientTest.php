@@ -40,16 +40,73 @@ class ClientTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    public function testIteratePagesReturnsPageValidPageObjects()
+    {
+        $files = [
+            'GoodResponseFourPage_1.xml',
+            'GoodResponseFourPage_2.xml',
+            'GoodResponseFourPage_3.xml',
+            'GoodResponseFourPage_4.xml'
+        ];
+
+        $obj = new Client($this->getMockHttpClient($files));
+
+        $firstRecordOnEachPage = [];
+        foreach ($obj->iteratePages(new RequestParameters('http://example.org', 'ListIdentifiers')) as $page) {
+            $this->assertInstanceOf('Phpoaipmh\Model\RecordPage', $page);
+            $firstRecordOnEachPage[] = current($page->getRecords());
+        }
+
+        $this->assertEquals(4, count($firstRecordOnEachPage));
+
+        foreach ($firstRecordOnEachPage as $record) {
+            var_dump($record);
+        }
+    }
+
+    public function testGetNumTotalRecordsReturnsExpectedValue()
+    {
+        $files = ['GoodResponseFourPage_1.xml'];
+
+        $obj = new Client($this->getMockHttpClient($files));
+        $params = new RequestParameters('http://example.org', 'ListIdentifiers');
+
+        $numTotalRecs = $obj->getNumTotalRecords($params);
+        $this->assertEquals(733, $numTotalRecs);
+    }
+
+    public function testIterateRecordsReturnsExpectedValue()
+    {
+        $files = [
+            'GoodResponseFourPage_1.xml',
+            'GoodResponseFourPage_2.xml',
+            'GoodResponseFourPage_3.xml',
+            'GoodResponseFourPage_4.xml'
+        ];
+
+        $obj = new Client($this->getMockHttpClient($files));
+
+        $recordCount = 0;
+        foreach ($obj->iterateRecords(new RequestParameters('http://example.org', 'ListIdentifiers')) as $page) {
+            $recordCount++;
+        }
+        $this->assertEquals(733, $recordCount);
+    }
+
     /**
-     * @param string $sampleXMLfile Filename in tests/fixtures/SampleXML
+     * @param string|array|string[] $sampleXMLfiles Filename in tests/fixtures/SampleXML
      * @return \Mockery\MockInterface|HttpAdapterInterface
      */
-    protected function getMockHttpClient($sampleXMLfile)
+    protected function getMockHttpClient($sampleXMLfiles)
     {
-        $filePath = TEST_DIR . '/fixtures/SampleXML/' . $sampleXMLfile;
+        $output = [];
+        foreach ((array) $sampleXMLfiles as $sampleXMLfile) {
+            $filePath = TEST_DIR . '/fixtures/SampleXML/' . $sampleXMLfile;
+            $output[] = file_get_contents($filePath);
+        }
 
         $mock = \Mockery::mock('Phpoaipmh\HttpAdapter\HttpAdapterInterface');
-        $mock->shouldReceive('request')->andReturn(file_get_contents($filePath));
+        $mock->shouldReceive('request')->andReturnValues($output);
 
         return $mock;
 

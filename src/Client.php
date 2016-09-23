@@ -20,7 +20,6 @@ namespace Phpoaipmh;
 use Phpoaipmh\Exception\OaipmhException;
 use Phpoaipmh\Exception\MalformedResponseException;
 use Phpoaipmh\HttpAdapter\HttpAdapterInterface;
-use Phpoaipmh\Model\Record;
 use Phpoaipmh\Model\RecordPage;
 use Phpoaipmh\Model\RequestParameters;
 
@@ -65,8 +64,10 @@ class Client implements ClientInterface
     }
 
     /**
+     * Get a single record or single item from the OAI-PMH endpoint
+     *
      * @param RequestParameters $requestParameters
-     * @return Record
+     * @return \SimpleXMLElement
      */
     public function getRecord(RequestParameters $requestParameters)
     {
@@ -120,30 +121,34 @@ class Client implements ClientInterface
         $dateGranularity = $this->getDateGranularity($requestParameters->getEndpointUrl());
 
         // Iterator control
-        $pageNumber = 0;
-        $continue   = true;
+        $continue      = true;
+        $requestParams = clone $requestParameters;
 
         while ($continue) {
 
-            // Add resumption token if applicable
-            $requestParams = $requestParameters->has('resumptionToken')
-                ? $requestParameters->withParam('ResumptionToken', $requestParameters->get('resumptionToken'))
-                : $requestParameters;
+            // Do the request
+            $response = $this->request($requestParams);
 
             // Send the request
             $pageRecord = RecordPage::buildFromRawXml(
-                $this->request($requestParams),
+                $response,
                 $requestParams,
                 $dateGranularity
             );
 
-            // If no records, then do not proceed
-            if ($pageRecord->countPageRecords() == 0) {
+            // If there is a resumption token, proceed
+            if ($pageRecord->getPaginationInfo()->hasResumptionToken()) {
+                $continue = true;
+                $requestParams = $requestParams->withParam(
+                    'ResumptionToken',
+                    $pageRecord->getPaginationInfo()->getResumptionToken()
+                );
+            }
+            else {
                 $continue = false;
             }
 
-            // Increment page record and return page record
-            $pageNumber++;
+            // Yield page record
             yield $pageRecord;
         }
     }
