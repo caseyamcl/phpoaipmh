@@ -3,6 +3,7 @@
 namespace Phpoaipmh;
 
 use Phpoaipmh\HttpAdapter\HttpAdapterInterface;
+use Phpoaipmh\Model\RecordPage;
 use Phpoaipmh\Model\RequestParameters;
 use PHPUnit_Framework_TestCase;
 
@@ -20,7 +21,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\Phpoaipmh\Client', $obj);
     }
 
-    public function testGetDateGranularityReturnsExpectedValue()
+    public function testGetDateGranularityReturnsExpectedValueWhenSetToAuto()
     {
         $obj = new Client($this->getMockHttpClient('GoodResponseIdentify.xml'));
         $granularity = $obj->getDateGranularity('http://example.org');
@@ -29,9 +30,21 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('2016-01-01T12:15:10Z', $granularity->formatDate($dateTime));
     }
 
+    public function testGetDateGranularityReturnsExpectedValueWhenExplictelyProvided()
+    {
+        $granularity = DateGranularity::date();
+        $obj = new Client($this->getMockHttpClient([]), $granularity);
+
+        $dateTime = \DateTime::createFromFormat('Y-m-d H:i:s', '2016-01-01 12:15:10');
+        $this->assertEquals('2016-01-01', $obj->getDateGranularity('http://example.org')->formatDate($dateTime));
+    }
+
     public function testGetRecordReturnsExpectedValue()
     {
-        $obj = new Client($this->getMockHttpClient('GoodResponseSingleRecord.xml'));
+        $obj = $this->getClientWithDateGranularitySet(
+            $this->getMockHttpClient('GoodResponseSingleRecord.xml')
+        );
+
         $record = $obj->getRecord(new RequestParameters('http://example.org', 'GetRecord'));
 
         $this->assertEquals(
@@ -49,26 +62,22 @@ class ClientTest extends PHPUnit_Framework_TestCase
             'GoodResponseFourPage_4.xml'
         ];
 
-        $obj = new Client($this->getMockHttpClient($files));
+        $obj = $this->getClientWithDateGranularitySet($this->getMockHttpClient($files));
 
         $firstRecordOnEachPage = [];
         foreach ($obj->iteratePages(new RequestParameters('http://example.org', 'ListIdentifiers')) as $page) {
-            $this->assertInstanceOf('Phpoaipmh\Model\RecordPage', $page);
+            $this->assertInstanceOf(RecordPage::class, $page);
             $firstRecordOnEachPage[] = current($page->getRecords());
         }
 
         $this->assertEquals(4, count($firstRecordOnEachPage));
-
-        foreach ($firstRecordOnEachPage as $record) {
-            var_dump($record);
-        }
     }
 
     public function testGetNumTotalRecordsReturnsExpectedValue()
     {
         $files = ['GoodResponseFourPage_1.xml'];
 
-        $obj = new Client($this->getMockHttpClient($files));
+        $obj = $this->getClientWithDateGranularitySet($this->getMockHttpClient($files));
         $params = new RequestParameters('http://example.org', 'ListIdentifiers');
 
         $numTotalRecs = $obj->getNumTotalRecords($params);
@@ -84,13 +93,27 @@ class ClientTest extends PHPUnit_Framework_TestCase
             'GoodResponseFourPage_4.xml'
         ];
 
-        $obj = new Client($this->getMockHttpClient($files));
+        $obj = $this->getClientWithDateGranularitySet($this->getMockHttpClient($files));
 
         $recordCount = 0;
         foreach ($obj->iterateRecords(new RequestParameters('http://example.org', 'ListIdentifiers')) as $page) {
             $recordCount++;
         }
         $this->assertEquals(733, $recordCount);
+    }
+
+    /**
+     * Get a client object with the date granularity set
+     *
+     * This keeps the client from generating an extra request to
+     * get the date granularity during tests, which can cause confusion.
+     *
+     * @param HttpAdapterInterface $httpClient
+     * @return Client
+     */
+    protected function getClientWithDateGranularitySet(HttpAdapterInterface $httpClient)
+    {
+        return new Client($httpClient, new DateGranularity(DateGranularity::DATE_AND_TIME));
     }
 
     /**
@@ -105,8 +128,15 @@ class ClientTest extends PHPUnit_Framework_TestCase
             $output[] = file_get_contents($filePath);
         }
 
-        $mock = \Mockery::mock('Phpoaipmh\HttpAdapter\HttpAdapterInterface');
-        $mock->shouldReceive('request')->andReturnValues($output);
+        $mock = \Mockery::mock(HttpAdapterInterface::class);
+        $mock->shouldReceive('request')->andReturnUsing(function() use (&$output) {
+            if (! empty($output)) {
+                return array_shift($output);
+            }
+            else {
+                throw new \Exception("No response from Mock HTTP Client");
+            }
+        });
 
         return $mock;
 
