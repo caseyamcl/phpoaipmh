@@ -1,22 +1,31 @@
 Upgrading from Version 2.x to 3.x
 =================================
 
-This upgrade provides a new paradigm for the PHP OAI-PMH Library.  Service
-classes are now stateless, and generators are used instead of custom iterators.
+## tl;dr 
 
-* Ensure you are running at least `PHP 5.5` or newer.  This library is now 
+* Use PHP5.5 or newer.
+* Add `->run()` to the end of Endpoint methods; e.g. `$endpoint->identify->run()`.
+* Use Guzzle 6 instead of Guzzle 5 (or use the legacy `Phpoaipmh\HttpAdapter\Guzzle5Adaptper`).
+
+## Overview
+
+This upgrade is a major overhaul of the PHP OAI-PMH Library.  Most of the API
+has changed. Service classes are now stateless, and generators are used instead of 
+custom iterators.
+
+* Ensure you are running at least `PHP 5.5` or newer.  This library is also now 
   tested and runs on PHP7.
 * If you are using the Guzzle HTTP adapter, consider upgrading to Guzzle v6.0.
   A Guzzle 5.x adapter is still included for backwards compatibility, but all 
   documentation has been updated for Guzzle 6.  The Guzzle 5 adapter has been
-  renamed to `Phpoaipmh\HttpAdapter\Guzzle5Adapter`
-* All calls to `Phpoaipmh\Endpoint` now return request objects.  Call 
+  renamed to `Phpoaipmh\HttpAdapter\Guzzle5Adapter`.  It will be removed in v4.
+* All calls to `Phpoaipmh\Endpoint` now return `RequestInterface` objects.  Call 
   the `run()` method on these to execute the request; e.g. 
   `$endpoint->identify()` becomes `$endpoint->identify()->run()`.
 * HTTP transport exceptions are no longer handled by this library.  You must catch 
   these exceptions in your own code.  The reason for this is that HTTP transport 
   exceptions are generally out-of-scope for the OAI-PMH protocol, and this library 
-  should be un-opinionated on how to deal HTTP issues.  If you previously caught the 
+  should be un-opinionated on how to deal with HTTP issues.  If you previously caught the 
   `Phpoaipmh\Exception\HttpException` exception, you would now catch either the
   `CurlHttpException` or a Guzzle Exception (depending on the adapter you use).  These
    exceptions do not extend the `Phpoaipmh\Exception\BaseOaipmhException` class.
@@ -26,12 +35,69 @@ classes are now stateless, and generators are used instead of custom iterators.
   now instead pass a `Phpoaipmh\DateGranularity` instance into your `Phpoaipmh\Client` instance.
 * The `Phpoaipmh\RecordIterator` has been removed.  Along with it, the following
   methods are no longer available when iterating records:
-    * `Phpoaipmh\RecordIterator::getNumRequests()`  - Refer to the <README.md> to see how to derive this information
-    * `Phpoaipmh\RecordIterator::getNumRetrieved()` - You track this information in your own libraries
+    * `Phpoaipmh\RecordIterator::getNumRequests()`  - You must now track this information in your own libraries (see example below)
+    * `Phpoaipmh\RecordIterator::getNumRetrieved()` - You must now track this information in your own libraries (see example below)
     * `Phpoaipmh\RecordIterator::getTotalRecordsInCollection()` - Use `Phpoaipmh\Client::getNumTotalRecords()` instead 
     * `Phpoaipmh\RecordIterator::nextItem()` - This method has no equivalent in the new version.
-* 
 
+### Tracking the number of requests
+
+There are two ways to do this in the new version of Phpoaipmh:
+
+1. If you are using Guzzle 6, implement [middleware](http://docs.guzzlephp.org/en/latest/handlers-and-middleware.html) that logs the requests:
+
+```php
+    use Psr\Http\Message\RequestInterface;
+    use GuzzleHttp\HandlerStack;
+    use GuzzleHttp\Client as GuzzleClient;
+    use GuzzleHttp\Middleware;
+    use Phpoaipmh\Client as OaiPmhClient;
+
+    // Track number of requests (this is a simple example; put your own tracker here)
+    $counter = 0;
+   
+    $stack = new HandlerStack();
+    $stack->push(Middleware::mapRequest(function (RequestInterface $request) use (&$counter) {
+        $counter++;
+        return $request;
+    }); 
+    $guzzle  = new GuzzleClient(['handler' => $stack]);
+    $adapter = new GuzzleAdapter($guzzle);
+    
+    $oaiPmh = new OaiPmhClient($adapter);
+```
+
+2. Implement a custom `HttpAdapter` that logs requests:
+
+```php
+
+use Phpoaipmh\HttpAdapter\CurlAdapter;
+use Phpoaipmh\Client;
+
+class MyAdapter extends CurlAdapter
+{
+    private $numRequests = 0;
+
+    public function __construct(array $curlOpts = [])
+    {
+        parent::__construct($curlOpts);
+    }
+    
+    public function getNumRequests()
+    {
+        return $this->numRequests;
+    }
+    
+    public function request($url, array $queryParams = [])
+    {
+        $response = parent::request($url, $queryParams();
+        $this->numRequests++;
+        return $response;
+    }
+}
+
+$client = new Client(new MyAdapter());
+```
 
 Upgrading from Version 1.x to 2.x
 =================================
