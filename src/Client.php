@@ -148,7 +148,6 @@ class Client implements ClientInterface
                 $continue = false;
             }
 
-            // Yield page record
             yield $pageRecord;
         }
     }
@@ -157,11 +156,11 @@ class Client implements ClientInterface
      * Get the total number of records
      *
      * @param RequestParameters $requestParameters
-     * @return int
+     * @return int|null  Returns NULL if count not provided
      */
     public function getNumTotalRecords(RequestParameters $requestParameters)
     {
-        /** @var RecordPage Get the first page... */
+        /** @var RecordPage $currentPage Get the first page... */
         $currentPage = $this->iteratePages($requestParameters)->current();
         return $currentPage->getPaginationInfo()->getCompleteRecordCount();
     }
