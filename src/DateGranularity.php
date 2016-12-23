@@ -42,6 +42,26 @@ class DateGranularity
     private $format;
 
     /**
+     * Construct DateGranularity object for Date
+     *
+     * @return static
+     */
+    public static function date()
+    {
+        return new static(static::DATE);
+    }
+
+    /**
+     * Construct DateGranularity object for DateAndTime
+     *
+     * @return static
+     */
+    public static function dateAndTime()
+    {
+        return new static(static::DATE_AND_TIME);
+    }
+
+    /**
      * DateGranularity constructor.
      *
      * @param string $format
