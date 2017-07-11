@@ -18,8 +18,7 @@ Features:
 * Composer-compatible
 * Unit-tested
 * Prefers Guzzle for HTTP transport layer, but can fall back to cURL
-* Easy-to-use iterator that hides all the HTTP junk necessary to get paginated records
-
+* Easy, transparent iteration over records
 
 Installation Options
 --------------------
@@ -27,23 +26,23 @@ Install via [Composer](http://getcomposer.org/) by including the following in yo
  
     {
         "require": {
-            "caseyamcl/phpoaipmh": "~2.0",
-            "guzzlehttp/guzzle":   "~5.0"
+            "caseyamcl/phpoaipmh": "~3.0",
+            "guzzlehttp/guzzle":   "~6.0"
         }
     }
 
-Or, drop the `src` folder into your application and use a PSR-0 autoloader to include the files.
+*Note:* Guzzle v6 or newer is strongly recommended.  The library still includes Guzzle v5 support,
+but that will be removed in Phpoaipmh v4.  If neither is installed, the library will use cURL.  If
+none of these are available, a `\RuntimeExeption` will be thrown.
 
-*Note:* Guzzle v5.0 or newer is strongly recommended, but if you choose not to use Guzzle, the
-library will fall back to using the PHP cURL extension.  If neither is installed, the library will
-throw an exception.  Alternatively, you can use a different HTTP client library by passing your own
+Alternatively, you can use a different HTTP client library by passing your own
 implementation of the `Phpoaipmh\HttpAdapter\HttpAdapterInterface` to the `Phpoaipmh\Client` constructor.
 
 
-Upgrading from Version 1 to Version 2
+Upgrading from Version 2 to Version 3
 -------------------------------------
 
-There are several backwards-incompatible API improvements in version 2.0.  See UPGRADE.md for
+There are several backwards-incompatible API improvements in version 3.0.  See <UPGRADE.md> for
 information about how to upgrade your code to use the new version.
 
 
@@ -52,19 +51,22 @@ Usage
 Setup a new endpoint client:
 
 ```php
-$client = new \Phpoaipmh\Client('http://some.service.com/oai');
-$myEndpoint = new \Phpoaipmh\Endpoint($client);
+
+use Phpoaipmh\Factory;
+
+$client = Factory::client();
+$myEndpoint = Factory::endpoint($client);
 ```
 
 Get basic information:
 
 ```php
 // Result will be a SimpleXMLElement object
-$result = $myEndpoint->identify();
+$result = $myEndpoint->identify()->run();
 var_dump($result);
 
 // Results will be iterator of SimpleXMLElement objects
-$results = $myEndpoint->listMetadataFormats();
+$results = $myEndpoint->listMetadataFormats()->run();
 foreach($results as $item) {
     var_dump($item);
 }
@@ -75,12 +77,12 @@ Get a lists of records:
 
 ```php
 // Recs will be an iterator of SimpleXMLElement objects
-$recs = $myEndpoint->listRecords('someMetaDataFormat');
+$recs = $myEndpoint->listRecords->run('someMetaDataFormat');
 
 // The iterator will continue retrieving items across multiple HTTP requests.
 // You can keep running this loop through the *entire* collection you
 // are harvesting.  All OAI-PMH and HTTP pagination logic is hidden neatly
-// behind the iterator API.
+// behind the API.
 foreach($recs as $rec) {
     var_dump($rec);
 }
@@ -91,33 +93,70 @@ Optionally, specify a date/time granularity level to use for date-based queries:
 ```php
 use Phpoaipmh\Client,
     Phpoaipmh\Endpoint,
-    Phpoaipmh\Granularity;
+    Phpoaipmh\DateGranularity;
 
 $client = new Client('http://some.service.com/oai');
-$myEndpoint = new Endpoint($client, Granularity::DATE_AND_TIME);
+$myEndpoint = new Endpoint($client, DateGranularity::dateAndTime());
 ```
+
+If you do not manually specify the granularity, the library will attempt to 
+query and cache it from the `identify` endpoint for the OAI-PMH service.
 
 Handling Results
 ----------------
 Depending on the verb you use, the library will send back either a `SimpleXMLELement`
-or an iterator containing `SimpleXMLElement` objects.
+or an iterator (instance of `\Generator`) to iterate `SimpleXMLElement` objects.
 
 * For `identify` and `getRecord`, a `SimpleXMLElement` object is returned
-* For `listMetadataFormats`, `listSets`, `listIdentifiers`, and `listRecords` a `Phpoaipmh\ResponseIterator` is returned
+* For `listMetadataFormats`, `listSets`, `listIdentifiers`, and `listRecords` a `\Generator` is returned
 
-The `Phpoaipmh\ResponseIterator` object encapsulates the logic to iterate through paginated sets of records.
+Iterating Pages instead of Records
+----------------------------------
+If you wish, you can iterate record pages instead of the records themselves:
 
+```
+use Phpoaipmh\Factory;
+
+$endpoint = Factory::endpoint('http://endpoint-url.example.org/');
+$request  = $endpoint->listRecords();
+$pageIterator = $request->getClient()->iteratePages($request->getParameters());
+
+foreach ($pageIterator as $page) {
+   foreach ($page->getRecords() as $xmlDocument) {
+      // Do something....
+   }
+}
+
+```
 
 Handling Errors
 ---------------
 
 This library will throw different exceptions under different circumstances:
 
-* HTTP request errors will generate a `Phpoaipmh\Exception\HttpException`
 * Response body parsing issues (e.g. invalid XML) will generate a `Phpoaipmh\Exception\MalformedResponseException`
 * OAI-PMH protocol errors (e.g. invalid verb or missing params) will generate a `Phpoaipmh\Exception\OaipmhException`
 
 All exceptions extend the `Phpoaipmh\Exception\BaseoaipmhException` class.
+
+*Note:* This library does not throw exceptions for HTTP transport errors 
+(such as 404 or connect errors).  These are out-of-scope for PHP OAI-PMH, so your
+client should handle them separately.  For example, if using Guzzle:
+
+```php
+
+try {
+    $client->iteratePages($requestParameters)
+} catch (MalformedResponseException $e) {
+     // Invalid or no XML returned
+} catch (OaiPmhException $e) {
+     // An OAI-PMH error was generated
+} catch (TransportException $e) {
+     // LEFT OFF HERE....
+}
+
+```
+
 
 Customizing Default Request Parameters
 --------------------------------------
