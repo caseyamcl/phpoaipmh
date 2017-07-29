@@ -1,10 +1,15 @@
 PHPOAIPMH Changelog
 ===================
 
-## 2.6
+## 2.6 (unreleased)
 
 ### Added
  - Added `Endpoint::build($url)` constructor for convenience
+ - Added Travis CI tests for PHP 7.0 and 7.1
+
+### Changed
+ - Added Symfony v3 library compatibility in `composer.json`
+ - Made Guzzle v6 the default development dependency (v5 still supported)
 
 ## v2.5.1 - 2016-09-17
 
