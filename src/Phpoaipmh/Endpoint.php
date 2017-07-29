@@ -17,8 +17,6 @@
 
 namespace Phpoaipmh;
 
-use DateTime;
-
 /**
  * OAI-PMH Endpoint Class
  *
@@ -40,6 +38,19 @@ class Endpoint implements EndpointInterface
      * @var string
      */
     private $granularity;
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Build endpoint using URL and default settings
+     *
+     * @param string $url
+     * @return Endpoint
+     */
+    public static function build($url)
+    {
+        return new Endpoint(new Client($url));
+    }
 
     // -------------------------------------------------------------------------
 
