@@ -11,6 +11,10 @@ PHPOAIPMH Changelog
  - Added Symfony v3 library compatibility in `composer.json`
  - Made Guzzle v6 the default development dependency (v5 still supported)
 
+### Removed
+ - Removed tests for PHP v5.4 in Travis CI.  It should still work, but is no longer
+   officially supported.
+
 ## v2.5.1 - 2016-09-17
 
 ### Fixed
