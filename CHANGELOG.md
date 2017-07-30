@@ -6,11 +6,21 @@ PHPOAIPMH Changelog
 ### Added
  - Added `Endpoint::build($url)` constructor for convenience
  - Added Travis CI tests for PHP 7.0 and 7.1
+ - Documentation for `RecordIterator::getTotalRecordCount()`
+ - `RecordIterator::getExpirationDate()` method to get record set expiration, if it is supplied by the server
+ - `RecordIteratorInterface` and `ClientInterface`, and updated method signatures
 
 ### Changed
  - Added Symfony v3 library compatibility in `composer.json`
  - Made Guzzle v6 the default development dependency (v5 still supported)
+ - Updated and fixed a whole bunch of stuff in the README file 
+ - Changed constructor signatures to use new interfaces instead of concrete classes
 
+### Deprecated
+ - Deprecated `RecordIterator::getTotalRecordsInCollection()` in favor of `RecordIterator::getTotalRecordCount()`
+ - `Endpoint::setUrl()` and `Client::setUrl()`.  These should be set in constructor and be immutable.  If URL needs
+   to change, simply create a new instance.
+ 
 ### Removed
  - Removed tests for PHP v5.4 in Travis CI.  It should still work, but is no longer
    officially supported.

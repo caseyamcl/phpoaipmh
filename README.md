@@ -17,9 +17,8 @@ Features:
 * PSR-0 thru PSR-2 Compliant
 * Composer-compatible
 * Unit-tested
-* Prefers Guzzle for HTTP transport layer, but can fall back to cURL
+* Prefers Guzzle (v6 or v5)for HTTP transport layer, but can fall back to cURL, or implement your own
 * Easy-to-use iterator that hides all the HTTP junk necessary to get paginated records
-
 
 Installation Options
 --------------------
@@ -27,17 +26,21 @@ Install via [Composer](http://getcomposer.org/) by including the following in yo
  
     {
         "require": {
-            "caseyamcl/phpoaipmh": "~2.0",
-            "guzzlehttp/guzzle":   "~5.0"
+            "caseyamcl/phpoaipmh": "^2.6",
+            "guzzlehttp/guzzle":   "^6.3"
         }
     }
 
 Or, drop the `src` folder into your application and use a PSR-0 autoloader to include the files.
 
-*Note:* Guzzle v5.0 or newer is strongly recommended, but if you choose not to use Guzzle, the
-library will fall back to using the PHP cURL extension.  If neither is installed, the library will
-throw an exception.  Alternatively, you can use a different HTTP client library by passing your own
-implementation of the `Phpoaipmh\HttpAdapter\HttpAdapterInterface` to the `Phpoaipmh\Client` constructor.
+*Note:* Guzzle v6.0 is recommended, but if you do not wish to use Guzzle v6 for whatever reason, you can
+use any one of the following:
+
+* Guzzle 5.0 - You can use Guzzle v5 instead of v6 in the case that you are using this library on PHP v5.4.
+  This works fine out-of-the-box.
+* cURL - This library will fall back to using cURL if Guzzle is not installed.
+* Build your own - You can use a different HTTP client library by passing your own
+  implementation of the `Phpoaipmh\HttpAdapter\HttpAdapterInterface` to the `Phpoaipmh\Client` constructor.
 
 
 Upgrading from Version 1 to Version 2
@@ -46,12 +49,16 @@ Upgrading from Version 1 to Version 2
 There are several backwards-incompatible API improvements in version 2.0.  See UPGRADE.md for
 information about how to upgrade your code to use the new version.
 
-
 Usage
 -----
 Setup a new endpoint client:
 
 ```php
+
+// Quick and easy 'build' method 
+$myEndpoint = \Phpoaipmh\Endpoint::build('http://some.service.com/oai');
+
+// Or, create your own client instance and pass it to `Endpoint::__construct()` 
 $client = new \Phpoaipmh\Client('http://some.service.com/oai');
 $myEndpoint = new \Phpoaipmh\Endpoint($client);
 ```
@@ -71,7 +78,6 @@ foreach($results as $item) {
 ```
 
 Get a lists of records:
-
 
 ```php
 // Recs will be an iterator of SimpleXMLElement objects
@@ -97,6 +103,17 @@ $client = new Client('http://some.service.com/oai');
 $myEndpoint = new Endpoint($client, Granularity::DATE_AND_TIME);
 ```
 
+Some endpoints provide a total record count for your query.  If the endpoint 
+provides this, you can access this value by calling: `RecordIterator::getTotalRecordCount()`.
+
+If the endpoint does not provide this count, then `RecordIterator::getTotalRecordCount()`
+returns `null`.
+
+```php
+$iterator = $myEndpoint->listRecords('someMetaDataFormat');
+echo "Total count is " . ($iterator->getTotalRecordCount() ?: 'unknown');
+```
+
 Handling Results
 ----------------
 Depending on the verb you use, the library will send back either a `SimpleXMLELement`
@@ -119,13 +136,34 @@ This library will throw different exceptions under different circumstances:
 
 All exceptions extend the `Phpoaipmh\Exception\BaseoaipmhException` class.
 
-Customizing Default Request Parameters
---------------------------------------
 
-You can customize the default request parameters (for example, request timeout) for both cURL and Guzzle 
+Customizing Default Request Options
+-----------------------------------
+
+You can customize the default request options (for example, request timeout) for both cURL and Guzzle 
 clients by building the adapter objects manually.
 
-To customize cURL parameters, pass them in as an array of key/value items to `CurlAdapter::setCurlOpts()`:
+If you're using **Guzzle v6**, you can set default options by building your own
+Guzzle client and [setting parameters in the constructor](http://docs.guzzlephp.org/en/stable/quickstart.html):
+
+```php
+
+use GuzzleHttp\Client as GuzzleClient;
+use Phpoaipmh\Client;
+use Phpoaipmh\Endpoint;
+use Phpoaipmh\HttpAdapter\GuzzleAdapter;
+
+$guzzle = new GuzzleAdapter(new GuzzleClient([
+    'connect_timeout' => 2.0
+    'timeout'         => 10.0
+]));
+
+$myEndpoint = new Endpoint(new Client($guzzle));
+
+```
+
+If you're using **cURL**, you can set request options by passing them in as an 
+array of key/value items to `CurlAdapter::setCurlOpts()`:
 
 ```php
 use Phpoaipmh\Client,
@@ -138,7 +176,8 @@ $client = new Client('http://some.service.com/oai', $adapter);
 $myEndpoint = new Endpoint($client);
 ```
 
-If you're using Guzzle, you can set the parameters in a similar way:
+If you're using **Guzzle v5**, you can set default options by building your own
+Guzzle client, 
 
 ```php
 use Phpoaipmh\Client,
@@ -165,11 +204,6 @@ The `Phpoaipmh\RecordIterator` iterator contains some helper methods:
 
 * `getNumRequests()` - Returns the number of HTTP requests made thus far
 * `getNumRetrieved()` - Returns the number of individual records retrieved
-* `getTotalRecordsInCollection()` - Returns the total number of records in the collection
-    * *Note* - This number should be treated as an estimate at best.  The number of records
-      can change while the records are being retrieved, so it is not guaranteed to be accurate.
-      Also, many OAI-PMH endpoints do not provide this information, in which case, this method will
-      return `null`.
 * `reset()` - Resets the iterator, which will restart the record retrieval from scratch.
 
 
@@ -180,12 +214,50 @@ Some OAI-PMH endpoints employ rate-limiting so that you can only make X number
 of requests in a given time period.  These endpoints will return a `503 Retry-AFter`
 HTTP status code if your code generates too many HTTP requests too quickly.
 
-If you have installed [Guzzle](http://guzzlephp.org), then you can use the
-[Retry-Subscriber](https://github.com/guzzle/retry-subscriber) to automatically
-adhere to the OAI-PMH endpoint rate-limiting rules.
+### Guzzle v6
 
-First, make sure you include the retry-subscriber as a dependency in your
-`composer.json`:
+If you have installed [Guzzle v6](http://guzzlephp.org), then you can use the 
+[Guzzle-Retry-Middleware](https://github.com/caseyamcl/guzzle_retry_middleware) library
+to automatically handle OAI-PMH endpoint rate limiting rules.
+
+First, include the middleware as a dependency in your app:
+
+```bash
+$ composer require caseyamcl/guzzle_retry_middleware
+```
+
+Then, when loading the Phpoaipmh libraries, build a Guzzle client manually, and add
+the middleware to the stack.  Example:
+
+```php
+
+use GuzzleRetry\GuzzleRetryMiddleware;
+use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\HandlerStack;
+
+// Setup the the Guzzle client with the retry middleware
+$stack = HandlerStack()::create();
+$stack->push(GuzzleRetryMiddleware::factory());
+$guzzleClient = new GuzzleClient(['handler' => $stack]);
+
+// Setup the Guzzle adpater and PHP OAI-PMH client
+$guzzleAdapter = new \Phpoaipmh\HttpAdapter\GuzzleAdapter($guzzleClient)
+$client  = new \Phpoaipmh\Client('http://some.service.com/oai', $guzzleAdapter);
+
+```
+This will create a client that automatically retries requests when OAI-PMH endpoints send
+`503` rate-limiting responses.
+
+The Retry middleware contains a number of options.  Refer to the [README for that package](https://github.com/caseyamcl/guzzle_retry_middleware)
+for details.
+
+### Guzzle v5
+
+If you have installed [Guzzle v5](http://docs.guzzlephp.org/en/5.3/overview.html), then you can use the
+[Retry-Subscriber](https://github.com/guzzle/retry-subscriber) to automatically
+handle OAI-PMH endpoint rate-limiting rules.
+
+First, include the retry-subscriber as a dependency in your `composer.json`:
 
     require: {
         /* ... */
@@ -212,7 +284,8 @@ $guzzleAdapter->getGuzzleClient()->getEmitter()->attach($retrySubscriber);
 $client  = new \Phpoaipmh\Client('http://some.service.com/oai', $guzzleAdapter);
 ```
 
-This will create a client that adheres to the rate-limiting rules enforced by the OAI-PMH record provider.
+This will create a client that automatically retries requests when OAI-PMH endpoints send
+`503` rate-limiting responses. 
 
 
 Sending Arbitrary Query Parameters
@@ -225,7 +298,41 @@ send them via the `\Phpoaipmh\Client` class:
     $client->request('Identify', ['some' => 'extra-param']);
 
 Alternatively, if you wish to send arbitrary parameters while taking advantage of the
-convenience of the `\Phpoaipmh\Endpoint` class, you can use the Guzzle event system:
+convenience of the `\Phpoaipmh\Endpoint` class, you can use the [Guzzle Param Middleware](emarref/guzzle-param-middleware)
+library:
+
+First, include the middleware as a dependency in your app:
+
+```bash
+$ composer require emarref/guzzle-param-middleware
+```
+
+Then, when loading the Phpoaipmh libraries, build a Guzzle client manually, and add
+the middleware to the stack.  Example:
+
+```php
+
+use Emarref\Guzzle\Middleware\ParamMiddleware
+use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Middleware;
+use Psr\Http\Message\RequestInterface;
+
+// Setup the the Guzzle stack
+$stack = HandlerStack()::create();
+$stack->push(new ParamMiddleware(['api_key' => 'xyz123']));
+
+// Setup Guzzle client, adapter, and PHP OAI-PMH client
+$guzzleClient = new GuzzleClient(['handler' => $stack])
+$guzzleAdapter = new \Phpoaipmh\HttpAdapter\GuzzleAdapter($guzzleClient)
+$client  = new \Phpoaipmh\Client('http://some.service.com/oai', $guzzleAdapter);
+```
+
+This will add the specified query parameters to all requests for the client.
+
+### Sending arbitrary query parameters with Guzzle v5
+
+If you are using Guzzle v5, you can use the Guzzle event system:
 
 ```php
 // Create a function or class to add parameters to a request

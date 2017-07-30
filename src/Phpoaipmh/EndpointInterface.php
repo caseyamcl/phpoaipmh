@@ -26,13 +26,6 @@ namespace Phpoaipmh;
 interface EndpointInterface
 {
     /**
-     * Set the URL in the client
-     *
-     * @param string $url
-     */
-    public function setUrl($url);
-
-    /**
      * Identify the OAI-PMH Endpoint
      *
      * @return \SimpleXMLElement A XML document with attributes describing the

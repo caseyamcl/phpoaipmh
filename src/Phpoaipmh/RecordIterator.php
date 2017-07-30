@@ -26,12 +26,12 @@ use Phpoaipmh\Exception\MalformedResponseException;
  * @author Casey McLaughlin <caseyamcl@gmail.com>
  * @since v2.0
  */
-class RecordIterator implements \Iterator
+class RecordIterator implements \Iterator, RecordIteratorInterface
 {
     /**
      * @var Client
      */
-    private $httpClient;
+    private $oaipmhClient;
 
     /**
      * @var string  The verb to use
@@ -81,14 +81,14 @@ class RecordIterator implements \Iterator
     /**
      * Constructor
      *
-     * @param Client $httpClient The client to use
-     * @param string $verb       The verb to use when retrieving results from the client
-     * @param array  $params     Optional parameters passed to OAI-PMH
+     * @param ClientInterface $client  The client to use
+     * @param string          $verb    The verb to use when retrieving results from the client
+     * @param array           $params  Optional parameters passed to OAI-PMH
      */
-    public function __construct(Client $httpClient, $verb, array $params = array(), $resumptionToken = null)
+    public function __construct(ClientInterface $client, $verb, array $params = array(), $resumptionToken = null)
     {
         //Set parameters
-        $this->httpClient       = $httpClient;
+        $this->oaipmhClient     = $client;
         $this->verb             = $verb;
         $this->params           = $params;
         $this->resumptionToken  = $resumptionToken;
@@ -221,7 +221,7 @@ class RecordIterator implements \Iterator
         $verb = $this->verb;
 
         //Do it..
-        $resp = $this->httpClient->request($verb, $params);
+        $resp = $this->oaipmhClient->request($verb, $params);
         $this->numRequests++;
 
         //Result format error?

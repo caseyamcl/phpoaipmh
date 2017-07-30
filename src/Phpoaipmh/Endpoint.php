@@ -27,8 +27,6 @@ class Endpoint implements EndpointInterface
 {
     const AUTO = null;
 
-    // ---------------------------------------------------------------
-
     /**
      * @var Client
      */
@@ -38,8 +36,6 @@ class Endpoint implements EndpointInterface
      * @var string
      */
     private $granularity;
-
-    // -------------------------------------------------------------------------
 
     /**
      * Build endpoint using URL and default settings
@@ -52,33 +48,29 @@ class Endpoint implements EndpointInterface
         return new Endpoint(new Client($url));
     }
 
-    // -------------------------------------------------------------------------
-
     /**
      * Constructor
      *
-     * @param Client $client       Optional; will attempt to auto-build dependency if not passed
-     * @param string $granularity  Optional; the OAI date format for fetching records, use constants from Granularity class
+     * @param ClientInterface $client       Optional; will attempt to auto-build dependency if not passed
+     * @param string          $granularity  Optional; the OAI date format for fetching records, use constants from
+     *                                      Granularity class
      */
-    public function __construct(Client $client = null, $granularity = self::AUTO)
+    public function __construct(ClientInterface $client = null, $granularity = self::AUTO)
     {
         $this->client = $client ?: new Client();
         $this->granularity = $granularity;
     }
 
-    // -------------------------------------------------------------------------
-
     /**
      * Set the URL in the client
      *
      * @param string $url
+     * @deprecated Will be removed in v3.0; build a new Endpoint instance instead
      */
     public function setUrl($url)
     {
         $this->client->setUrl($url);
     }
-
-    // -------------------------------------------------------------------------
 
     /**
      * Identify the OAI-PMH Endpoint
@@ -92,8 +84,6 @@ class Endpoint implements EndpointInterface
         return $resp;
     }
 
-    // -------------------------------------------------------------------------
-
     /**
      * List Metadata Formats
      *
@@ -101,7 +91,7 @@ class Endpoint implements EndpointInterface
      * is provided), or the entire repository (if no arguments are provided)
      *
      * @param  string         $identifier If specified, will return only those metadata formats that a particular record supports
-     * @return RecordIterator
+     * @return RecordIteratorInterface
      */
     public function listMetadataFormats($identifier = null)
     {
@@ -110,19 +100,15 @@ class Endpoint implements EndpointInterface
         return new RecordIterator($this->client, 'ListMetadataFormats', $params);
     }
 
-    // -------------------------------------------------------------------------
-
     /**
      * List Record Sets
      *
-     * @return RecordIterator
+     * @return RecordIteratorInterface
      */
     public function listSets()
     {
         return new RecordIterator($this->client, 'ListSets');
     }
-
-    // -------------------------------------------------------------------------
 
     /**
      * Get a single record
@@ -141,8 +127,6 @@ class Endpoint implements EndpointInterface
         return $this->client->request('GetRecord', $params);
     }
 
-    // -------------------------------------------------------------------------
-
     /**
      * List Record identifiers
      *
@@ -153,14 +137,12 @@ class Endpoint implements EndpointInterface
      * @param  \DateTime      $until            An optional 'until' date for selective harvesting
      * @param  string         $set              An optional setSpec for selective harvesting
      * @param  string         $resumptionToken  An optional resumptionToken for selective harvesting
-     * @return RecordIterator
+     * @return RecordIteratorInterface
      */
     public function listIdentifiers($metadataPrefix, $from = null, $until = null, $set = null, $resumptionToken = null)
     {
         return $this->createRecordIterator("ListIdentifiers", $metadataPrefix, $from, $until, $set, $resumptionToken);
     }
-
-    // -------------------------------------------------------------------------
 
     /**
      * List Records
@@ -172,14 +154,12 @@ class Endpoint implements EndpointInterface
      * @param  \DateTime      $until            An optional 'from' date for selective harvesting
      * @param  string         $set              An optional setSpec for selective harvesting
      * @param  string         $resumptionToken  An optional resumptionToken for selective harvesting
-     * @return RecordIterator
+     * @return RecordIteratorInterface
      */
     public function listRecords($metadataPrefix, $from = null, $until = null, $set = null, $resumptionToken = null)
     {
         return $this->createRecordIterator("ListRecords", $metadataPrefix, $from, $until, $set, $resumptionToken);
     }
-
-    // -------------------------------------------------------------------------
 
     /**
      * Create a record iterator
@@ -191,7 +171,7 @@ class Endpoint implements EndpointInterface
      * @param  string         $set              An optional setSpec for selective harvesting
      * @param  string         $resumptionToken  An optional resumptionToken for selective harvesting
      *
-     * @return RecordIterator
+     * @return RecordIteratorInterface
      */
     private function createRecordIterator($verb, $metadataPrefix, $from, $until, $set, $resumptionToken)
     {
@@ -224,8 +204,6 @@ class Endpoint implements EndpointInterface
         return new RecordIterator($this->client, $verb, $params, $resumptionToken);
     }
 
-    // ---------------------------------------------------------------
-
     /**
      * Lazy load granularity from Identify, if not specified
      *
@@ -239,8 +217,6 @@ class Endpoint implements EndpointInterface
 
         return $this->granularity;
     }
-
-    // ---------------------------------------------------------------
 
     /**
      * Attempt to fetch date format from Identify endpoint (or use default)
