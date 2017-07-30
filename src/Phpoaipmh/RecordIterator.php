@@ -137,8 +137,27 @@ class RecordIterator implements \Iterator
      * be treated as an estimate
      *
      * @return int|null
+     * @deprecated Use `countTotalRecords()`
      */
     public function getTotalRecordsInCollection()
+    {
+        return $this->getTotalRecordCount();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Get the total number of records in the collection if available
+     *
+     * This only returns a value if the OAI-PMH server provides this information
+     * in the response, which not all servers do (it is optional in the OAI-PMH spec)
+     *
+     * Also, the number of records may change during the requests, so it should
+     * be treated as an estimate
+     *
+     * @return int|null
+     */
+    public function getTotalRecordCount()
     {
         if ($this->currItem === null) {
             $this->next();
