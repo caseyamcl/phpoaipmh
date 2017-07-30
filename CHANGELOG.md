@@ -1,7 +1,7 @@
 PHPOAIPMH Changelog
 ===================
 
-## 2.6 (unreleased)
+## 2.6 - 2017-07-29
 
 ### Added
  - Added `Endpoint::build($url)` constructor for convenience
