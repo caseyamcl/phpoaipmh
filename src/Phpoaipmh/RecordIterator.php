@@ -78,8 +78,6 @@ class RecordIterator implements \Iterator
      */
     private $currItem;
 
-    // -------------------------------------------------------------------------
-
     /**
      * Constructor
      *
@@ -101,8 +99,6 @@ class RecordIterator implements \Iterator
         }
     }
 
-    // -------------------------------------------------------------------------
-
     /**
      * Get the total number of requests made during this run
      *
@@ -112,8 +108,6 @@ class RecordIterator implements \Iterator
     {
         return $this->numRequests;
     }
-
-    // -------------------------------------------------------------------------
 
     /**
      * Get the total number of records processed during this run
@@ -125,7 +119,24 @@ class RecordIterator implements \Iterator
         return $this->numProcessed;
     }
 
-    // -------------------------------------------------------------------------
+
+    /**
+     * Get the resumption token if it is specified
+     *
+     * @return null|string
+     */
+    public function getResumptionToken()
+    {
+        return $this->resumptionToken;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getExpirationDate()
+    {
+        return $this->expireDate;
+    }
 
     /**
      * Get the total number of records in the collection if available
@@ -143,8 +154,6 @@ class RecordIterator implements \Iterator
     {
         return $this->getTotalRecordCount();
     }
-
-    // -------------------------------------------------------------------------
 
     /**
      * Get the total number of records in the collection if available
@@ -165,8 +174,6 @@ class RecordIterator implements \Iterator
 
         return $this->totalRecordsInCollection;
     }
-
-    // -------------------------------------------------------------------------
 
     /**
      * Get the next item
@@ -195,8 +202,6 @@ class RecordIterator implements \Iterator
 
         return $this->currItem;
     }
-
-    // -------------------------------------------------------------------------
 
     /**
      * Do a request to get the next batch of items
@@ -249,8 +254,6 @@ class RecordIterator implements \Iterator
         return count($this->batch);
     }
 
-    // -------------------------------------------------------------------------
-
     /**
      * Get Item Node Name
      *
@@ -271,6 +274,17 @@ class RecordIterator implements \Iterator
     }
 
     // ----------------------------------------------------------------
+    // Leaky abstraction methods
+
+    /**
+     * Get the current batch of records retrieved
+     *
+     * @return array|\SimpleXMLElement[]
+     */
+    public function getBatch()
+    {
+        return $this->batch;
+    }
 
     /**
      * Reset the request state
@@ -289,6 +303,7 @@ class RecordIterator implements \Iterator
     }
 
     // ----------------------------------------------------------------
+    // Iterator methods
 
     public function current()
     {
@@ -319,15 +334,5 @@ class RecordIterator implements \Iterator
     public function rewind()
     {
         $this->reset();
-    }
-
-    public function getBatch()
-    {
-        return $this->batch;
-    }
-
-    public function getResumptionToken()
-    {
-        return $this->resumptionToken;
     }
 }
