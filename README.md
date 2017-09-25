@@ -236,12 +236,12 @@ use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\HandlerStack;
 
 // Setup the the Guzzle client with the retry middleware
-$stack = HandlerStack()::create();
+$stack = HandlerStack::create();
 $stack->push(GuzzleRetryMiddleware::factory());
 $guzzleClient = new GuzzleClient(['handler' => $stack]);
 
 // Setup the Guzzle adpater and PHP OAI-PMH client
-$guzzleAdapter = new \Phpoaipmh\HttpAdapter\GuzzleAdapter($guzzleClient)
+$guzzleAdapter = new \Phpoaipmh\HttpAdapter\GuzzleAdapter($guzzleClient);
 $client  = new \Phpoaipmh\Client('http://some.service.com/oai', $guzzleAdapter);
 
 ```
