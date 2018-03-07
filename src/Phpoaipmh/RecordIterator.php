@@ -185,6 +185,10 @@ class RecordIterator implements \Iterator, RecordIteratorInterface
      */
     public function nextItem()
     {
+        if ($this->batch === null) {
+            $this->batch = [];
+        }
+        
         //If no items in batch, and we have a resumptionToken or need to make initial request...
         if (count($this->batch) == 0 && ($this->resumptionToken or $this->numRequests == 0)) {
             $this->retrieveBatch();
