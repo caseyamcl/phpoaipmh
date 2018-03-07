@@ -1,6 +1,16 @@
 PHPOAIPMH Changelog
 ===================
 
+## 2.6.1 - 2018-03-07
+
+### Changed
+ - Added Travis CI tests for PHP 7.2
+ - Minor tweaks to `composer.json` dependencies
+
+### Fixed
+ - Ensure support for Symfony 4.x libraries in `composer.json`
+ - Fixed `RcordIterator` bug for PHP 7.2 (thanks @mengidd)
+
 ## 2.6 - 2017-07-29
 
 ### Added
