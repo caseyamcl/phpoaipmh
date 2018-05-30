@@ -154,11 +154,11 @@ use Phpoaipmh\Endpoint;
 use Phpoaipmh\HttpAdapter\GuzzleAdapter;
 
 $guzzle = new GuzzleAdapter(new GuzzleClient([
-    'connect_timeout' => 2.0
+    'connect_timeout' => 2.0,
     'timeout'         => 10.0
 ]));
 
-$myEndpoint = new Endpoint(new Client($guzzle));
+$myEndpoint = new Endpoint(new Client('http://some.service.com/oai', $guzzle));
 
 ```
 
