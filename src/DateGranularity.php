@@ -80,10 +80,10 @@ class DateGranularity
     }
 
     /**
-     * @param \DateTime $dateTime
+     * @param \DateTimeInterface $dateTime
      * @return string
      */
-    public function formatDate(\DateTime $dateTime)
+    public function formatDate(\DateTimeInterface $dateTime)
     {
         $phpFormat = static::$mapping[$this->format];
         return $dateTime->format($phpFormat);
