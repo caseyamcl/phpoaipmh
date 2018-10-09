@@ -23,7 +23,7 @@ class PaginationInfo
     private $resumptionToken;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTimeInterface|null
      */
     private $expirationDate;
 
@@ -35,11 +35,11 @@ class PaginationInfo
     /**
      * PaginationInfo constructor.
      *
-     * @param string         $resumptionToken
-     * @param int|null       $completeRecordCount
-     * @param \DateTime|null $expirationDate
+     * @param string                  $resumptionToken
+     * @param int|null                $completeRecordCount
+     * @param \DateTimeInterface|null $expirationDate
      */
-    public function __construct($resumptionToken = '', $completeRecordCount = null, \DateTime $expirationDate = null)
+    public function __construct($resumptionToken = '', $completeRecordCount = null, \DateTimeInterface $expirationDate = null)
     {
         $this->resumptionToken     = $resumptionToken;
         $this->expirationDate      = $expirationDate;
@@ -79,7 +79,7 @@ class PaginationInfo
     }
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeInterface|null
      */
     public function getExpirationDate()
     {
