@@ -19,8 +19,6 @@ class GuzzleAdapter implements HttpAdapterInterface
      */
     private $guzzle;
 
-    // ----------------------------------------------------------------
-
     /**
      * Constructor
      *
@@ -31,8 +29,6 @@ class GuzzleAdapter implements HttpAdapterInterface
         $this->guzzle = $guzzle ?: new GuzzleClient();
     }
 
-    // ----------------------------------------------------------------
-
     /**
      * Get the Guzzle Client
      *
@@ -42,8 +38,6 @@ class GuzzleAdapter implements HttpAdapterInterface
     {
         return $this->guzzle;
     }
-
-    // ----------------------------------------------------------------
 
     /**
      * Do the request with GuzzleAdapter

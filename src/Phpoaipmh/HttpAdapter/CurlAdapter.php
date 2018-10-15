@@ -24,8 +24,6 @@ class CurlAdapter implements HttpAdapterInterface
         CURLOPT_USERAGENT         => 'PHP OAI-PMH Library',
     ];
 
-    // -------------------------------------------------------------------------
-
     /**
      * Constructor
      *
@@ -43,8 +41,6 @@ class CurlAdapter implements HttpAdapterInterface
         $this->setCurlOpts($curlOpts);
     }
 
-    // ---------------------------------------------------------------
-
     /**
      * Set cURL Options at runtime
      *
@@ -60,8 +56,6 @@ class CurlAdapter implements HttpAdapterInterface
             ? array_replace($this->curlOpts, $opts)
             : $opts;
     }
-
-    // -------------------------------------------------------------------------
 
     /**
      * Do CURL Request

@@ -25,6 +25,9 @@ namespace Phpoaipmh\Exception;
  */
 class HttpException extends BaseOaipmhException
 {
+    /**
+     * @var string
+     */
     private $body;
 
     /**

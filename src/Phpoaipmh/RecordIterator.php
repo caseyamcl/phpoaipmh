@@ -81,9 +81,10 @@ class RecordIterator implements \Iterator, RecordIteratorInterface
     /**
      * Constructor
      *
-     * @param ClientInterface $client  The client to use
-     * @param string          $verb    The verb to use when retrieving results from the client
-     * @param array           $params  Optional parameters passed to OAI-PMH
+     * @param ClientInterface $client           The client to use
+     * @param string          $verb             The verb to use when retrieving results from the client
+     * @param array           $params           Optional parameters passed to OAI-PMH
+     * @param string|null     $resumptionToken  Resumption token, if one exists
      */
     public function __construct(ClientInterface $client, $verb, array $params = array(), $resumptionToken = null)
     {

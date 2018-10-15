@@ -42,6 +42,7 @@ class Endpoint implements EndpointInterface
      *
      * @param string $url
      * @return Endpoint
+     * @throws \Exception
      */
     public static function build($url)
     {
@@ -54,6 +55,7 @@ class Endpoint implements EndpointInterface
      * @param ClientInterface $client       Optional; will attempt to auto-build dependency if not passed
      * @param string          $granularity  Optional; the OAI date format for fetching records, use constants from
      *                                      Granularity class
+     * @throws \Exception
      */
     public function __construct(ClientInterface $client = null, $granularity = self::AUTO)
     {

@@ -26,8 +26,6 @@ class Granularity
     const DATE = "YYYY-MM-DD";
     const DATE_AND_TIME = "YYYY-MM-DDThh:mm:ssZ";
 
-    // ---------------------------------------------------------------
-
     /**
      * Format DateTime string based on granularity
      *
