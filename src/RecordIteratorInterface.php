@@ -26,6 +26,11 @@ namespace Phpoaipmh;
 interface RecordIteratorInterface extends \Traversable
 {
     /**
+     * @return ClientInterface
+     */
+    public function getClient();
+
+    /**
      * Get the total number of requests made during this run
      *
      * @return int The number of HTTP requests made

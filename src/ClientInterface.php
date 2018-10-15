@@ -17,6 +17,8 @@
 
 namespace Phpoaipmh;
 
+use Phpoaipmh\HttpAdapter\HttpAdapterInterface;
+
 /**
  * OAI-PMH Client class retrieves and decodes OAI-PMH from a given URL
  *
@@ -33,4 +35,9 @@ interface ClientInterface
      * @return \SimpleXMLElement An XML document
      */
     public function request($verb, array $params = array());
+
+    /**
+     * @return HttpAdapterInterface
+     */
+    public function getHttpAdapter();
 }

@@ -1,8 +1,8 @@
 PHPOAIPMH
 =========
 
-A PHP OAI-PMH harvester client library
---------------------------------------
+## A PHP OAI-PMH harvester client library
+
 
 [![Latest Version](https://img.shields.io/github/release/caseyamcl/phpoaipmh.svg?style=flat-square?style=flat-square)](https://github.com/caseyamcl/phpoaipmh/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
@@ -20,8 +20,8 @@ Features:
 * Prefers Guzzle (v6 or v5)for HTTP transport layer, but can fall back to cURL, or implement your own
 * Easy-to-use iterator that hides all the HTTP junk necessary to get paginated records
 
-Installation Options
---------------------
+## Installation Options
+
 Install via [Composer](http://getcomposer.org/) by including the following in your composer.json file: 
  
     {

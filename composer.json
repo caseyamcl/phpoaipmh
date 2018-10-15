@@ -31,5 +31,8 @@
             "Phpoaipmh\\": ["src/", "tests"],
             "Phpoaipmh\\Example\\": "example/src/"
         }
+    },
+    "scripts": {
+        "test": "phpunit"
     }
 }

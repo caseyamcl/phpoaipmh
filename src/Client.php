@@ -41,27 +41,35 @@ class Client implements ClientInterface
     /**
      * @var HttpAdapterInterface
      */
-    private $httpClient;
+    private $httpAdapter;
 
     /**
      * Constructor
      *
      * @param string $url The URL of the OAI-PMH Endpoint
-     * @param HttpAdapterInterface $httpClient Optional HTTP HttpAdapterInterface class; attempt to
+     * @param HttpAdapterInterface $httpAdapter Optional HTTP HttpAdapterInterface class; attempt to
      *                                         auto-build dependency if not passed
      * @throws \Exception
      */
-    public function __construct($url = null, HttpAdapterInterface $httpClient = null)
+    public function __construct($url = null, HttpAdapterInterface $httpAdapter = null)
     {
         $this->url = $url;
 
-        if ($httpClient) {
-            $this->httpClient = $httpClient;
+        if ($httpAdapter) {
+            $this->httpAdapter = $httpAdapter;
         } else {
-            $this->httpClient = (class_exists('GuzzleHttp\Client'))
+            $this->httpAdapter = (class_exists('GuzzleHttp\Client'))
                 ? new GuzzleAdapter()
                 : new CurlAdapter();
         }
+    }
+
+    /**
+     * @return HttpAdapterInterface
+     */
+    public function getHttpAdapter()
+    {
+        return $this->httpAdapter;
     }
 
     /**
@@ -83,7 +91,7 @@ class Client implements ClientInterface
 
         //Do the request
         try {
-            $resp = $this->httpClient->request($url);
+            $resp = $this->httpAdapter->request($url);
         } catch (HttpException $e) {
             $this->checkForOaipmhException($e);
             $resp = '';

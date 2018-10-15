@@ -101,6 +101,14 @@ class RecordIterator implements \Iterator, RecordIteratorInterface
     }
 
     /**
+     * @return ClientInterface
+     */
+    public function getClient()
+    {
+        return $this->oaipmhClient;
+    }
+
+    /**
      * Get the total number of requests made during this run
      *
      * @return int The number of HTTP requests made
