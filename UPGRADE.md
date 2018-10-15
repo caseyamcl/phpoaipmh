@@ -1,5 +1,12 @@
-Upgrading from Version 1.x to 2.x
-=================================
+## Upgrading from Version 2.x to 3.x
+
+* Ensure you are running at-least PHP v5.5 or newer (I recommend at least PHP7.2, if you are able to)
+* If you pass any date strings to `Client::listIdentifiers()` or `Client::listRecords`, you must now pass instances of
+  `DateTimeInterface` instead
+* Remove any usage of `Endpoint::setUrl()` or `ClientInterface::setUrl()`.  If you need to change the URL for your
+  endpoint, create new instances of `Endpoint` or `ClientInterface` instead, and pass the URL to the constructor.
+
+## Upgrading from Version 1.x to 2.x
 
 * Usages of `Phpoaipmh\Http\Guzzle` should now instead use `Phpoaipmh\HttpAdapter\GuzzleAdapter`.
 * Usages of `Phpoaipmh\Http\Curl` should now instead use  `Phpoaipmh\HttpAdapter\CurlAdapter`.

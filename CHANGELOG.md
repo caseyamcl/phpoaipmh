@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed automatic 'short name' class detection in `OaiPmhException`
 - Removed `bootstrap.php` from tests directory, in favor of simply using composer autoloader
 - Renamed `httpClient` variables and proprties to `httpAdapter` for consistency in naming
+- Improved README and documentation
 
 ### Added
 - Added `composer test` command

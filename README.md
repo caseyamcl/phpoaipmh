@@ -36,21 +36,18 @@ Or, drop the `src` folder into your application and use a PSR-0 autoloader to in
 *Note:* Guzzle v6.0 is recommended, but if you do not wish to use Guzzle v6 for whatever reason, you can
 use any one of the following:
 
-* Guzzle 5.0 - You can use Guzzle v5 instead of v6 in the case that you are using this library on PHP v5.4.
-  This works fine out-of-the-box.
+* Guzzle 5.0 - You can use Guzzle v5 instead of v6.
 * cURL - This library will fall back to using cURL if Guzzle is not installed.
 * Build your own - You can use a different HTTP client library by passing your own
   implementation of the `Phpoaipmh\HttpAdapter\HttpAdapterInterface` to the `Phpoaipmh\Client` constructor.
 
+## Upgrading
 
-Upgrading from Version 1 to Version 2
--------------------------------------
-
-There are several backwards-incompatible API improvements in version 2.0.  See UPGRADE.md for
+There are several backwards-incompatible API improvements in major version changes.  See <UPGRADE.md> for
 information about how to upgrade your code to use the new version.
 
-Usage
------
+## Usage
+
 Setup a new endpoint client:
 
 ```php
@@ -77,7 +74,7 @@ foreach($results as $item) {
 }
 ```
 
-Get a lists of records:
+### Retrieving records
 
 ```php
 // Recs will be an iterator of SimpleXMLElement objects
@@ -92,7 +89,24 @@ foreach($recs as $rec) {
 }
 ```
 
-Optionally, specify a date/time granularity level to use for date-based queries:
+### Limiting record retrieval by date/time
+
+Simply pass instances of `DateTimeInterface` to `Endpoint::listRecords()` or `Endpoint::listIdentifiers()` as
+arguments two and three, respectively.
+
+If you want one and not another, you can pass `null` for either argument.
+
+```php
+
+// Retrieve records from Jan 1, 2018 through October 1, 2018
+$recs = $myEndpoint->listRecords('someMetaDataFormat', new \DateTime('2018-01-01'), new \DateTime('2018-10-01'));
+
+foreach($recs as $rec) {
+    var_dump($rec);
+}
+```
+
+### Setting date/time granularity
 
 ```php
 use Phpoaipmh\Client,
@@ -103,6 +117,29 @@ $client = new Client('http://some.service.com/oai');
 $myEndpoint = new Endpoint($client, Granularity::DATE_AND_TIME);
 ```
 
+### Record sets
+
+Some OAI-PMH endpoints sub-divide records into [sets](https://www.openarchives.org/OAI/openarchivesprotocol.html#Set).
+
+You can list the record sets available for a given endpoint by calling `Endpoint::listSets()`:
+
+```php
+foreach ($myEndpoint->listSets() as $set) {
+    var_dump($set);
+}
+```
+
+You can specify the set you wish to retrieve by passing the set name as the fourth argument to 
+`Endpoint::listIdentifiers()` or `Endpoint::listRecords()`:
+
+```php
+foreach ($myEndpoint->listRecords('someMetadataFormat', null, null 'someSetName') as $record) {
+    var_dump($record);
+}
+```
+
+### Getting total record count
+ 
 Some endpoints provide a total record count for your query.  If the endpoint 
 provides this, you can access this value by calling: `RecordIterator::getTotalRecordCount()`.
 
@@ -114,8 +151,8 @@ $iterator = $myEndpoint->listRecords('someMetaDataFormat');
 echo "Total count is " . ($iterator->getTotalRecordCount() ?: 'unknown');
 ```
 
-Handling Results
-----------------
+## Handling Results
+
 Depending on the verb you use, the library will send back either a `SimpleXMLELement`
 or an iterator containing `SimpleXMLElement` objects.
 
@@ -125,8 +162,7 @@ or an iterator containing `SimpleXMLElement` objects.
 The `Phpoaipmh\ResponseIterator` object encapsulates the logic to iterate through paginated sets of records.
 
 
-Handling Errors
----------------
+## Handling Errors
 
 This library will throw different exceptions under different circumstances:
 
@@ -137,8 +173,7 @@ This library will throw different exceptions under different circumstances:
 All exceptions extend the `Phpoaipmh\Exception\BaseoaipmhException` class.
 
 
-Customizing Default Request Options
------------------------------------
+## Customizing Default Request Options
 
 You can customize the default request options (for example, request timeout) for both cURL and Guzzle 
 clients by building the adapter objects manually.
@@ -190,15 +225,13 @@ $client = new Client('http://some.service.com/oai', $adapter);
 $myEndpoint = new Endpoint($client);
 ```
 
-Dealing with XML Namespaces
----------------------------
+## Dealing with XML Namespaces
 
 Many OAI-PMH XML documents make use of XML Namespaces.  For non-XML experts, it can be confusing to implement
 these in PHP.  SitePoint has a brief but excellent [overview of how to use Namespaces in SimpleXML](http://www.sitepoint.com/simplexml-and-namespaces/).
 
 
-Iterator Metadata
------------------
+## Iterator Metadata
 
 The `Phpoaipmh\RecordIterator` iterator contains some helper methods:
 
@@ -207,8 +240,7 @@ The `Phpoaipmh\RecordIterator` iterator contains some helper methods:
 * `reset()` - Resets the iterator, which will restart the record retrieval from scratch.
 
 
-Handling 503 `Retry-After` Responses
-------------------------------------
+## Handling 503 `Retry-After` Responses
 
 Some OAI-PMH endpoints employ rate-limiting so that you can only make X number
 of requests in a given time period.  These endpoints will return a `503 Retry-AFter`
@@ -288,8 +320,7 @@ This will create a client that automatically retries requests when OAI-PMH endpo
 `503` rate-limiting responses. 
 
 
-Sending Arbitrary Query Parameters
-----------------------------------
+## Sending Arbitrary Query Parameters
 
 If you wish to send arbitrary HTTP query parameters with your requests, you can
 send them via the `\Phpoaipmh\Client` class:
@@ -351,15 +382,13 @@ $guzzleAdapter->getGuzzleClient()->getEmitter()->on('before', $addParamsListener
 $client  = new \Phpoaipmh\Client('http://some.service.com/oai', $guzzleAdapter);
 ```
 
-Implementation Tips
--------------------
+## Implementation Tips
 
 Harvesting data from a OAI-PMH endpoint can be a time-consuming task, especially when there are lots of records.
 Typically, this kind of task is done via a CLI script or background process that can run for a long time.
 It is not normally a good idea to make it part of a web request.
 
-Credits
--------
+## Credits
 
 * [Casey McLaughlin](http://github.com/caseyamcl)
 * [Christian Scheb](https://github.com/scheb)
@@ -368,7 +397,6 @@ Credits
 * [Valery Buchinsky](https://github.com/vbuc)
 * [All Contributors](https://github.com/caseyamcl/phpoaipmh/contributors)
 
-License
--------
+## License
 
-MIT License; see [LICENSE](LICENSE) file for details
+MIT License; see [LICENSE](LICENSE.md) file for details
