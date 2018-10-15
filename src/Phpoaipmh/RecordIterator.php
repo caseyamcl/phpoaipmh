@@ -49,7 +49,7 @@ class RecordIterator implements \Iterator, RecordIteratorInterface
     private $totalRecordsInCollection;
 
     /**
-     * @var \DateTime  Recordset expiration date (if specified)
+     * @var \DateTimeInterface  RecordSet expiration date (if specified)
      */
     private $expireDate;
 
@@ -131,7 +131,7 @@ class RecordIterator implements \Iterator, RecordIteratorInterface
     }
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeInterface|null
      */
     public function getExpirationDate()
     {

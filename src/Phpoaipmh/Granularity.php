@@ -31,12 +31,12 @@ class Granularity
     /**
      * Format DateTime string based on granularity
      *
-     * @param \DateTime $dateTime
+     * @param \DateTimeInterface $dateTime
      * @param string $format       Either self::DATE or self::DATE_AND_TIME
      *
      * @return string
      */
-    public static function formatDate(\DateTime $dateTime, $format)
+    public static function formatDate(\DateTimeInterface $dateTime, $format)
     {
         $phpFormats = array(
             self::DATE => "Y-m-d",

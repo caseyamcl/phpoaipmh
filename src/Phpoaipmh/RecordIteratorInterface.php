@@ -47,7 +47,7 @@ interface RecordIteratorInterface extends \Traversable
     public function getResumptionToken();
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeInterface|null
      */
     public function getExpirationDate();
 

@@ -132,11 +132,11 @@ class Endpoint implements EndpointInterface
      *
      * Corresponds to OAI Verb to list record identifiers
      *
-     * @param  string         $metadataPrefix Required by OAI-PMH endpoint
-     * @param  \DateTime      $from             An optional 'from' date for selective harvesting
-     * @param  \DateTime      $until            An optional 'until' date for selective harvesting
-     * @param  string         $set              An optional setSpec for selective harvesting
-     * @param  string         $resumptionToken  An optional resumptionToken for selective harvesting
+     * @param  string             $metadataPrefix Required by OAI-PMH endpoint
+     * @param  \DateTimeInterface $from             An optional 'from' date for selective harvesting
+     * @param  \DateTimeInterface $until            An optional 'until' date for selective harvesting
+     * @param  string             $set              An optional setSpec for selective harvesting
+     * @param  string             $resumptionToken  An optional resumptionToken for selective harvesting
      * @return RecordIteratorInterface
      */
     public function listIdentifiers($metadataPrefix, $from = null, $until = null, $set = null, $resumptionToken = null)
@@ -149,11 +149,11 @@ class Endpoint implements EndpointInterface
      *
      * Corresponds to OAI Verb to list records
      *
-     * @param  string         $metadataPrefix Required by OAI-PMH endpoint
-     * @param  \DateTime      $from             An optional 'from' date for selective harvesting
-     * @param  \DateTime      $until            An optional 'from' date for selective harvesting
-     * @param  string         $set              An optional setSpec for selective harvesting
-     * @param  string         $resumptionToken  An optional resumptionToken for selective harvesting
+     * @param  string             $metadataPrefix Required by OAI-PMH endpoint
+     * @param  \DateTimeInterface $from             An optional 'from' date for selective harvesting
+     * @param  \DateTimeInterface $until            An optional 'from' date for selective harvesting
+     * @param  string             $set              An optional setSpec for selective harvesting
+     * @param  string             $resumptionToken  An optional resumptionToken for selective harvesting
      * @return RecordIteratorInterface
      */
     public function listRecords($metadataPrefix, $from = null, $until = null, $set = null, $resumptionToken = null)
@@ -164,37 +164,37 @@ class Endpoint implements EndpointInterface
     /**
      * Create a record iterator
      *
-     * @param  string         $verb             OAI Verb
-     * @param  string         $metadataPrefix   Required by OAI-PMH endpoint
-     * @param  \DateTime|null $from             An optional 'from' date for selective harvesting
-     * @param  \DateTime|null $until            An optional 'from' date for selective harvesting
-     * @param  string         $set              An optional setSpec for selective harvesting
-     * @param  string         $resumptionToken  An optional resumptionToken for selective harvesting
+     * @param  string             $verb             OAI Verb
+     * @param  string             $metadataPrefix   Required by OAI-PMH endpoint
+     * @param  \DateTimeInterface $from             An optional 'from' date for selective harvesting
+     * @param  \DateTimeInterface $until            An optional 'from' date for selective harvesting
+     * @param  string             $set              An optional setSpec for selective harvesting
+     * @param  string             $resumptionToken  An optional resumptionToken for selective harvesting
      *
      * @return RecordIteratorInterface
      */
-    private function createRecordIterator($verb, $metadataPrefix, $from, $until, $set, $resumptionToken)
+    private function createRecordIterator($verb, $metadataPrefix, $from, $until, $set = null, $resumptionToken = null)
     {
         $params = array('metadataPrefix' => $metadataPrefix);
 
-        if ($from instanceof \DateTime) {
+        if ($from instanceof \DateTimeInterface) {
             $params['from'] = Granularity::formatDate($from, $this->getGranularity());
         } elseif (null !== $from) {
-            trigger_error(sprintf(
-                'Deprecated: %s::%s \'from\' parameter should be an instance of \DateTime (string param support to be removed in v3.0)',
+            throw new \InvalidArgumentException(sprintf(
+                '%s::%s $from parameter must be an instance of \DateTimeInterface',
                 get_called_class(),
-                lcfirst($verb)
-            ), E_USER_DEPRECATED);
+                'createRecordIterator'
+            ));
         }
 
-        if ($until instanceof \DateTime) {
+        if ($until instanceof \DateTimeInterface) {
             $params['until'] = Granularity::formatDate($until, $this->getGranularity());
         } elseif (null !== $until) {
-            trigger_error(sprintf(
-                'Deprecated: %s::%s \'until\' parameter should be an instance of \DateTime (string param support to be removed in v3.0)',
+            throw new \InvalidArgumentException(sprintf(
+                '%s::%s $until parameter must be an instance of \DateTimeInterface',
                 get_called_class(),
-                lcfirst($verb)
-            ), E_USER_DEPRECATED);
+                'createRecordIterator'
+            ));
         }
 
         if ($set) {

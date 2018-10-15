@@ -1,6 +1,13 @@
 PHPOAIPMH Changelog
 ===================
 
+## UNRELEASED
+
+### Changed
+- Require PHP5.5 or newer (hint: upgrade to PHP7, since PHP5 support is [being deprecated](http://php.net/supported-versions.php))
+- Change all `DateTime` references and type-hints to `DateTimeInterface`
+
+
 ## 2.6.1 - 2018-03-07
 
 ### Changed

@@ -223,10 +223,13 @@ class EndpointTest extends PHPUnit_Framework_TestCase
 
     // ---------------------------------------------------------------
 
-    public function testStringDatesGenerateDeprecatedWarnings()
+    /**
+     * As of v3.0, we don't allow string dates
+     *
+     * @expectedException \InvalidArgumentException
+     */
+    public function testStringDateThrowsException()
     {
-        $this->setExpectedException('PHPUnit_Framework_Error_Deprecated');
-
         $obj = new Endpoint($this->getMockClient());
         $obj->listRecords('oai_dc', '2014-01-01', '2015-01-01');
     }

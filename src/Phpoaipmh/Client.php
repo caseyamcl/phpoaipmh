@@ -46,8 +46,10 @@ class Client implements ClientInterface
     /**
      * Constructor
      *
-     * @param string               $url        The URL of the OAI-PMH Endpoint
-     * @param HttpAdapterInterface $httpClient Optional HTTP HttpAdapterInterface class; attempt to auto-build dependency if not passed
+     * @param string $url The URL of the OAI-PMH Endpoint
+     * @param HttpAdapterInterface $httpClient Optional HTTP HttpAdapterInterface class; attempt to
+     *                                         auto-build dependency if not passed
+     * @throws \Exception
      */
     public function __construct($url = null, HttpAdapterInterface $httpClient = null)
     {
