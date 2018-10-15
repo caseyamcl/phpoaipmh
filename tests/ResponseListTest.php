@@ -188,7 +188,7 @@ class ResponseListTest extends PHPUnit_Framework_TestCase
     protected function generateSampleXML($sampleFiles)
     {
         foreach ($sampleFiles as $file) {
-            $obj = simplexml_load_file(__DIR__ . '/../fixtures/SampleXML/' . $file);
+            $obj = simplexml_load_file(__DIR__ . '/SampleXML/' . $file);
 
             if (! $obj) {
                 user_error(sprintf("Could not load sampel XML file: %s", $file));

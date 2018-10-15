@@ -241,7 +241,7 @@ class EndpointTest extends PHPUnit_Framework_TestCase
      */
     protected function getSampleXML($file)
     {
-        return __DIR__ . '/../fixtures/SampleXML/' . $file;
+        return __DIR__ . '/SampleXML/' . $file;
     }
 
     // -------------------------------------------------------------------------
