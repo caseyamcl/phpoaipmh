@@ -53,8 +53,13 @@ class EndpointCurlTest extends PHPUnit_Framework_TestCase
     public function testGetRecordWorksForCorrectRecord()
     {
         //First, make sure the record actually exists using Guzzle
-        $guzzle   = new GuzzleHttpClient();
-        $uri      = sprintf(self::ENDPOINT_URL . "?verb=GetRecord&identifier=%s&metadataPrefix=%s", self::RECORD_ID, self::METADATA_PREFIX);
+        $guzzle = new GuzzleHttpClient();
+        $uri = sprintf(
+            self::ENDPOINT_URL . "?verb=GetRecord&identifier=%s&metadataPrefix=%s",
+            self::RECORD_ID,
+            self::METADATA_PREFIX
+        );
+
         $response = $guzzle->get($uri);
 
         //Search for a known string to ensure the endpoint works before testing it

@@ -62,14 +62,15 @@ class ClientTest extends PHPUnit_Framework_TestCase
     public function testRequestUrlBuildCorrectly($endpointUrl, $expectedRequestUrl)
     {
         $mockClient = new HttpMockClient;
-        $mockClient->toReturn = '<?xml version="1.0" encoding="UTF-8" ?>  <OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/  http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">  </OAI-PMH>';
+        $mockClient->toReturn = file_get_contents(__DIR__ . '/SampleXML/GoodResponseIdentify.xml');
         $obj = new Client($endpointUrl, $mockClient);
         $obj->request('Identify', array('param' => 'value'));
 
         $this->assertEquals($expectedRequestUrl, $mockClient->getLastRequestUrl());
     }
 
-    public function getUrlsToTest() {
+    public function getUrlsToTest()
+    {
         return array(
             array('http://example.com/oai', 'http://example.com/oai?verb=Identify&param=value'),
             array('http://example.com/?oai=1', 'http://example.com/?oai=1&verb=Identify&param=value'),
@@ -84,7 +85,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
     public function testRequestDecodesValidResponseCorrectly()
     {
         $mockClient = new HttpMockClient;
-        $mockClient->toReturn = '<?xml version="1.0" encoding="UTF-8" ?><OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd"><responseDate>2012-08-06T19:25:47Z</responseDate><request verb="Identify">http://nsdl.org/oai</request><Identify><repositoryName>National Science Digital Library</repositoryName><baseURL>http://nsdl.org/oai</baseURL><protocolVersion>2.0</protocolVersion><adminEmail>jweather@ucar.edu</adminEmail><earliestDatestamp>1900-01-01T12:00:00Z</earliestDatestamp><deletedRecord>no</deletedRecord><granularity>YYYY-MM-DDThh:mm:ssZ</granularity> <compression>gzip</compression><description><oai-identifier    xmlns="http://www.openarchives.org/OAI/2.0/oai-identifier"   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai-identifier   http://www.openarchives.org/OAI/2.0/oai-identifier.xsd">  <scheme>oai</scheme>   <repositoryIdentifier>nsdl.org</repositoryIdentifier>      <delimiter>:</delimiter>   <sampleIdentifier>oai:nsdl.org:1477460</sampleIdentifier></oai-identifier></description><description>    <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">        <dc:description>The National Science Digital Library (NSDL) is a national network of digital environments dedicated to advancing science, technology, engineering, and mathematics (STEM) teaching and learning for all learners, in both formal and informal settings.</dc:description>    </oai_dc:dc></description></Identify></OAI-PMH>';
+        $mockClient->toReturn = file_get_contents(__DIR__ . '/SampleXML/GoodResponseIdentify.xml');
         $obj = new Client('http://nsdl.org/oai', $mockClient);
         $result = $obj->request('Identify');
 
@@ -116,7 +117,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
     public function testRequestThrowsOAIPMHExceptionForInvalidVerbOrParams()
     {
         $mockClient = new HttpMockClient;
-        $mockClient->toReturn = '<?xml version="1.0" encoding="UTF-8" ?>  <OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/  http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd"> <responseDate>2012-08-06T19:33:31Z</responseDate> <request>http://nsdl.org/oai</request>      <error code="badVerb">The verb &#39;NotExist&#39; is illegal</error>  </OAI-PMH>';
+        $mockClient->toReturn = file_get_contents(__DIR__ . '/SampleXML/BadResponseNonExistentVerb.xml');
         $this->setExpectedException('Phpoaipmh\Exception\OaipmhException');
 
         $obj = new Client('http://nsdl.org/oai', $mockClient);
@@ -128,7 +129,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
      */
     public function testHttpErrorStatusWithOaipmhErrorResponseThrowsOAIPMHException()
     {
-        $response = '<?xml version="1.0" encoding="UTF-8" ?>  <OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/  http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd"> <responseDate>2012-08-06T19:33:31Z</responseDate> <request>http://nsdl.org/oai</request>      <error code="badVerb">The verb &#39;NotExist&#39; is illegal</error>  </OAI-PMH>';
+        $response = file_get_contents(__DIR__ . '/SampleXML/BadResponseNonExistentVerb.xml');
         $httpException = new HttpException($response, "Not found.", 404);
 
         $mockAdapter = $this->getMock("Phpoaipmh\HttpAdapter\HttpAdapterInterface");

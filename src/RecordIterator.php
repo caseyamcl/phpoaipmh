@@ -239,7 +239,11 @@ class RecordIterator implements \Iterator, RecordIteratorInterface
 
         //Result format error?
         if (! isset($resp->$verb->$nodeName)) {
-            throw new MalformedResponseException(sprintf("Expected XML element list '%s' missing for verb '%s'", $nodeName, $verb));
+            throw new MalformedResponseException(sprintf(
+                "Expected XML element list '%s' missing for verb '%s'",
+                $nodeName,
+                $verb
+            ));
         }
 
         //Set the resumption token and expiration date, if specified in the response

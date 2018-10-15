@@ -81,7 +81,8 @@ class Endpoint implements EndpointInterface
      * Return the list of supported metadata format for a particular record (if $identifier
      * is provided), or the entire repository (if no arguments are provided)
      *
-     * @param  string         $identifier If specified, will return only those metadata formats that a particular record supports
+     * @param  string  $identifier If specified, will return only those metadata formats that a
+     *                             particular record supports
      * @return RecordIteratorInterface
      */
     public function listMetadataFormats($identifier = null)

@@ -17,8 +17,6 @@
 
 namespace Phpoaipmh;
 
-require_once __DIR__ . '/EndpointCurlTest.php';
-
 /**
  * Endpoint Guzzle Test
  *
