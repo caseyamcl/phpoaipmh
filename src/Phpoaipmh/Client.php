@@ -53,7 +53,7 @@ class Client implements ClientInterface
      */
     public function __construct($url = null, HttpAdapterInterface $httpClient = null)
     {
-        $this->setUrl($url);
+        $this->url = $url;
 
         if ($httpClient) {
             $this->httpClient = $httpClient;
@@ -62,17 +62,6 @@ class Client implements ClientInterface
                 ? new GuzzleAdapter()
                 : new CurlAdapter();
         }
-    }
-
-    /**
-     * Set the URL
-     *
-     * @param string $url
-     * @deprecated Will be removed in v3.0.  Build a new client instance instead
-     */
-    public function setUrl($url)
-    {
-        $this->url = $url;
     }
 
     /**

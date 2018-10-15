@@ -62,17 +62,6 @@ class Endpoint implements EndpointInterface
     }
 
     /**
-     * Set the URL in the client
-     *
-     * @param string $url
-     * @deprecated Will be removed in v3.0; build a new Endpoint instance instead
-     */
-    public function setUrl($url)
-    {
-        $this->client->setUrl($url);
-    }
-
-    /**
      * Identify the OAI-PMH Endpoint
      *
      * @return \SimpleXMLElement A XML document with attributes describing the repository
