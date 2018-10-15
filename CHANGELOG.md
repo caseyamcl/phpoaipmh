@@ -20,11 +20,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Automatic code coverage reports into `build` directory when  
 - Object graph methods: `ClientInterface::getHttpAdapter()` and `RecordIterator::getClient()`
 - Added PHP CodeSniffer to auto-correct PSR-2 issues
+- Additional tests (`testGetRecordWithNamespaces`)
 
 ### Removed
 - Removed `Endpoint::setUrl()` and `Client::setUrl()` methods.  URL in client should be immutable.  If you need to 
   change the Endpoint URL, best practice is to create a new Client and Endpoint instance.
 - Removed `EndpointCurlTest` that performed HTTP calls against an actual OAI-PMH endpoint (slow and not useful)
+- Removed `RecordIterator::getTotalRecordsInCollection()` in favor of `RecordIterator::getTotalRecordCount()`
 
 ## [2.6.1] - 2018-03-07
 ### Changed
