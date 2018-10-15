@@ -810,7 +810,7 @@
       <datestamp>2012-07-28T22:10:19Z</datestamp>
        <setSpec>ncs-NSDL-COLLECTION-000-003-112-079</setSpec>
       </header>
-    <resumptionToken completeListSize="733" cursor="600"/>
+    <resumptionToken completeListSize="733" cursor="600" expirationDate="2099-01-01T01:30:28Z" />
 </ListIdentifiers>
 
 </OAI-PMH>

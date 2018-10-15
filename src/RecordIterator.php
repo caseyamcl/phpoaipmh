@@ -5,7 +5,7 @@
  *
  * @license http://opensource.org/licenses/MIT
  * @link https://github.com/caseyamcl/phpoaipmh
- * @version 2.0
+ * @version 3.0
  * @package caseyamcl/phpoaipmh
  * @author Casey McLaughlin <caseyamcl@gmail.com>
  *
@@ -145,23 +145,6 @@ class RecordIterator implements \Iterator, RecordIteratorInterface
     public function getExpirationDate()
     {
         return $this->expireDate;
-    }
-
-    /**
-     * Get the total number of records in the collection if available
-     *
-     * This only returns a value if the OAI-PMH server provides this information
-     * in the response, which not all servers do (it is optional in the OAI-PMH spec)
-     *
-     * Also, the number of records may change during the requests, so it should
-     * be treated as an estimate
-     *
-     * @return int|null
-     * @deprecated Use `countTotalRecords()`
-     */
-    public function getTotalRecordsInCollection()
-    {
-        return $this->getTotalRecordCount();
     }
 
     /**

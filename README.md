@@ -26,12 +26,12 @@ Install via [Composer](http://getcomposer.org/) by including the following in yo
  
     {
         "require": {
-            "caseyamcl/phpoaipmh": "^2.6",
+            "caseyamcl/phpoaipmh": "^3.0",
             "guzzlehttp/guzzle":   "^6.3"
         }
     }
 
-Or, drop the `src` folder into your application and use a PSR-0 autoloader to include the files.
+Or, drop the `src` folder into your application and use a PSR-4 autoloader to include the files.
 
 *Note:* Guzzle v6.0 is recommended, but if you do not wish to use Guzzle v6 for whatever reason, you can
 use any one of the following:
@@ -51,7 +51,6 @@ information about how to upgrade your code to use the new version.
 Setup a new endpoint client:
 
 ```php
-
 // Quick and easy 'build' method 
 $myEndpoint = \Phpoaipmh\Endpoint::build('http://some.service.com/oai');
 
@@ -107,6 +106,10 @@ foreach($recs as $rec) {
 ```
 
 ### Setting date/time granularity
+
+This library will attempt to retrieve granularity automatically from the OAI-PMH
+`Identify` endpoint, but in case you want to set it your self manually, you can pass
+an instance of `Granularity` to the `Endpoint` constructor:
 
 ```php
 use Phpoaipmh\Client,

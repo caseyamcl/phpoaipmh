@@ -5,6 +5,7 @@
   `DateTimeInterface` instead
 * Remove any usage of `Endpoint::setUrl()` or `ClientInterface::setUrl()`.  If you need to change the URL for your
   endpoint, create new instances of `Endpoint` or `ClientInterface` instead, and pass the URL to the constructor.
+* Change any calls to `RecordIterator::getTotalRecordsInCollection()` to `RecordIterator::getTotalRecordCount()`.
 
 ## Upgrading from Version 1.x to 2.x
 

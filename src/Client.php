@@ -5,7 +5,7 @@
  *
  * @license http://opensource.org/licenses/MIT
  * @link https://github.com/caseyamcl/phpoaipmh
- * @version 2.0
+ * @version 3.0
  * @package caseyamcl/phpoaipmh
  * @author Casey McLaughlin <caseyamcl@gmail.com>
  *
@@ -92,12 +92,10 @@ class Client implements ClientInterface
         //Do the request
         try {
             $resp = $this->httpAdapter->request($url);
+            return $this->decodeResponse($resp);
         } catch (HttpException $e) {
             $this->checkForOaipmhException($e);
-            $resp = '';
         }
-
-        return $this->decodeResponse($resp);
     }
 
     /**

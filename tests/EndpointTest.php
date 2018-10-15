@@ -5,7 +5,7 @@
  *
  * @license http://opensource.org/licenses/MIT
  * @link https://github.com/caseyamcl/phpoaipmh
- * @version 2.0
+ * @version 3.0
  * @package caseyamcl/phpoaipmh
  * @author Casey McLaughlin <caseyamcl@gmail.com>
  *
@@ -27,8 +27,6 @@ use PHPUnit_Framework_TestCase;
 class EndpointTest extends PHPUnit_Framework_TestCase
 {
 
-    // -------------------------------------------------------------------------
-
     /**
      * Simple Instantiation Test
      *
@@ -37,11 +35,9 @@ class EndpointTest extends PHPUnit_Framework_TestCase
     public function testInsantiateCreatesNewObject()
     {
         $obj = new Endpoint($this->getMockClient());
-        $this->assertInstanceOf('Phpoaipmh\Endpoint', $obj);
-        $this->assertInstanceOf('Phpoaipmh\EndpointInterface', $obj);
+        $this->assertInstanceOf(Endpoint::class, $obj);
+        $this->assertInstanceOf(EndpointInterface::class, $obj);
     }
-
-    // -------------------------------------------------------------------------
 
     /**
      * Test that identify returns a valid SimpleXMLElement
@@ -60,8 +56,6 @@ class EndpointTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceof('SimpleXMLElement', $response);
         $this->assertObjectHasAttribute('Identify', $response);
     }
-
-    // -------------------------------------------------------------------------
 
     /**
      * Test meta data format being returned
@@ -93,8 +87,6 @@ class EndpointTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expectedRecordIterator, $returnValue);
     }
 
-    // -------------------------------------------------------------------------
-
     /**
      * Test meta data format being returned
      */
@@ -109,8 +101,6 @@ class EndpointTest extends PHPUnit_Framework_TestCase
         $expectedRecordIterator = new RecordIterator($client, "ListSets");
         $this->assertEquals($expectedRecordIterator, $returnValue);
     }
-
-    // -------------------------------------------------------------------------
 
     /**
      * Test that client is called correctly
@@ -146,8 +136,6 @@ class EndpointTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceof('SimpleXMLElement', $response);
         $this->assertObjectHasAttribute('GetRecord', $response);
     }
-
-    // -------------------------------------------------------------------------
 
     /**
      * Test that ListIdentifiers returns a RecordIterator
@@ -196,8 +184,6 @@ class EndpointTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expectedRecordIterator, $returnValue);
     }
 
-    // -------------------------------------------------------------------------
-
     /**
      * Test that list ListRecords returns a RecordIterator
      */
@@ -219,7 +205,7 @@ class EndpointTest extends PHPUnit_Framework_TestCase
     public function testListRecordsReturnsRecordIteratorWithParameters()
     {
         $client = $this->getMockClient();
-        $obj = new Endpoint($client);
+        $obj = new Endpoint($client, Granularity::DATE);
 
         $returnValue = $obj->listRecords(
             "metadataPrefix",
@@ -246,20 +232,27 @@ class EndpointTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expectedRecordIterator, $returnValue);
     }
 
-    // ---------------------------------------------------------------
+    /**
+     * As of v3.0, we don't allow string dates
+     *
+     * @expectedException \InvalidArgumentException
+     */
+    public function testStringDateThrowsExceptionOnFromDate()
+    {
+        $obj = new Endpoint($this->getMockClient());
+        $obj->listRecords('oai_dc', '2014-01-01');
+    }
 
     /**
      * As of v3.0, we don't allow string dates
      *
      * @expectedException \InvalidArgumentException
      */
-    public function testStringDateThrowsException()
+    public function testStringDateThrowsExceptionOnUntilDate()
     {
         $obj = new Endpoint($this->getMockClient());
-        $obj->listRecords('oai_dc', '2014-01-01', '2015-01-01');
+        $obj->listRecords('oai_dc', null, '2015-01-01');
     }
-
-    // ---------------------------------------------------------------
 
     /**
      * Shortcut to load contents of a sample XML file
@@ -269,11 +262,9 @@ class EndpointTest extends PHPUnit_Framework_TestCase
         return __DIR__ . '/SampleXML/' . $file;
     }
 
-    // -------------------------------------------------------------------------
-
     protected function getMockClient($retVal = null)
     {
-        $mock = $this->getMockBuilder('Phpoaipmh\Client')->disableOriginalConstructor()->getMock();
+        $mock = $this->getMockBuilder(Client::class)->disableOriginalConstructor()->getMock();
         $mock->expects($this->any())->method('request')->will($this->returnValue($retVal));
         return $mock;
     }

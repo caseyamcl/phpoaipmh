@@ -5,7 +5,7 @@
  *
  * @license http://opensource.org/licenses/MIT
  * @link https://github.com/caseyamcl/phpoaipmh
- * @version 2.0
+ * @version 3.0
  * @package caseyamcl/phpoaipmh
  * @author Casey McLaughlin <caseyamcl@gmail.com>
  *
@@ -203,24 +203,15 @@ class Endpoint implements EndpointInterface
      */
     private function getGranularity()
     {
+        // If the granularity is not specified, attempt to retrieve it from the server
+        // Fall back on DATE granularity
         if ($this->granularity === null) {
-            $this->granularity = $this->fetchGranularity();
+            $response = $this->identify();
+            return (isset($response->Identify->granularity))
+                ? (string) $response->Identify->granularity
+                : Granularity::DATE;
         }
 
         return $this->granularity;
-    }
-
-    /**
-     * Attempt to fetch date format from Identify endpoint (or use default)
-     *
-     * @return string
-     */
-    private function fetchGranularity()
-    {
-        $response = $this->identify();
-
-        return (isset($response->Identify->granularity))
-            ? (string) $response->Identify->granularity
-            : Granularity::DATE;
     }
 }

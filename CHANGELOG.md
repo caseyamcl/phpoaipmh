@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## [Unreleased]
+## [v3.0] - 2018-10-15
 ### Changed
 - Upgraded from PSR-0 to PSR-4 
 - Require PHP5.5 or newer (hint: upgrade to PHP7, since PHP5 support is [being deprecated](http://php.net/supported-versions.php))

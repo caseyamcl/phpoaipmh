@@ -1,0 +1,39 @@
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/">
+    <responseDate>2015-07-29T19:56:59Z</responseDate>
+    <request metadataPrefix="oai_dc" verb="ListRecords">http://oai.bnf.fr/oai2/OAIHandler</request>
+    <ListRecords>
+        <record>
+            <header>
+                <identifier>oai:bnf.fr:gallica/ark:/12148/bpt6k5440618t</identifier>
+                <datestamp>2010-06-09</datestamp>
+                <setSpec>gallica:theme:8:80</setSpec>
+                <setSpec>gallica:typedoc:periodiques:fascicules</setSpec>
+            </header>
+            <metadata>
+                <oai_dc:dc>
+                    <dc:identifier>http://gallica.bnf.fr/ark:/12148/bpt6k5440618t</dc:identifier>
+                    <dc:date>1889-04</dc:date>
+                    <dc:description>1889/04 (FASC1).</dc:description>
+                    <dc:title>Le Poème. Publication mensuelle</dc:title>
+                    <dc:publisher>[s.n.?] (Paris)</dc:publisher>
+                    <dc:type xml:lang="fre">texte</dc:type>
+                    <dc:type xml:lang="eng">text</dc:type>
+                    <dc:type xml:lang="fre">publication en série imprimée</dc:type>
+                    <dc:type xml:lang="eng">printed serial</dc:type>
+                    <dc:language>fre</dc:language>
+                    <dc:rights xml:lang="fre">domaine public</dc:rights>
+                    <dc:rights xml:lang="eng">public domain</dc:rights>
+                    <dc:relation>
+                        Notice du catalogue : http://catalogue.bnf.fr/ark:/12148/cb32840451v
+                    </dc:relation>
+                    <dc:source>
+                        Bibliothèque nationale de France, département Littérature et art, 8-YE-2446
+                    </dc:source>
+                    <dc:relation>http://gallica.bnf.fr/ark:/12148/cb32840451v/date</dc:relation>
+                    <dc:format>application/pdf</dc:format>
+                </oai_dc:dc>
+            </metadata>
+        </record>
+        <resumptionToken expirationDate="2015-07-29T20:57:07Z" completeListSize="2402263" cursor="0">1!53691!20513471!2505879!100!2402263!oai_dc</resumptionToken>
+    </ListRecords>
+</OAI-PMH>

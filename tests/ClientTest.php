@@ -5,7 +5,7 @@
  *
  * @license http://opensource.org/licenses/MIT
  * @link https://github.com/caseyamcl/phpoaipmh
- * @version 2.0
+ * @version 3.0
  * @package caseyamcl/phpoaipmh
  * @author Casey McLaughlin <caseyamcl@gmail.com>
  *
@@ -19,6 +19,7 @@ namespace Phpoaipmh;
 
 use Phpoaipmh\Exception\HttpException;
 use Phpoaipmh\Fixture\HttpMockClient;
+use Phpoaipmh\HttpAdapter\HttpAdapterInterface;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -28,20 +29,16 @@ use PHPUnit_Framework_TestCase;
  */
 class ClientTest extends PHPUnit_Framework_TestCase
 {
-    // -------------------------------------------------------------------------
-
     /**
      * Simple Instantiation Test
      *
      * Tests that no syntax or runtime errors occur during object insantiation
      */
-    public function testIntantiateCreatesNewObject()
+    public function testInstantiateCreatesNewObject()
     {
         $obj = new Client('http://example.com/oai', new HttpMockClient);
         $this->assertInstanceOf('Phpoaipmh\Client', $obj);
     }
-
-    // ----------------------------------------------------------------
 
     public function testInstantiateCreatesNewObjectWhenNoConstructorArgsPassed()
     {
@@ -53,7 +50,11 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Phpoaipmh\Client', $obj);
     }
 
-    // -------------------------------------------------------------------------
+    public function testGetAdapterReturnsHttpAdapterInstance()
+    {
+        $obj = new Client('http://example.com/oai', new HttpMockClient);
+        $this->assertInstanceOf(HttpAdapterInterface::class, $obj->getHttpAdapter());
+    }
 
     /**
      * Test that URL is built correctly
@@ -77,8 +78,6 @@ class ClientTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    // -------------------------------------------------------------------------
-
     /**
      * Test that a simple valid response is decoded correctly
      */
@@ -94,8 +93,6 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(isset($result->Identify));
     }
 
-    // -------------------------------------------------------------------------
-
     /**
      * Test that the client throws a HttpAdapter\HttpException for non-XML or non-parsable responses
      */
@@ -108,8 +105,6 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $obj = new Client('http://nsdl.org/oai', $mockClient);
         $obj->request('Identify');
     }
-
-    // -------------------------------------------------------------------------
 
     /**
      * Test that a XML response with a OAI-PMH error embedded throws an OaipmhException
@@ -163,8 +158,6 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $obj = new Client('http://nsdl.org/oai', $mockClient);
         $obj->request('Identify');
     }
-
-    // ----------------------------------------------------------------
 
     public function testRequestThrowsExceptionIfUrlNotSet()
     {

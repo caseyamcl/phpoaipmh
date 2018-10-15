@@ -1212,7 +1212,7 @@
       <datestamp>2012-07-26T01:42:24Z</datestamp>
        <setSpec>ncs-NSDL-COLLECTION-000-003-112-021</setSpec>
       </header>
-    <resumptionToken completeListSize="733" cursor="200">200/400/733/nsdl_dc/null/2012-07-26/null</resumptionToken>
+    <resumptionToken completeListSize="733" cursor="200" expirationDate="2099-01-01T01:30:28Z">200/400/733/nsdl_dc/null/2012-07-26/null</resumptionToken>
 
 </ListIdentifiers>
 
