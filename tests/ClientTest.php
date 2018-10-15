@@ -131,15 +131,15 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $response = '<?xml version="1.0" encoding="UTF-8" ?>  <OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/  http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd"> <responseDate>2012-08-06T19:33:31Z</responseDate> <request>http://nsdl.org/oai</request>      <error code="badVerb">The verb &#39;NotExist&#39; is illegal</error>  </OAI-PMH>';
         $httpException = new HttpException($response, "Not found.", 404);
 
-        $mockClient = $this->getMock("Phpoaipmh\HttpAdapter\HttpAdapterInterface");
-        $mockClient
+        $mockAdapter = $this->getMock("Phpoaipmh\HttpAdapter\HttpAdapterInterface");
+        $mockAdapter
             ->expects($this->any())
             ->method("request")
             ->will($this->throwException($httpException));
 
         $this->setExpectedException('Phpoaipmh\Exception\OaipmhException');
 
-        $obj = new Client('http://nsdl.org/oai', $mockClient);
+        $obj = new Client('http://nsdl.org/oai', $mockAdapter);
         $obj->request('NonexistentVerb');
     }
 
@@ -173,6 +173,3 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $obj->request('Identify');
     }
 }
-
-// =============================================================================
-

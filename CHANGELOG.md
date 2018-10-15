@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `composer test` command
 - Automatic code coverage reports into `build` directory when  
 - Object graph methods: `ClientInterface::getHttpAdapter()` and `RecordIterator::getClient()`
+- Added PHP CodeSniffer to auto-correct PSR-2 issues
 
 ### Removed
 - Removed `Endpoint::setUrl()` and `Client::setUrl()` methods.  URL in client should be immutable.  If you need to 
