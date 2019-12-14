@@ -14,6 +14,8 @@
  * ------------------------------------------------------------------
  */
 
+declare(strict_types=1);
+
 namespace Phpoaipmh\Exception;
 
 class OaipmhExceptionTest extends \PHPUnit_Framework_TestCase

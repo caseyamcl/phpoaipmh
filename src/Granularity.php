@@ -1,12 +1,11 @@
 <?php
-namespace Phpoaipmh;
 
 /**
  * PHPOAIPMH Library
  *
  * @license http://opensource.org/licenses/MIT
  * @link https://github.com/caseyamcl/phpoaipmh
- * @version 3.0
+ * @Version 4.0
  * @package caseyamcl/phpoaipmh
  * @author Casey McLaughlin <caseyamcl@gmail.com>
  *
@@ -15,6 +14,10 @@ namespace Phpoaipmh;
  *
  * ------------------------------------------------------------------
  */
+
+declare(strict_types=1);
+
+namespace Phpoaipmh;
 
 /**
  * Granularity class provides utility for specifying date and constraint precision

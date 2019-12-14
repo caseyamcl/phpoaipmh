@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phpoaipmh\HttpAdapter;
 
 use GuzzleHttp\Client as GuzzleClient;

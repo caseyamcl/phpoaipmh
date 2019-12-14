@@ -14,6 +14,8 @@
  * ------------------------------------------------------------------
  */
 
+declare(strict_types=1);
+
 namespace Phpoaipmh\Fixture;
 
 use Phpoaipmh\HttpAdapter\HttpAdapterInterface;

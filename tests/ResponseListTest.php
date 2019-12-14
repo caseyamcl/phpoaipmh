@@ -15,6 +15,8 @@
  * ------------------------------------------------------------------
  */
 
+declare(strict_types=1);
+
 namespace Phpoaipmh;
 
 use Phpoaipmh\Fixture\ClientStub;
