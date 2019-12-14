@@ -14,8 +14,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": ">=5.5.0",
-        "ext-simplexml": "*"
+        "php": "^7.2"
     },
     "require-dev": {
         "guzzlehttp/guzzle": "^6.0",
@@ -26,6 +25,9 @@
         "symfony/dependency-injection": "^3.4.26|^4.3|^5.0",
         "symfony/config": "^3.4|^4.3|^5.0",
         "symfony/yaml": "^3.4|^4.3|^5.0"
+    },
+    "suggest": {
+        "ext-simplexml": "For maintaining exact backwards-compatibility with v3.x of this library"
     },
     "autoload": {
         "psr-4": {
