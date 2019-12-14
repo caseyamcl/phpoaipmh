@@ -4,14 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v3.1] - 2019-12-14
+### Security
+- Addressed [CVE-2019-10910](https://github.com/advisories/GHSA-pgwj-prpq-jpc2) by requiring Symfony DI v3.4.26 or newer
 
 ## [v3.0] - 2018-10-15
 ### Changed
 - Upgraded from PSR-0 to PSR-4 
 - Require PHP5.5 or newer (hint: upgrade to PHP7, since PHP5 support is [being deprecated](http://php.net/supported-versions.php))
 - Change all `DateTime` references and type-hints to `DateTimeInterface`
-- Removed automatic 'short name' class detection in `OaiPmhException`
-- Removed `bootstrap.php` from tests directory, in favor of simply using composer autoloader
 - Renamed `httpClient` variables and proprties to `httpAdapter` for consistency in naming
 - Improved README and documentation
 
@@ -27,6 +28,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   change the Endpoint URL, best practice is to create a new Client and Endpoint instance.
 - Removed `EndpointCurlTest` that performed HTTP calls against an actual OAI-PMH endpoint (slow and not useful)
 - Removed `RecordIterator::getTotalRecordsInCollection()` in favor of `RecordIterator::getTotalRecordCount()`
+- Removed automatic 'short name' class detection in `OaiPmhException`
+- Removed `bootstrap.php` from tests directory, in favor of simply using composer autoloader
 
 ## [2.6.1] - 2018-03-07
 ### Changed
