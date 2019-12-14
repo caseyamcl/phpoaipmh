@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 - Addressed [CVE-2019-10910](https://github.com/advisories/GHSA-pgwj-prpq-jpc2) by requiring Symfony DI v3.4.26 or newer
 
+### Removed
+- Removed build test for PHP v5.5
+
 ## [v3.0] - 2018-10-15
 ### Changed
 - Upgraded from PSR-0 to PSR-4 
