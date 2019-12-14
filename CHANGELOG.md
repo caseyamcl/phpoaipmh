@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [v3.1] - 2019-12-14
+### Added
+- Support for Symfony v5 in `composer.json`
+
 ### Security
 - Addressed [CVE-2019-10910](https://github.com/advisories/GHSA-pgwj-prpq-jpc2) by requiring Symfony DI v3.4.26 or newer
 
