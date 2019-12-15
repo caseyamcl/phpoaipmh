@@ -19,14 +19,14 @@ declare(strict_types=1);
 
 namespace Phpoaipmh;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Endpoint Test
  *
  * @package Phpoaipmh
  */
-class EndpointTest extends PHPUnit_Framework_TestCase
+class EndpointTest extends TestCase
 {
 
     /**
@@ -236,22 +236,22 @@ class EndpointTest extends PHPUnit_Framework_TestCase
 
     /**
      * As of v3.0, we don't allow string dates
-     *
-     * @expectedException \InvalidArgumentException
      */
     public function testStringDateThrowsExceptionOnFromDate()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $obj = new Endpoint($this->getMockClient());
         $obj->listRecords('oai_dc', '2014-01-01');
     }
 
     /**
      * As of v3.0, we don't allow string dates
-     *
-     * @expectedException \InvalidArgumentException
      */
     public function testStringDateThrowsExceptionOnUntilDate()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $obj = new Endpoint($this->getMockClient());
         $obj->listRecords('oai_dc', null, '2015-01-01');
     }

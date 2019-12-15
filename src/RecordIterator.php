@@ -19,8 +19,12 @@ declare(strict_types=1);
 
 namespace Phpoaipmh;
 
+use DateTime;
+use DateTimeInterface;
+use Iterator;
 use Phpoaipmh\Exception\BaseOaipmhException;
 use Phpoaipmh\Exception\MalformedResponseException;
+use SimpleXMLElement;
 
 /**
  * Response List Entity iterates over records returned from an OAI-PMH Endpoint
@@ -28,7 +32,7 @@ use Phpoaipmh\Exception\MalformedResponseException;
  * @author Casey McLaughlin <caseyamcl@gmail.com>
  * @since v2.0
  */
-class RecordIterator implements \Iterator, RecordIteratorInterface
+class RecordIterator implements Iterator, RecordIteratorInterface
 {
     /**
      * @var Client
@@ -51,7 +55,7 @@ class RecordIterator implements \Iterator, RecordIteratorInterface
     private $totalRecordsInCollection;
 
     /**
-     * @var \DateTimeInterface  RecordSet expiration date (if specified)
+     * @var DateTimeInterface  RecordSet expiration date (if specified)
      */
     private $expireDate;
 
@@ -76,7 +80,7 @@ class RecordIterator implements \Iterator, RecordIteratorInterface
     private $numRequests = 0;
 
     /**
-     * @var \SimpleXMLElement|null  Used for tracking the iterator
+     * @var SimpleXMLElement|null  Used for tracking the iterator
      */
     private $currItem;
 
@@ -142,7 +146,7 @@ class RecordIterator implements \Iterator, RecordIteratorInterface
     }
 
     /**
-     * @return \DateTimeInterface|null
+     * @return DateTimeInterface|null
      */
     public function getExpirationDate()
     {
@@ -175,7 +179,7 @@ class RecordIterator implements \Iterator, RecordIteratorInterface
      * Return an item from the currently-retrieved batch, get next batch and
      * return first record from it, or return false if no more records
      *
-     * @return \SimpleXMLElement|bool
+     * @return SimpleXMLElement|bool
      */
     public function nextItem()
     {
@@ -240,7 +244,7 @@ class RecordIterator implements \Iterator, RecordIteratorInterface
             }
             if (isset($resp->$verb->resumptionToken['expirationDate'])) {
                 $t = $resp->$verb->resumptionToken['expirationDate'];
-                $this->expireDate = \DateTime::createFromFormat(\DateTime::ISO8601, $t);
+                $this->expireDate = DateTime::createFromFormat(DateTime::ISO8601, (string) $t);
             }
         } else {
             //Unset the resumption token when we're at the end of the list
@@ -281,7 +285,7 @@ class RecordIterator implements \Iterator, RecordIteratorInterface
     /**
      * Get the current batch of records retrieved
      *
-     * @return array|\SimpleXMLElement[]
+     * @return array|SimpleXMLElement[]
      */
     public function getBatch()
     {

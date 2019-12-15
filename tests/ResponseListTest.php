@@ -19,16 +19,18 @@ declare(strict_types=1);
 
 namespace Phpoaipmh;
 
+use Exception;
 use Phpoaipmh\Fixture\ClientStub;
 use Phpoaipmh\HttpAdapter\HttpAdapterInterface;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 /**
  * Response List Test
  *
  * @package Phpoaipmh
  */
-class ResponseListTest extends PHPUnit_Framework_TestCase
+class ResponseListTest extends TestCase
 {
     /**
      * Simple Instantiation Test
@@ -121,7 +123,7 @@ class ResponseListTest extends PHPUnit_Framework_TestCase
      */
     public function testRequestThrowsExceptionForNonListVerb()
     {
-        $this->setExpectedException('RuntimeException');
+        $this->expectException(RuntimeException::class);
         $output = $this->generateSampleXML(array('GoodResponseSinglePage.xml'));
         new RecordIterator($this->getMockClient($output), 'Identify');
     }
@@ -136,7 +138,7 @@ class ResponseListTest extends PHPUnit_Framework_TestCase
      */
     public function testRequestThrowsExceptionForMissingSchemaForVerb()
     {
-        $this->setExpectedException('RuntimeException');
+        $this->expectException(RuntimeException::class);
         $output = $this->generateSampleXML(array('GoodResponseSinglePage.xml'));
         $obj = new RecordIterator($this->getMockClient($output), 'ListIdentifiers');
         $obj->nextItem();
@@ -178,6 +180,7 @@ class ResponseListTest extends PHPUnit_Framework_TestCase
 
     /**
      * @return RecordIterator  Consists of 733 records over 4 requests
+     * @throws Exception
      */
     protected function getSampleMultiPageResponseList()
     {
@@ -222,7 +225,7 @@ class ResponseListTest extends PHPUnit_Framework_TestCase
      *
      * @param array $toReturn Array of values to return for consecutive calls (send one for same every time)
      * @return HttpAdapterInterface|ClientStub
-     * @throws \Exception
+     * @throws Exception
      */
     protected function getMockClient($toReturn = array())
     {
@@ -231,5 +234,3 @@ class ResponseListTest extends PHPUnit_Framework_TestCase
         return $stub;
     }
 }
-
-// =============================================================================

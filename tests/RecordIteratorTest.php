@@ -5,65 +5,63 @@ declare(strict_types=1);
 namespace Phpoaipmh;
 
 use DateTimeInterface;
+use Exception;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\Psr7\Response;
 use Phpoaipmh\HttpAdapter\GuzzleAdapter;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Created by PhpStorm.
- * User: casey
- * Date: 10/15/18
- * Time: 1:27 PM
- */
-
-class RecordIteratorTest extends \PHPUnit_Framework_TestCase
+class RecordIteratorTest extends TestCase
 {
     public function testGetClientReturnsClientInstance()
     {
-        $iterator = new \Phpoaipmh\RecordIterator($this->singlePageRequestClient(), 'ListRecords');
-        $this->assertInstanceOf(\Phpoaipmh\ClientInterface::class, $iterator->getClient());
+        $iterator = new RecordIterator($this->singlePageRequestClient(), 'ListRecords');
+        $this->assertInstanceOf(ClientInterface::class, $iterator->getClient());
     }
 
     public function testGetResumptionTokenReturnsNullWhenNoTokenExists()
     {
-        $iterator = new \Phpoaipmh\RecordIterator($this->singlePageRequestClient(), 'ListRecords');
+        $iterator = new RecordIterator($this->singlePageRequestClient(), 'ListRecords');
         $iterator->next();
         $this->assertNull($iterator->getResumptionToken());
     }
 
     public function testGetResumptionTokenReturnsTokenWhenTokenExists()
     {
-        $iterator = new \Phpoaipmh\RecordIterator($this->multiplePageRequestClient(), 'ListIdentifiers');
+        $iterator = new RecordIterator($this->multiplePageRequestClient(), 'ListIdentifiers');
         $iterator->next();
         $this->assertNotNull($iterator->getResumptionToken());
     }
 
     public function testGetExpirationDateReturnsNullWhenNoDataExists()
     {
-        $iterator = new \Phpoaipmh\RecordIterator($this->singlePageRequestClient(), 'ListRecords');
+        $iterator = new RecordIterator($this->singlePageRequestClient(), 'ListRecords');
         $iterator->next();
         $this->assertNull($iterator->getExpirationDate());
     }
 
     public function testGetExpirationDateReturnsDateTimeWhenDataExists()
     {
-        $iterator = new \Phpoaipmh\RecordIterator($this->multiplePageRequestClient(), 'ListIdentifiers');
+        $iterator = new RecordIterator($this->multiplePageRequestClient(), 'ListIdentifiers');
         $iterator->next();
         $this->assertInstanceOf(DateTimeInterface::class, $iterator->getExpirationDate());
     }
 
     public function testKeyCallsNextItemWhenCurrItemIsNull()
     {
-        $iterator = new \Phpoaipmh\RecordIterator($this->multiplePageRequestClient(), 'ListIdentifiers');
+        $iterator = new RecordIterator($this->multiplePageRequestClient(), 'ListIdentifiers');
         $key = $iterator->key();
-        $this->assertInternalType('int', $key);
+        $this->assertIsInt($key);
     }
 
     /**
      * @return Client
+     * @throws Exception
      */
-    protected function singlePageRequestClient()
+    protected function singlePageRequestClient(): Client
     {
-        $handler = new \GuzzleHttp\Handler\MockHandler([
-            new \GuzzleHttp\Psr7\Response(
+        $handler = new MockHandler([
+            new Response(
                 200,
                 ['Content-type' => 'text/xml'],
                 fopen(__DIR__ . '/SampleXML/GoodResponseSinglePage.xml', 'r')
@@ -75,11 +73,12 @@ class RecordIteratorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @return Client
+     * @throws Exception
      */
-    protected function multiplePageRequestClient()
+    protected function multiplePageRequestClient(): Client
     {
-        $handler = new \GuzzleHttp\Handler\MockHandler([
-            new \GuzzleHttp\Psr7\Response(
+        $handler = new MockHandler([
+            new Response(
                 200,
                 ['Content-type' => 'text/xml'],
                 fopen(__DIR__ . '/SampleXML/GoodResponseFourPage_1.xml', 'r')

@@ -7,12 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [v4.0] - UNRELEASED
 ### Added
 - PHP 7 goodness: `declare(strict_types=1)` and method argument & return signatures
+- Support for any [PSR-18 HTTP client](https://www.php-fig.org/psr/psr-18/)
 
 ### Changed
-- 
+- (dev) Upgraded all tests to PHPUnit v8
 
 ### Removed
 - Support for PHPv5 (if you are still on PHP5, use v3.1 or lower)
+- (dev) Dependency on Mockery library in favor of built-in PHPUnit mocks and stubs
 
 ## [v3.1] - 2019-12-14
 ### Added

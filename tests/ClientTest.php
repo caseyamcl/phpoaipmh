@@ -20,21 +20,25 @@ declare(strict_types=1);
 namespace Phpoaipmh;
 
 use Phpoaipmh\Exception\HttpException;
+use Phpoaipmh\Exception\MalformedResponseException;
+use Phpoaipmh\Exception\OaipmhException;
 use Phpoaipmh\Fixture\HttpMockClient;
 use Phpoaipmh\HttpAdapter\HttpAdapterInterface;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 /**
  * Class ClientTest
  *
  * @author Casey McLaughlin <caseyamcl@gmail.com>
  */
-class ClientTest extends PHPUnit_Framework_TestCase
+class ClientTest extends TestCase
 {
     /**
      * Simple Instantiation Test
      *
      * Tests that no syntax or runtime errors occur during object insantiation
+     * @throws \Exception
      */
     public function testInstantiateCreatesNewObject()
     {
@@ -100,9 +104,10 @@ class ClientTest extends PHPUnit_Framework_TestCase
      */
     public function testInvalidXMLResponseThrowsHttpRequestException()
     {
+        $this->expectException(MalformedResponseException::class);
+
         $mockClient = new HttpMockClient;
         $mockClient->toReturn = 'thisIs&NotXML!!';
-        $this->setExpectedException('Phpoaipmh\Exception\MalformedResponseException');
 
         $obj = new Client('http://nsdl.org/oai', $mockClient);
         $obj->request('Identify');
@@ -113,9 +118,10 @@ class ClientTest extends PHPUnit_Framework_TestCase
      */
     public function testRequestThrowsOAIPMHExceptionForInvalidVerbOrParams()
     {
+        $this->expectException(OaipmhException::class);
+
         $mockClient = new HttpMockClient;
         $mockClient->toReturn = file_get_contents(__DIR__ . '/SampleXML/BadResponseNonExistentVerb.xml');
-        $this->setExpectedException('Phpoaipmh\Exception\OaipmhException');
 
         $obj = new Client('http://nsdl.org/oai', $mockClient);
         $obj->request('NonexistentVerb');
@@ -126,16 +132,16 @@ class ClientTest extends PHPUnit_Framework_TestCase
      */
     public function testHttpErrorStatusWithOaipmhErrorResponseThrowsOAIPMHException()
     {
+        $this->expectException(OaipmhException::class);
+
         $response = file_get_contents(__DIR__ . '/SampleXML/BadResponseNonExistentVerb.xml');
         $httpException = new HttpException($response, "Not found.", 404);
 
-        $mockAdapter = $this->getMock("Phpoaipmh\HttpAdapter\HttpAdapterInterface");
+        $mockAdapter = $this->createMock(HttpAdapterInterface::class);
         $mockAdapter
             ->expects($this->any())
             ->method("request")
             ->will($this->throwException($httpException));
-
-        $this->setExpectedException('Phpoaipmh\Exception\OaipmhException');
 
         $obj = new Client('http://nsdl.org/oai', $mockAdapter);
         $obj->request('NonexistentVerb');
@@ -146,16 +152,16 @@ class ClientTest extends PHPUnit_Framework_TestCase
      */
     public function testHttpErrorStatusMissingOaipmhErrorResponseThrowsHttpException()
     {
+        $this->expectException(HttpException::class);
+
         $response = 'thisIs&NotXML!!';
         $httpException = new HttpException($response, "Not found.", 404);
 
-        $mockClient = $this->getMock("Phpoaipmh\HttpAdapter\HttpAdapterInterface");
+        $mockClient = $this->createMock(HttpAdapterInterface::class);
         $mockClient
             ->expects($this->any())
             ->method("request")
             ->will($this->throwException($httpException));
-
-        $this->setExpectedException('Phpoaipmh\Exception\HttpException');
 
         $obj = new Client('http://nsdl.org/oai', $mockClient);
         $obj->request('Identify');
@@ -163,7 +169,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
 
     public function testRequestThrowsExceptionIfUrlNotSet()
     {
-        $this->setExpectedException('\RuntimeException');
+        $this->expectException(RuntimeException::class);
 
         $obj = new Client();
         $obj->request('Identify');

@@ -19,23 +19,29 @@ declare(strict_types=1);
 
 namespace Phpoaipmh;
 
-use PHPUnit_Framework_TestCase;
+use DateTime;
+use DateTimeZone;
+use Exception;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Endpoint Test
  *
  * @package Phpoaipmh
  */
-class GranularityTest extends PHPUnit_Framework_TestCase
+class GranularityTest extends TestCase
 {
 
     /**
      * Test the date formatting with granularity
      * @dataProvider getFormatTests
+     * @param string $granularity
+     * @param string $expectedResult
+     * @throws Exception
      */
-    public function testGranularityFormatting($granularity, $expectedResult)
+    public function testGranularityFormatting(string $granularity, string $expectedResult)
     {
-        $testDate = new \DateTime("2015-02-01 12:15:30", new \DateTimeZone("UTC"));
+        $testDate = new DateTime("2015-02-01 12:15:30", new DateTimeZone("UTC"));
         $returnValue = Granularity::formatDate($testDate, $granularity);
         $this->assertEquals($expectedResult, $returnValue);
     }

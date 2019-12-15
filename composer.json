@@ -14,17 +14,14 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.2"
+        "php": "^7.2",
+        "psr/http-client": "^1.0"
     },
     "require-dev": {
-        "guzzlehttp/guzzle": "^6.0",
-        "phpunit/phpunit":   "^4.0",
-        "squizlabs/php_codesniffer": "^3.3",
-        "mockery/mockery":   "^0.9",
-        "symfony/console": "^3.4|^4.3|^5.0",
-        "symfony/dependency-injection": "^3.4.26|^4.3|^5.0",
-        "symfony/config": "^3.4|^4.3|^5.0",
-        "symfony/yaml": "^3.4|^4.3|^5.0"
+        "ext-simplexml": "*",
+        "phpunit/phpunit":   "^8.0",
+        "ricardofiorani/guzzle-psr18-adapter": "^1.0",
+        "squizlabs/php_codesniffer": "^3.5"
     },
     "suggest": {
         "ext-simplexml": "For maintaining exact backwards-compatibility with v3.x of this library"
