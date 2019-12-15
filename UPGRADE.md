@@ -1,3 +1,7 @@
+## Upgrading from Version 3.x to 4.x
+
+* Ensure you are running at-least PHP 7.2 (I recommend 7.4)
+
 ## Upgrading from Version 2.x to 3.x
 
 * Ensure you are running at-least PHP v5.5 or newer (I recommend at least PHP7.2, if you are able to)
