@@ -1,5 +1,7 @@
 ## Upgrading from Version 3.x to 4.x
 
+This version provides a refactoring of...
+
 * Ensure you are running at-least PHP 7.2 (I recommend 7.4)
 
 ## Upgrading from Version 2.x to 3.x
