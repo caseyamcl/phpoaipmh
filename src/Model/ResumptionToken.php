@@ -13,6 +13,7 @@ use Phpoaipmh\Exception\MalformedResponseException;
  * Resumption Token class
  *
  * See: https://www.openarchives.org/OAI/openarchivesprotocol.html#FlowControl
+ * TODO: Create test for this
  *
  * @author Casey McLaughlin <caseyamcl@gmail.com>
  */

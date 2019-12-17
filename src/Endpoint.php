@@ -19,6 +19,10 @@ declare(strict_types=1);
 
 namespace Phpoaipmh;
 
+use DateTimeInterface;
+use InvalidArgumentException;
+use SimpleXMLElement;
+
 /**
  * OAI-PMH Endpoint Class
  *
@@ -30,11 +34,6 @@ class Endpoint implements EndpointInterface
     const AUTO = null;
 
     /**
-     * @var Client
-     */
-    private $client;
-
-    /**
      * @var string
      */
     private $granularity;
@@ -43,38 +42,32 @@ class Endpoint implements EndpointInterface
      * Build endpoint using URL and default settings
      *
      * @param string $url
-     * @return Endpoint
-     * @throws \Exception
+     * @return static
      */
-    public static function build($url)
+    public static function build(string $url): self
     {
-        return new Endpoint(new Client($url));
+        // TODO: Re-implement this
     }
 
     /**
      * Constructor
      *
-     * @param ClientInterface $client       Optional; will attempt to auto-build dependency if not passed
-     * @param string          $granularity  Optional; the OAI date format for fetching records, use constants from
-     *                                      Granularity class
-     * @throws \Exception
+     * @param string $granularity  Optional; the OAI date format for fetching records, uses constants from Granularity
      */
-    public function __construct(ClientInterface $client = null, $granularity = self::AUTO)
+    public function __construct(string $granularity = self::AUTO)
     {
-        $this->client = $client ?: new Client();
+        // TODO: Re-implement this
         $this->granularity = $granularity;
     }
 
     /**
      * Identify the OAI-PMH Endpoint
      *
-     * @return \SimpleXMLElement A XML document with attributes describing the repository
+     * @return SimpleXMLElement A XML document with attributes describing the repository
      */
-    public function identify()
+    public function identify(): SimpleXMLElement
     {
-        $resp = $this->client->request('Identify');
-
-        return $resp;
+        return $this->client->request('Identify');
     }
 
     /**
@@ -87,7 +80,7 @@ class Endpoint implements EndpointInterface
      *                             particular record supports
      * @return RecordIteratorInterface
      */
-    public function listMetadataFormats($identifier = null)
+    public function listMetadataFormats(string $identifier = ''): RecordIteratorInterface
     {
         $params = ($identifier) ? array('identifier' => $identifier) : array();
 
@@ -99,7 +92,7 @@ class Endpoint implements EndpointInterface
      *
      * @return RecordIteratorInterface
      */
-    public function listSets()
+    public function listSets(): RecordIteratorInterface
     {
         return new RecordIterator($this->client, 'ListSets');
     }
@@ -109,9 +102,9 @@ class Endpoint implements EndpointInterface
      *
      * @param  string            $id             Record Identifier
      * @param  string            $metadataPrefix Required by OAI-PMH endpoint
-     * @return \SimpleXMLElement An XML document corresponding to the record
+     * @return SimpleXMLElement An XML document corresponding to the record
      */
-    public function getRecord($id, $metadataPrefix)
+    public function getRecord(string $id, string $metadataPrefix): SimpleXMLElement
     {
         $params = array(
             'identifier'     => $id,
@@ -127,14 +120,19 @@ class Endpoint implements EndpointInterface
      * Corresponds to OAI Verb to list record identifiers
      *
      * @param  string             $metadataPrefix Required by OAI-PMH endpoint
-     * @param  \DateTimeInterface $from             An optional 'from' date for selective harvesting
-     * @param  \DateTimeInterface $until            An optional 'until' date for selective harvesting
+     * @param  DateTimeInterface $from             An optional 'from' date for selective harvesting
+     * @param  DateTimeInterface $until            An optional 'until' date for selective harvesting
      * @param  string             $set              An optional setSpec for selective harvesting
      * @param  string             $resumptionToken  An optional resumptionToken for selective harvesting
      * @return RecordIteratorInterface
      */
-    public function listIdentifiers($metadataPrefix, $from = null, $until = null, $set = null, $resumptionToken = null)
-    {
+    public function listIdentifiers(
+        string $metadataPrefix,
+        ?DateTimeInterface $from = null,
+        ?DateTimeInterface $until = null,
+        string $set = '',
+        $resumptionToken = ''
+    ): RecordIteratorInterface {
         return $this->createRecordIterator("ListIdentifiers", $metadataPrefix, $from, $until, $set, $resumptionToken);
     }
 
@@ -144,52 +142,45 @@ class Endpoint implements EndpointInterface
      * Corresponds to OAI Verb to list records
      *
      * @param  string             $metadataPrefix Required by OAI-PMH endpoint
-     * @param  \DateTimeInterface $from             An optional 'from' date for selective harvesting
-     * @param  \DateTimeInterface $until            An optional 'from' date for selective harvesting
+     * @param  DateTimeInterface $from             An optional 'from' date for selective harvesting
+     * @param  DateTimeInterface $until            An optional 'from' date for selective harvesting
      * @param  string             $set              An optional setSpec for selective harvesting
      * @param  string             $resumptionToken  An optional resumptionToken for selective harvesting
      * @return RecordIteratorInterface
      */
-    public function listRecords($metadataPrefix, $from = null, $until = null, $set = null, $resumptionToken = null)
-    {
+    public function listRecords(
+        string $metadataPrefix,
+        ?DateTimeInterface $from = null,
+        ?DateTimeInterface $until = null,
+        string $set = '',
+        string $resumptionToken = ''
+    ): RecordIteratorInterface {
         return $this->createRecordIterator("ListRecords", $metadataPrefix, $from, $until, $set, $resumptionToken);
     }
 
     /**
      * Create a record iterator
      *
-     * @param  string             $verb             OAI Verb
-     * @param  string             $metadataPrefix   Required by OAI-PMH endpoint
-     * @param  \DateTimeInterface $from             An optional 'from' date for selective harvesting
-     * @param  \DateTimeInterface $until            An optional 'from' date for selective harvesting
-     * @param  string             $set              An optional setSpec for selective harvesting
-     * @param  string             $resumptionToken  An optional resumptionToken for selective harvesting
+     * @param  string            $verb             OAI Verb
+     * @param  string            $metadataPrefix   Required by OAI-PMH endpoint
+     * @param  DateTimeInterface $from             An optional 'from' date for selective harvesting
+     * @param  DateTimeInterface $until            An optional 'from' date for selective harvesting
+     * @param  string            $set              An optional setSpec for selective harvesting
+     * @param  string            $resumptionToken  An optional resumptionToken for selective harvesting
      *
      * @return RecordIteratorInterface
      */
-    private function createRecordIterator($verb, $metadataPrefix, $from, $until, $set = null, $resumptionToken = null)
-    {
+    private function createRecordIterator(
+        string $verb,
+        string $metadataPrefix,
+        ?DateTimeInterface $from,
+        ?DateTimeInterface $until,
+        string $set = '',
+        string $resumptionToken = ''
+    ): RecordIteratorInterface {
         $params = array('metadataPrefix' => $metadataPrefix);
-
-        if ($from instanceof \DateTimeInterface) {
-            $params['from'] = Granularity::formatDate($from, $this->getGranularity());
-        } elseif (null !== $from) {
-            throw new \InvalidArgumentException(sprintf(
-                '%s::%s $from parameter must be an instance of \DateTimeInterface',
-                get_called_class(),
-                'createRecordIterator'
-            ));
-        }
-
-        if ($until instanceof \DateTimeInterface) {
-            $params['until'] = Granularity::formatDate($until, $this->getGranularity());
-        } elseif (null !== $until) {
-            throw new \InvalidArgumentException(sprintf(
-                '%s::%s $until parameter must be an instance of \DateTimeInterface',
-                get_called_class(),
-                'createRecordIterator'
-            ));
-        }
+        $params['from'] = Granularity::formatDate($from, $this->getGranularity());
+        $params['until'] = Granularity::formatDate($until, $this->getGranularity());
 
         if ($set) {
             $params['set'] = $set;

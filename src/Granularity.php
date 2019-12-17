@@ -19,6 +19,8 @@ declare(strict_types=1);
 
 namespace Phpoaipmh;
 
+use DateTimeInterface;
+
 /**
  * Granularity class provides utility for specifying date and constraint precision
  *
@@ -32,12 +34,12 @@ class Granularity
     /**
      * Format DateTime string based on granularity
      *
-     * @param \DateTimeInterface $dateTime
+     * @param DateTimeInterface $dateTime
      * @param string $format       Either self::DATE or self::DATE_AND_TIME
      *
      * @return string
      */
-    public static function formatDate(\DateTimeInterface $dateTime, $format)
+    public static function formatDate(DateTimeInterface $dateTime, string $format): string
     {
         $phpFormats = array(
             self::DATE => "Y-m-d",
