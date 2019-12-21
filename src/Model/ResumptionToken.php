@@ -1,5 +1,20 @@
 <?php
 
+/**
+ * PHPOAIPMH Library
+ *
+ * @license http://opensource.org/licenses/MIT
+ * @link https://github.com/caseyamcl/phpoaipmh
+ * @Version 4.0
+ * @package caseyamcl/phpoaipmh
+ * @author Casey McLaughlin <caseyamcl@gmail.com>
+ *
+ * For the full copyright and license information, -please view the LICENSE.md
+ * file that was distributed with this source code.
+ *
+ * ------------------------------------------------------------------
+ */
+
 declare(strict_types=1);
 
 namespace Phpoaipmh\Model;
@@ -7,6 +22,7 @@ namespace Phpoaipmh\Model;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
+use http\Exception\RuntimeException;
 use Phpoaipmh\Exception\MalformedResponseException;
 
 /**
@@ -48,8 +64,21 @@ class ResumptionToken
      */
     public static function fromString(string $tokenTag): self
     {
-        // TODO: LEFT OFF HERE.. I think the XMLRPC extension is bundled with PHP, but be sure before you use it...
-        xmlrpc_decode('test');
+        // Check if necessary extensions exist
+        if (! class_exists('\DOMNode')) {
+            throw new RuntimeException(sprintf(
+                'php-dom extension missing, which means you cannot use the %s::fromString',
+                get_called_class()
+            ));
+        }
+
+        /* According to the docs, DOM is enabled by default; example token XML:
+         *   <resumptionToken completeListSize="733" cursor="0" expirationDate="2099-01-01T01:30:28Z">
+         *      0/200/733/nsdl_dc/null/2012-07-26/null
+         *   </resumptionToken>
+         */
+
+        // TODO: Use builti-in XML functions to convert string to object
     }
 
     /**
