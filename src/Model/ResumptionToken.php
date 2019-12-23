@@ -72,7 +72,7 @@ class ResumptionToken
     public static function fromString(string $tokenTag): self
     {
         // Check if necessary extensions exist
-        if (! class_exists('\DOMNode')) {
+        if (! class_exists('\DOMDocument')) {
             throw new RuntimeException(sprintf(
                 'php-dom extension missing, which means you cannot use the %s::fromString',
                 get_called_class()
