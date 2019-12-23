@@ -11,7 +11,7 @@ PHPOAIPMH
 [![Scrutinizer](https://img.shields.io/scrutinizer/g/caseyamcl/phpoaipmh.svg?style=flat-square)](https://scrutinizer-ci.com/g/caseyamcl/phpoaipmh/)
 
 This library provides an interface to harvest OAI-PMH metadata
-from any [OAI 2.0 compliant endpoint](http://www.openarchives.org/OAI/openarchivesprotocol.html#ListMetadataFormats).
+from any [OAI 2.0 compliant endpoint](http://www.openarchives.org/OAI/openarchivesprotocol.html).
 
 Features:
 * PSR-0 thru PSR-2 Compliant
