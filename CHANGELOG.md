@@ -9,10 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PHP 7 goodness: `declare(strict_types=1)` and method argument & return signatures
 - Support for any [PSR-18 HTTP client](https://www.php-fig.org/psr/psr-18/)
 - Record processors to provide alternatives to SimpleXML processing
+- Data models to represent all documents that may be returned by an OAI-PMH endpoint
 
 ### Changed
 - Refactored how iteration works
 - (dev) Upgraded all tests to PHPUnit v8
+- (dev) Moved sample XML responses to the `Fixtures` directory
 
 ### Removed
 - Support for PHPv5 (if you are still on PHP5, use v3.1 or lower)
