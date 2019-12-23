@@ -20,7 +20,13 @@ declare(strict_types=1);
 namespace Phpoaipmh;
 
 use DateTimeInterface;
-use InvalidArgumentException;
+use Phpoaipmh\Contract\RecordProcessor;
+use Phpoaipmh\Model\IdentifyResponse;
+use Phpoaipmh\Processor\SimpleXMLProcessor;
+use Phpoaipmh\Processor\StringProcessor;
+use Psr\Http\Client\ClientExceptionInterface;
+use Psr\Http\Client\ClientInterface;
+use RicardoFiorani\GuzzlePsr18Adapter\Client;
 use SimpleXMLElement;
 
 /**
@@ -36,38 +42,75 @@ class Endpoint implements EndpointInterface
     /**
      * @var string
      */
+    private $url;
+
+    /**
+     * @var string
+     */
     private $granularity;
+
+    /**
+     * @var ClientInterface
+     */
+    private $client;
+
+    /**
+     * @var RecordProcessor
+     */
+    private $processor;
 
     /**
      * Build endpoint using URL and default settings
      *
-     * @param string $url
+     * @param string $url  The base URL of the OAI-PMH endpoint
+     * @param ClientInterface|null $client  if not passed, will attempt to use the 'ricardofiorani/guzzle-psr18-adapter'
+     * @param RecordProcessor|null $processor Record processor; if not specified, attempts to auto-detect
      * @return static
      */
-    public static function build(string $url): self
-    {
-        // TODO: Re-implement this
+    public static function build(
+        string $url,
+        ?ClientInterface $client = self::AUTO,
+        ?RecordProcessor $processor = self::AUTO
+    ): self {
+        if (! $client && class_exists('\RicardoFiorani\GuzzlePsr18Adapter\Client')) {
+            $client = new Client();
+        }
+
+        return new static($url, $client, $processor);
     }
 
     /**
      * Constructor
      *
-     * @param string $granularity  Optional; the OAI date format for fetching records, uses constants from Granularity
+     * @param string $url  The base URL of the OAI-PMH endpoint
+     * @param ClientInterface $client A PSR-18 compatible client
+     * @param string|null $granularity Optional; attempts to retrieve from Identify endpoint if not passed.
+     * @param RecordProcessor|null $processor Record processor; if not specified, attempts to auto-detect
      */
-    public function __construct(string $granularity = self::AUTO)
-    {
-        // TODO: Re-implement this
+    public function __construct(
+        string $url,
+        ClientInterface $client,
+        ?string $granularity = self::AUTO,
+        ?RecordProcessor $processor = self::AUTO
+    ) {
+        $this->url = $url;
         $this->granularity = $granularity;
+        $this->client = $client;
+
+        $this->processor = $processor ?:
+            ((class_exists('\SimpleXMLElement') ? new SimpleXMLProcessor() : new StringProcessor()));
     }
 
     /**
      * Identify the OAI-PMH Endpoint
-     *
-     * @return SimpleXMLElement A XML document with attributes describing the repository
      */
-    public function identify(): SimpleXMLElement
+    public function identify()
     {
-        return $this->client->request('Identify');
+        // TODO: LEFT OFF HERE.. Might need a 'HttpClient' abstraction after all.
+
+        $idResponse = IdentifyResponse::fromXmlString(
+            (string) $this->client->sendRequest()->getBody()
+        );
     }
 
     /**
