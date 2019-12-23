@@ -24,7 +24,6 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use DOMDocument;
 use Exception;
-use http\Exception\RuntimeException;
 use Phpoaipmh\Exception\MalformedResponseException;
 
 /**
@@ -71,14 +70,6 @@ class ResumptionToken
      */
     public static function fromString(string $tokenTag): self
     {
-        // Check if necessary extensions exist
-        if (! class_exists('\DOMDocument')) {
-            throw new RuntimeException(sprintf(
-                'php-dom extension missing, which means you cannot use the %s::fromString',
-                get_called_class()
-            ));
-        }
-
         try {
             $doc = new DOMDocument();
             $doc->validateOnParse = true;

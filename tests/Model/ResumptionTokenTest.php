@@ -21,6 +21,7 @@ use DateInterval;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
+use Phpoaipmh\Exception\MalformedResponseException;
 use PHPUnit\Framework\TestCase;
 
 class ResumptionTokenTest extends TestCase
@@ -74,7 +75,7 @@ class ResumptionTokenTest extends TestCase
         $this->assertFalse($rt->isValid());
     }
 
-    public function testFromString(): void
+    public function testFromStringWithValidTagData(): void
     {
         $xml = '<resumptionToken completeListSize="733" cursor="4" expirationDate="2099-01-01T01:30:28Z">
                 0/200/733/nsdl_dc/null/2012-07-26/null
@@ -87,6 +88,26 @@ class ResumptionTokenTest extends TestCase
         $this->assertEquals('2099-01-01T01:30:28+00:00', $rt->getExpirationDate()->format('c'));
     }
 
+    public function testFromStringWithMissingTagThrowsMalformedResponseException()
+    {
+        $this->expectException(MalformedResponseException::class);
+        $this->expectDeprecationMessage('missing expected element');
+
+        $xml = '<some-valid-xml>test</some-valid-xml>';
+        ResumptionToken::fromString($xml);
+    }
+
+    public function testFromStringWithInvalidDateThrowsMalformedResponseException()
+    {
+        $this->expectException(MalformedResponseException::class);
+        $this->expectDeprecationMessage('Failed to parse time string');
+
+        $xml = '<resumptionToken completeListSize="733" cursor="4" expirationDate="invalid-date">
+                0/200/733/nsdl_dc/null/2012-07-26/null
+                </resumptionToken>';
+        ResumptionToken::fromString($xml);
+    }
+
     public function testGetTokenReturnsStringToken(): void
     {
         $rt = new ResumptionToken('abc123');
@@ -97,7 +118,7 @@ class ResumptionTokenTest extends TestCase
     public function testToString(): void
     {
         $rt = new ResumptionToken('abc123');
-        $this->assertSame('abc123', (string) $rt->getToken());
+        $this->assertSame('abc123', (string) $rt);
     }
 
     public function testGetCursorReturnsIntegerWhenExists(): void
