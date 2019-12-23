@@ -68,7 +68,7 @@ class ResumptionToken
      * @return static
      * @throws MalformedResponseException  In the case that invalid XML data is passed
      */
-    public static function fromString(string $tokenTag): self
+    public static function fromXmlString(string $tokenTag): self
     {
         try {
             $doc = new DOMDocument();

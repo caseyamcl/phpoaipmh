@@ -78,11 +78,11 @@ class ResumptionTokenTest extends TestCase
     public function testFromStringWithValidTagData(): void
     {
         $xml = '<resumptionToken completeListSize="733" cursor="4" expirationDate="2099-01-01T01:30:28Z">
-                0/200/733/nsdl_dc/null/2012-07-26/null
+                4/200/733/nsdl_dc/null/2012-07-26/null
                 </resumptionToken>';
 
-        $rt = ResumptionToken::fromString($xml);
-        $this->assertSame('0/200/733/nsdl_dc/null/2012-07-26/null', $rt->getToken());
+        $rt = ResumptionToken::fromXmlString($xml);
+        $this->assertSame('4/200/733/nsdl_dc/null/2012-07-26/null', $rt->getToken());
         $this->assertSame(733, $rt->getCompleteListSize());
         $this->assertSame(4, $rt->getCursor());
         $this->assertEquals('2099-01-01T01:30:28+00:00', $rt->getExpirationDate()->format('c'));
@@ -94,7 +94,7 @@ class ResumptionTokenTest extends TestCase
         $this->expectDeprecationMessage('missing expected element');
 
         $xml = '<some-valid-xml>test</some-valid-xml>';
-        ResumptionToken::fromString($xml);
+        ResumptionToken::fromXmlString($xml);
     }
 
     public function testFromStringWithInvalidDateThrowsMalformedResponseException()
@@ -105,7 +105,7 @@ class ResumptionTokenTest extends TestCase
         $xml = '<resumptionToken completeListSize="733" cursor="4" expirationDate="invalid-date">
                 0/200/733/nsdl_dc/null/2012-07-26/null
                 </resumptionToken>';
-        ResumptionToken::fromString($xml);
+        ResumptionToken::fromXmlString($xml);
     }
 
     public function testGetTokenReturnsStringToken(): void
