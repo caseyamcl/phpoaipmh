@@ -23,8 +23,10 @@ use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DOMDocument;
+use DOMElement;
 use Exception;
 use Phpoaipmh\Exception\MalformedResponseException;
+use Phpoaipmh\Granularity;
 
 /**
  * Resumption Token class
@@ -148,7 +150,22 @@ class ResumptionToken
      */
     public function __toString(): string
     {
-        return $this->token;
+        $dom = new DOMDocument();
+        $rtNode = new DOMElement('resumptionToken', $this->getToken());
+        $dom->appendChild($rtNode);
+
+        if ($this->expirationDate) {
+            $rtNode->setAttribute('expirationDate', Granularity::formatDate($this->expirationDate));
+        }
+        if ($this->cursor) {
+            $rtNode->setAttribute('cursor', (string) $this->cursor);
+        }
+        if ($this->completeListSize) {
+            $rtNode->setAttribute('completeListSize', (string) $this->completeListSize);
+        }
+
+        $xml = $dom->saveXML();
+        return trim(str_replace('<?xml version="1.0"?>', '', $xml));
     }
 
     /**

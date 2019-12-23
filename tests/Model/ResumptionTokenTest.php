@@ -117,8 +117,11 @@ class ResumptionTokenTest extends TestCase
 
     public function testToString(): void
     {
-        $rt = new ResumptionToken('abc123');
-        $this->assertSame('abc123', (string) $rt);
+        $rt = new ResumptionToken('abc123', 5, 2, new DateTime('2019-05-01'));
+        $this->assertSame(
+            '<resumptionToken expirationDate="2019-05-01" cursor="2" completeListSize="5">abc123</resumptionToken>',
+            (string) $rt
+        );
     }
 
     public function testGetCursorReturnsIntegerWhenExists(): void
