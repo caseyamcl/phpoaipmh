@@ -20,6 +20,7 @@ declare(strict_types=1);
 namespace Phpoaipmh\Processor;
 
 use Exception;
+use Phpoaipmh\Contract\RecordProcessor;
 use Phpoaipmh\Exception\MalformedResponseException;
 use Phpoaipmh\Exception\OaipmhException;
 use RuntimeException;
@@ -30,7 +31,7 @@ use SimpleXMLElement;
  *
  * @author Casey McLaughlin <caseyamcl@gmail.com>
  */
-class SimpleXMLProcessor /* TODO: Create ProcessorInterface */
+class SimpleXMLProcessor implements RecordProcessor
 {
     /**
      * SimpleXMLProcessor constructor.

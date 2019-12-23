@@ -19,7 +19,9 @@ declare(strict_types=1);
 
 namespace Phpoaipmh\Processor;
 
-class StringProcessor
+use Phpoaipmh\Contract\RecordProcessor;
+
+class StringProcessor implements RecordProcessor
 {
     /**
      * Pass-through processor just returns string
