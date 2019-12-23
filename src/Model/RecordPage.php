@@ -23,7 +23,10 @@ use Countable;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
+use DOMDocument;
 use IteratorAggregate;
+use Phpoaipmh\Contract\RecordProcessor;
+use Traversable;
 
 /**
  * Record Page
@@ -88,6 +91,18 @@ class RecordPage implements IteratorAggregate, Countable
     }
 
     /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+
+        // TODO: Add elements here.
+
+        return trim($dom->saveXML());
+    }
+
+    /**
      * @return DateTimeImmutable
      */
     public function getResponseDate(): DateTimeImmutable
@@ -112,9 +127,10 @@ class RecordPage implements IteratorAggregate, Countable
     }
 
     /**
-     * @return array|string[]
+     * @param RecordProcessor|null $processor
+     * @return iterable|
      */
-    public function getRecords()
+    public function getRecords(RecordProcessor $processor = null): iterable
     {
         return $this->records;
     }
@@ -128,11 +144,23 @@ class RecordPage implements IteratorAggregate, Countable
     }
 
     /**
-     * @inheritDoc
+     * Get iterator with optional processing
+     *
+     * If $processor is set, this method returns a generator that prepares the records.
+     * Otherwise, it returns 'Model\Record' instances.
+     *
+     * @param RecordProcessor|null $processor = null
+     * @return Traversable|iterable|mixed[]
      */
-    public function getIterator()
+    public function getIterator(?RecordProcessor $processor = null): Traversable
     {
-        // TODO: Implement getIterator() method.
+        if ($processor) {
+            foreach ($this->records as $record) {
+                yield $processor->process($record);
+            }
+        } else {
+            return new \ArrayIterator($this->records);
+        }
     }
 
     /**
@@ -140,6 +168,6 @@ class RecordPage implements IteratorAggregate, Countable
      */
     public function count(): int
     {
-        // TODO: Implement count() method.
+        return count($this->records);
     }
 }
