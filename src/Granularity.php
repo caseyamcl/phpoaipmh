@@ -35,17 +35,19 @@ class Granularity
      * Format DateTime string based on granularity
      *
      * @param DateTimeInterface $dateTime
-     * @param string $format       Either self::DATE or self::DATE_AND_TIME
+     * @param string|null $format  Either self::DATE or self::DATE_AND_TIME; if not specified, will attempt to guess
      *
      * @return string
      */
-    public static function formatDate(DateTimeInterface $dateTime, string $format): string
+    public static function formatDate(DateTimeInterface $dateTime, ?string $format = null): string
     {
-        $phpFormats = array(
-            self::DATE => "Y-m-d",
-            self::DATE_AND_TIME => 'Y-m-d\TH:i:s\Z',
-        );
-        $phpFormat = $phpFormats[$format];
+        if ($format) {
+            $phpFormats = [self::DATE => "Y-m-d", self::DATE_AND_TIME => 'Y-m-d\TH:i:s\Z'];
+            $phpFormat = $phpFormats[$format];
+        } else {
+            // attempt to guess based on the date/time object
+            $phpFormat = ($dateTime->format('H:i:s') === '00:00:00') ? 'Y-m-d' : 'Y-m-d\TH:i:s\Z';
+        }
 
         return $dateTime->format($phpFormat);
     }

@@ -164,6 +164,7 @@ class ResumptionToken
             $rtNode->setAttribute('completeListSize', (string) $this->completeListSize);
         }
 
+        // Strip header XML tag from generated XML for the resumptionToken
         $xml = $dom->saveXML();
         return trim(str_replace('<?xml version="1.0"?>', '', $xml));
     }
