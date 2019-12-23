@@ -81,10 +81,10 @@ class ResumptionTokenTest extends TestCase
                 </resumptionToken>';
 
         $rt = ResumptionToken::fromString($xml);
-        $this->assertSame(' 0/200/733/nsdl_dc/null/2012-07-26/null', $rt->getToken());
+        $this->assertSame('0/200/733/nsdl_dc/null/2012-07-26/null', $rt->getToken());
         $this->assertSame(733, $rt->getCompleteListSize());
         $this->assertSame(4, $rt->getCursor());
-        $this->assertEquals('2099-01-01T01:30:28Z', $rt->getExpirationDate()->format('c'));
+        $this->assertEquals('2099-01-01T01:30:28+00:00', $rt->getExpirationDate()->format('c'));
     }
 
     public function testGetTokenReturnsStringToken(): void

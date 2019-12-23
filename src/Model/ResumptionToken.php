@@ -22,6 +22,8 @@ namespace Phpoaipmh\Model;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
+use DOMDocument;
+use Exception;
 use http\Exception\RuntimeException;
 use Phpoaipmh\Exception\MalformedResponseException;
 
@@ -58,6 +60,11 @@ class ResumptionToken
     /**
      * Build class from XML string
      *
+     * Example string that this method is able to parse:
+     *   <resumptionToken completeListSize="733" cursor="0" expirationDate="2099-01-01T01:30:28Z">
+     *      0/200/733/nsdl_dc/null/2012-07-26/null
+     *   </resumptionToken>
+     *
      * @param string $tokenTag  The raw XML tag representing the resumption token
      * @return static
      * @throws MalformedResponseException  In the case that invalid XML data is passed
@@ -72,13 +79,40 @@ class ResumptionToken
             ));
         }
 
-        /* According to the docs, DOM is enabled by default; example token XML:
-         *   <resumptionToken completeListSize="733" cursor="0" expirationDate="2099-01-01T01:30:28Z">
-         *      0/200/733/nsdl_dc/null/2012-07-26/null
-         *   </resumptionToken>
-         */
+        try {
+            $doc = new DOMDocument();
+            $doc->validateOnParse = true;
+            $doc->loadXML($tokenTag);
 
-        // TODO: Use builti-in XML functions to convert string to object
+            if (! $element = $doc->getElementsByTagName('resumptionToken')->item(0)) {
+                throw new MalformedResponseException("XML is missing expected element: 'resumptionToken'");
+            }
+
+            $attrs = $element->attributes;
+
+            if ($attrs->getNamedItem('completeListSize')) {
+                $completeListSize = (int) $attrs->getNamedItem('completeListSize')->value;
+            }
+            if ($attrs->getNamedItem('cursor')) {
+                $cursor = (int) $attrs->getNamedItem('cursor')->value;
+            }
+            if ($attrs->getNamedItem('expirationDate')) {
+                $expirationDate = new DateTimeImmutable((string) $attrs->getNamedItem('expirationDate')->value);
+            }
+
+            return new static(
+                trim($element->nodeValue),
+                $completeListSize ?? null,
+                $cursor ?? null,
+                $expirationDate ?? null
+            );
+        } catch (MalformedResponseException $e) {
+            // pass-through MalFormedResponse exceptions.
+            throw $e;
+        } catch (Exception $e) {
+            // catch all other exceptions and convert them to MalformedResponseExceptions
+            throw new MalformedResponseException('Tag parse error: ' . $e->getMessage(), $e->getCode(), $e);
+        }
     }
 
     /**

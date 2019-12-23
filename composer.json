@@ -15,6 +15,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
+        "ext-dom": "*",
         "psr/http-client": "^1.0"
     },
     "require-dev": {
