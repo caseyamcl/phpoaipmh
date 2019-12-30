@@ -5,24 +5,54 @@ declare(strict_types=1);
 namespace Phpoaipmh\Model;
 
 use DOMDocument;
+use DOMNode;
+use LogicException;
 
 class Record
 {
     /**
-     * @var RecordHeader
+     * @var string
      */
     private $header;
 
     /**
-     * @var RecordMetadata
+     * @var string|null
      */
     private $metadata;
 
     /**
-     * @var array
+     * @var array|string[]
      */
     private $about = [];
 
+    /**
+     * @var string
+     */
+    private $format;
+
+    /**
+     * @param DOMNode $node
+     * @return static
+     */
+    public static function fromDomNode(DOMNode $node): self
+    {
+        throw new LogicException('left off here');
+    }
+    
+    /**
+     * Record constructor.
+     * @param string $format  Format of the record
+     * @param string $header XML for the header
+     * @param string|null $metadata XML for the metadata, if present
+     * @param iterable|string[] $about XML for the about sections, if present
+     */
+    public function __construct(string $format, string $header, ?string $metadata, iterable $about)
+    {
+        $this->format = $format;
+        $this->header = $header;
+        $this->metadata = $metadata;
+        $this->about = $about;
+    }
 
     /**
      * @return string
@@ -31,37 +61,29 @@ class Record
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
 
-        $dom->appendChild($this->header->getDomRepresentation());
-        $dom->appendChild($this->metadata->getDomRepresentation());
-
-        foreach ($this->about as $aboutSection) {
-            $dom->appendChild($aboutSection->getDomRepresentation());
-        }
-
-
         // Strip header XML tag from generated XML for the resumptionToken
         $xml = $dom->saveXML();
         return trim(str_replace('<?xml version="1.0"?>', '', $xml));
     }
 
     /**
-     * @return RecordHeader
+     * @return string
      */
-    public function getHeader(): RecordHeader
+    public function getHeader(): string
     {
         return $this->header;
     }
 
     /**
-     * @return RecordMetadata
+     * @return string
      */
-    public function getMetadata(): RecordMetadata
+    public function getMetadata(): string
     {
         return $this->metadata;
     }
 
     /**
-     * @return array|null
+     * @return array|string[]|null
      */
     public function getAbout(): ?array
     {
