@@ -24,6 +24,7 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use DOMDocument;
 use DOMElement;
+use DOMNode;
 use Exception;
 use Phpoaipmh\Exception\MalformedResponseException;
 use Phpoaipmh\Granularity;
@@ -59,7 +60,7 @@ class ResumptionToken
     private $expirationDate = null;
 
     /**
-     * Build class from XML string
+     * Build object from XML string
      *
      * Example string that this method is able to parse:
      *   <resumptionToken completeListSize="733" cursor="0" expirationDate="2099-01-01T01:30:28Z">
@@ -81,7 +82,23 @@ class ResumptionToken
                 throw new MalformedResponseException("XML is missing expected element: 'resumptionToken'");
             }
 
-            $attrs = $element->attributes;
+            return self::fromDomNode($element);
+        } catch (MalformedResponseException $e) {
+            // pass-through MalFormedResponse exceptions.
+            throw $e;
+        }
+    }
+
+    /**
+     * Build object from DOM Node
+     *
+     * @param DOMNode $node
+     * @return static
+     */
+    public static function fromDomNode(DOMNode $node): self
+    {
+        try {
+            $attrs = $node->attributes;
 
             if ($attrs->getNamedItem('completeListSize')) {
                 $completeListSize = (int) $attrs->getNamedItem('completeListSize')->value;
@@ -94,16 +111,13 @@ class ResumptionToken
             }
 
             return new static(
-                trim($element->nodeValue),
+                trim($node->nodeValue),
                 $completeListSize ?? null,
                 $cursor ?? null,
                 $expirationDate ?? null
             );
-        } catch (MalformedResponseException $e) {
-            // pass-through MalFormedResponse exceptions.
-            throw $e;
         } catch (Exception $e) {
-            // catch all other exceptions and convert them to MalformedResponseExceptions
+            // catch all exceptions and convert them to MalformedResponseExceptions
             throw new MalformedResponseException('Tag parse error: ' . $e->getMessage(), $e->getCode(), $e);
         }
     }
