@@ -19,6 +19,8 @@ declare(strict_types=1);
 
 namespace Phpoaipmh\Exception;
 
+use Throwable;
+
 /**
  * OAI-PMH protocol Exception Class thrown when OAI-PMH protocol errors occur
  *
@@ -34,12 +36,12 @@ class OaipmhException extends BaseOaipmhException
 
     /**
      * OaipmhException constructor.
-     * @param string          $oaiErrorCode
-     * @param string          $message
-     * @param int             $code
-     * @param \Exception|null $previous
+     * @param string         $oaiErrorCode
+     * @param string         $message
+     * @param int            $code
+     * @param Throwable|null $previous
      */
-    public function __construct($oaiErrorCode, $message, $code = 0, \Exception $previous = null)
+    public function __construct(string $oaiErrorCode, string $message, int $code = 0, ?Throwable $previous = null)
     {
         $this->oaiErrorCode = $oaiErrorCode;
         parent::__construct($message, $code, $previous);
@@ -48,15 +50,15 @@ class OaipmhException extends BaseOaipmhException
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
-        return "OaipmhException: [{$this->code}]: ({$this->oaiErrorCode}) {$this->message}";
+        return "OaiPmhException: [{$this->code}]: ({$this->oaiErrorCode}) {$this->message}";
     }
 
     /**
      * @return string
      */
-    public function getOaiErrorCode()
+    public function getOaiErrorCode(): string
     {
         return $this->oaiErrorCode;
     }
