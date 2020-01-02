@@ -24,7 +24,6 @@ use Phpoaipmh\Contract\RecordProcessor;
 use Phpoaipmh\Model\IdentifyResponse;
 use Phpoaipmh\Processor\SimpleXMLProcessor;
 use Phpoaipmh\Processor\StringProcessor;
-use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use RicardoFiorani\GuzzlePsr18Adapter\Client;
 use SimpleXMLElement;
@@ -184,11 +183,11 @@ class Endpoint implements EndpointInterface
      *
      * Corresponds to OAI Verb to list records
      *
-     * @param  string             $metadataPrefix Required by OAI-PMH endpoint
+     * @param  string            $metadataPrefix Required by OAI-PMH endpoint
      * @param  DateTimeInterface $from             An optional 'from' date for selective harvesting
      * @param  DateTimeInterface $until            An optional 'from' date for selective harvesting
-     * @param  string             $set              An optional setSpec for selective harvesting
-     * @param  string             $resumptionToken  An optional resumptionToken for selective harvesting
+     * @param  string            $set              An optional setSpec for selective harvesting
+     * @param  string            $resumptionToken  An optional resumptionToken for selective harvesting
      * @return RecordIteratorInterface
      */
     public function listRecords(

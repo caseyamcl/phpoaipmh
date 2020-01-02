@@ -6,8 +6,12 @@ namespace Phpoaipmh\Model;
 
 use DOMDocument;
 use DOMNode;
-use LogicException;
 
+/**
+ * A single OAI-PMH record
+ *
+ * @author Casey McLaughlin <caseyamcl@gmail.com>
+ */
 class Record
 {
     /**
@@ -31,12 +35,14 @@ class Record
     private $format;
 
     /**
+     * @param string $metadataPrefix
      * @param DOMNode $node
      * @return static
      */
-    public static function fromDomNode(DOMNode $node): self
+    public static function fromDomNode(string $metadataPrefix, DOMNode $node): self
     {
-        throw new LogicException('left off here');
+        // TODO: finish this...
+        die('left off here');
     }
     
     /**

@@ -19,20 +19,23 @@ declare(strict_types=1);
 
 namespace Phpoaipmh\Model;
 
+use ArrayIterator;
 use Countable;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DOMDocument;
+use DOMNode;
 use IteratorAggregate;
 use Phpoaipmh\Contract\RecordProcessor;
+use Phpoaipmh\Exception\MalformedResponseException;
+use Phpoaipmh\Exception\OaipmhException;
 use Traversable;
 
 /**
  * Record Page
  *
  * Represents a single XML document returned by an HTTP endpoint
- * TODO: Create test for this
  *
  * @author Casey McLaughlin <caseyamcl@gmail.com>
  * @since v4.0
@@ -55,7 +58,7 @@ class RecordPage implements IteratorAggregate, Countable
     private $params = [];
 
     /**
-     * @var array|string[]
+     * @var iterable|Record[]
      */
     private $records = [];
 
@@ -65,18 +68,85 @@ class RecordPage implements IteratorAggregate, Countable
     private $resumptionToken = null;
 
     /**
+     * Build class from XML string
+     *
+     * This method expects a full XML document containing a complete, valid OAI-PMH
+     * document.  Anything else throws a MalformedResponseException.
+     *
+     * @param string $xml
+     * @return static
+     * @throws MalformedResponseException|OaipmhException
+     */
+    public static function fromXmlString(string $xml): self
+    {
+        $doc = new DOMDocument();
+        $doc->validateOnParse = true;
+        $doc->loadXML($xml);
+
+        // Get the response date
+        if (! $rdItem = $doc->getElementsByTagName('responseDate')->item(0)) {
+            throw new MalformedResponseException('Expected "responseDate" element in page record XML document');
+        }
+        $responseDate = DateTimeImmutable::createFromFormat('Y-m-d\TH:i:s\Z', trim($rdItem->nodeValue));
+
+        // Get the request tag and read attributes into $params variable
+        if (! $reqItem = $doc->getElementsByTagName('request')->item(0)) {
+            throw new MalformedResponseException('Expected "request" element in page record XML document');
+        }
+        if (! $verb = $reqItem->attributes->getNamedItem('verb')) {
+            throw new MalformedResponseException('Expected "verb" attribute in "request" element');
+        } else {
+            $verb = $verb->value;
+        }
+        $params = [];
+        foreach ($reqItem->attributes as $attrName => $attr) {
+            if ($attrName === 'verb') {
+                continue;
+            } else {
+                $params[$attrName] = (string) $attr->value;
+            }
+        }
+
+        // if this is an error response, handle it here.
+        if ($err = $doc->getElementsByTagName('error')->item(0)) {
+            $errorCode = (string) $err->attributes->getNamedItem('code')->value;
+            $errorMessage = (string) trim($err->nodeValue);
+            throw new OaipmhException($errorCode, $errorMessage);
+        }
+
+        // otherwise, the next element should match the verb value
+        // in which case, iterate through the values and build a Record object for each one
+        if ($records = $doc->getElementsByTagName($verb)->item(0)) {
+            $records = function (DOMNode $node) {
+                yield Record::fromDomNode($mdPrefix, $node);
+            };
+        } else {
+            throw new MalformedResponseException(sprintf(
+                'Expected %s element in page record XML document',
+                $verb->value
+            ));
+        }
+
+        $resumptionToken = ($rt = $doc->getElementsByTagName('resumptionToken')->item(0))
+            ? ResumptionToken::fromDomNode($rt)
+            : null;
+
+        return new static($responseDate, $verb, $records, $resumptionToken, $params);
+    }
+
+    /**
      * RecordPage constructor.
      *
      * @param DateTimeInterface|DateTime $responseDate
      * @param string $verb
-     * @param array $records
+     * @param iterable $records
      * @param ResumptionToken|null $resumptionToken
      * @param array $params
      */
     public function __construct(
         DateTimeInterface $responseDate,
         string $verb,
-        array $records,
+        iterable $records,
         ?ResumptionToken $resumptionToken = null,
         array $params = []
     ) {
@@ -128,10 +198,11 @@ class RecordPage implements IteratorAggregate, Countable
 
     /**
      * @param RecordProcessor|null $processor
-     * @return iterable|
+     * @return iterable
      */
     public function getRecords(RecordProcessor $processor = null): iterable
     {
+        // TODO: If processor passed, then process the record; otherwise, return the record iterator
         return $this->records;
     }
 
@@ -156,10 +227,10 @@ class RecordPage implements IteratorAggregate, Countable
     {
         if ($processor) {
             foreach ($this->records as $record) {
-                yield $processor->process($record);
+                yield $processor->process((string) $record);
             }
         } else {
-            return new \ArrayIterator($this->records);
+            return new ArrayIterator($this->records);
         }
     }
 

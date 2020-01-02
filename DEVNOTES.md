@@ -1,3 +1,7 @@
+## Update 2 Jan 2020
+
+- Left off on `Record.php`: `Record::fromDomNode()` method
+
 ## To-do for v4:
 
 - Refer to v3 code at: <https://github.com/caseyamcl/phpoaipmh/blob/v3.1/src>
