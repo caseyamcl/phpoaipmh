@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v3.1.1] - 2020-03-30
+### Changed
+- Implement PSR-12 (require `squizlabs/php_codesniffer: "^3.5"` in `composer.json`)
+
+### Fixed
+- Fix compatibility with PHP 7.4 by removing curly bracket usage (thanks @danez)
+
 ## [v3.1] - 2019-12-14
 ### Added
 - Support for Symfony v5 in `composer.json`
@@ -17,7 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [v3.0] - 2018-10-15
 ### Changed
 - Upgraded from PSR-0 to PSR-4 
-- Require PHP5.5 or newer (hint: upgrade to PHP7, since PHP5 support is [being deprecated](http://php.net/supported-versions.php))
+- Require PHP5.5 or newer (hint: upgrade to PHP7, since PHP5 support is [~being~ deprecated](http://php.net/supported-versions.php))
 - Change all `DateTime` references and type-hints to `DateTimeInterface`
 - Renamed `httpClient` variables and proprties to `httpAdapter` for consistency in naming
 - Improved README and documentation

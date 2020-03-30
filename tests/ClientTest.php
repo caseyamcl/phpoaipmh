@@ -36,7 +36,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
      */
     public function testInstantiateCreatesNewObject()
     {
-        $obj = new Client('http://example.com/oai', new HttpMockClient);
+        $obj = new Client('http://example.com/oai', new HttpMockClient());
         $this->assertInstanceOf('Phpoaipmh\Client', $obj);
     }
 
@@ -52,7 +52,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
 
     public function testGetAdapterReturnsHttpAdapterInstance()
     {
-        $obj = new Client('http://example.com/oai', new HttpMockClient);
+        $obj = new Client('http://example.com/oai', new HttpMockClient());
         $this->assertInstanceOf(HttpAdapterInterface::class, $obj->getHttpAdapter());
     }
 
@@ -62,7 +62,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
      */
     public function testRequestUrlBuildCorrectly($endpointUrl, $expectedRequestUrl)
     {
-        $mockClient = new HttpMockClient;
+        $mockClient = new HttpMockClient();
         $mockClient->toReturn = file_get_contents(__DIR__ . '/SampleXML/GoodResponseIdentify.xml');
         $obj = new Client($endpointUrl, $mockClient);
         $obj->request('Identify', array('param' => 'value'));
@@ -83,7 +83,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
      */
     public function testRequestDecodesValidResponseCorrectly()
     {
-        $mockClient = new HttpMockClient;
+        $mockClient = new HttpMockClient();
         $mockClient->toReturn = file_get_contents(__DIR__ . '/SampleXML/GoodResponseIdentify.xml');
         $obj = new Client('http://nsdl.org/oai', $mockClient);
         $result = $obj->request('Identify');
@@ -98,7 +98,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
      */
     public function testInvalidXMLResponseThrowsHttpRequestException()
     {
-        $mockClient = new HttpMockClient;
+        $mockClient = new HttpMockClient();
         $mockClient->toReturn = 'thisIs&NotXML!!';
         $this->setExpectedException('Phpoaipmh\Exception\MalformedResponseException');
 
@@ -111,7 +111,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
      */
     public function testRequestThrowsOAIPMHExceptionForInvalidVerbOrParams()
     {
-        $mockClient = new HttpMockClient;
+        $mockClient = new HttpMockClient();
         $mockClient->toReturn = file_get_contents(__DIR__ . '/SampleXML/BadResponseNonExistentVerb.xml');
         $this->setExpectedException('Phpoaipmh\Exception\OaipmhException');
 

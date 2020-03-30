@@ -1,5 +1,8 @@
 <?php
+
 namespace Phpoaipmh;
+
+use DateTimeInterface;
 
 /**
  * PHPOAIPMH Library
@@ -29,12 +32,12 @@ class Granularity
     /**
      * Format DateTime string based on granularity
      *
-     * @param \DateTimeInterface $dateTime
+     * @param DateTimeInterface $dateTime
      * @param string $format       Either self::DATE or self::DATE_AND_TIME
      *
      * @return string
      */
-    public static function formatDate(\DateTimeInterface $dateTime, $format)
+    public static function formatDate(DateTimeInterface $dateTime, $format)
     {
         $phpFormats = array(
             self::DATE => "Y-m-d",
