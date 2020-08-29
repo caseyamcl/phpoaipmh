@@ -56,6 +56,7 @@ class ResponseListTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(162, count($respArr));
         $this->assertEquals(162, $obj->getNumRetrieved());
+        $this->assertEquals(162, $obj->getTotalRecordCount());
         $this->assertEquals(1, $obj->getNumRequests());
     }
 
@@ -155,9 +156,6 @@ class ResponseListTest extends PHPUnit_Framework_TestCase
         //Single page sample file contains 162 results in a valid ListRecords response
         $output = $this->generateSampleXML(array('GoodResponseSinglePage.xml'));
         $obj = new RecordIterator($this->getMockClient($output), 'ListRecords');
-
-        // The single page records do not supply a number
-        $this->assertNull($obj->getTotalRecordCount());
     }
 
     // ---------------------------------------------------------------

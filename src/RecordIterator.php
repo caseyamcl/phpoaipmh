@@ -248,6 +248,11 @@ class RecordIterator implements \Iterator, RecordIteratorInterface
         //Process the results
         foreach ($resp->$verb->$nodeName as $node) {
             $this->batch[] = $node;
+	}
+
+        // If the entire set was sent in one request, store the total count.
+        if ($this->numRequests == 1 && $this->resumptionToken === null) {
+            $this->totalRecordsInCollection = count($this->batch);
         }
 
         //Return a count
