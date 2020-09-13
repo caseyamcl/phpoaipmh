@@ -6,6 +6,11 @@ namespace Phpoaipmh\Contract;
 
 use Phpoaipmh\Exception\MalformedResponseException;
 
+/**
+ * Record processor interface (processes a record and returns the expected format back)
+ *
+ * @author Casey McLaughlin <caseyamcl@gmail.com>
+ */
 interface RecordProcessor
 {
     /**
