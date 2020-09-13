@@ -19,6 +19,8 @@ declare(strict_types=1);
 
 namespace Phpoaipmh\Exception;
 
+use Throwable;
+
 /**
  * Class MalformedResponseException
  *
@@ -29,5 +31,25 @@ namespace Phpoaipmh\Exception;
  */
 class MalformedResponseException extends BaseOaipmhException
 {
-    // pass..
+    /**
+     * Alternative constructor to create errors about missing tags
+     *
+     * @param string $tagName
+     * @param string $responseDocName
+     * @param int $code
+     * @param Throwable|null $previous
+     * @return MalformedResponseException
+     */
+    public static function missingTag(
+        string $tagName,
+        string $responseDocName,
+        int $code = 0,
+        ?Throwable $previous = null
+    ) {
+        return new self(
+            sprintf("Expected '%s' element in %s XML document", $tagName, $responseDocName),
+            $code,
+            $previous
+        );
+    }
 }
