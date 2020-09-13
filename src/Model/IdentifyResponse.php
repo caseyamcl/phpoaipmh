@@ -8,7 +8,10 @@ use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DOMDocument;
+use DOMNode;
 use InvalidArgumentException;
+use Phpoaipmh\Behavior\RetrieveNodeTrait;
+use Phpoaipmh\Granularity;
 
 /**
  * Class IdentifyResponse
@@ -19,6 +22,8 @@ use InvalidArgumentException;
  */
 class IdentifyResponse
 {
+    use RetrieveNodeTrait;
+
     public const DELETED_RECORD_NO = 'no';
     public const DELETED_RECORD_TRANSIENT = 'transient';
     public const DELETED_RECORD_PERSISTENT = 'persistent';
@@ -52,7 +57,7 @@ class IdentifyResponse
     private $deletedRecordPolicy;
 
     /**
-     * @var string
+     * @var Granularity
      */
     private $granularity;
 
@@ -67,9 +72,9 @@ class IdentifyResponse
     private $compression;
 
     /**
-     * @var string|null
+     * @var iterable|DOMNode[]
      */
-    private $description;
+    private $descriptions = [];
 
     /**
      * @param string $xml
@@ -77,20 +82,48 @@ class IdentifyResponse
      */
     public static function fromXmlString(string $xml): self
     {
-        // TODO: Implement this method.
+        $doc = new DOMDocument();
+        $doc->validateOnParse = true;
+        $doc->loadXML($xml);
+
+        // Required attributes
+        $repoName = self::retrieveNodeValue($doc, 'repositoryName');
+        $baseUrl = self::retrieveNodeValue($doc, 'baseURL');
+        $protocolVersion = self::retrieveNodeValue($doc, 'protocolVersion');
+        $earliestDatestamp = self::retrieveNodeDateValue($doc, 'earliestDatestamp');
+        $deletedRecord = self::retrieveNodeValue($doc, 'deletedRecord');
+        $granularity  = new Granularity(self::retrieveNodeValue($doc, 'granularity'));
+        $adminEmails = self::retrieveNodeValues($doc, 'adminEmail');
+
+        // OPTIONAL attributes:
+        $compression = self::retrieveNodeValue($doc, 'compression', false);
+        $descriptions = $doc->getElementsByTagName('description');
+
+        return new static(
+            $repoName,
+            $baseUrl,
+            $protocolVersion,
+            $earliestDatestamp,
+            $deletedRecord,
+            $granularity,
+            $adminEmails,
+            $compression,
+            $descriptions
+        );
     }
 
     /**
      * IdentifyResponse constructor.
+     *
      * @param string $repositoryName
      * @param string $baseURL
      * @param string $protocolVersion
      * @param DateTimeInterface|DateTime $earliestDatestamp
      * @param string $deletedRecordPolicy
-     * @param string $granularity
-     * @param array|string[] $adminEmail
+     * @param Granularity $granularity
+     * @param iterable|string[] $adminEmails
      * @param string|null $compression
-     * @param string|null $description
+     * @param iterable|DOMNode[] $descriptions
      */
     public function __construct(
         string $repositoryName,
@@ -98,26 +131,30 @@ class IdentifyResponse
         string $protocolVersion,
         DateTimeInterface $earliestDatestamp,
         string $deletedRecordPolicy,
-        string $granularity,
-        $adminEmail,
+        Granularity $granularity,
+        iterable $adminEmails = [],
         ?string $compression = null,
-        ?string $description = null
+        iterable $descriptions = []
     ) {
         $this->repositoryName = $repositoryName;
-        $this->baseURL = $baseURL;
-        $this->adminEmails = is_array($adminEmail) ? array_map('trim', $adminEmail) : [trim($adminEmail)];
-        $this->compression = trim($compression) ?: null;
-        $this->description = trim($description) ?: null;
+        $this->granularity = $granularity;
+        $this->compression = $compression ?: null;
+
+        $this->baseURL = filter_var($baseURL, FILTER_VALIDATE_URL);
+        if (! $this->baseURL) {
+            throw new InvalidArgumentException('Invalid value for "baseURL" element');
+        }
 
         // Set protocol version
         if ((int) $protocolVersion !== 2) {
             trigger_error(
-                'Warning: This library is designed to work with OAI-PMH 2.0 endpoints. YMMV with ' . $protocolVersion,
+                'This library is designed to work with OAI-PMH 2.0 endpoints. YMMV with v' . $protocolVersion,
                 E_USER_NOTICE
             );
         }
         $this->protocolVersion = $protocolVersion;
 
+        // Earliest date/time should be immutable
         $this->earliestDatestamp = $earliestDatestamp instanceof DateTimeImmutable
             ? $earliestDatestamp
             : DateTimeImmutable::createFromMutable($earliestDatestamp);
@@ -126,22 +163,36 @@ class IdentifyResponse
         $validPolicies = [self::DELETED_RECORD_NO, self::DELETED_RECORD_PERSISTENT, self::DELETED_RECORD_TRANSIENT];
         if (! in_array($deletedRecordPolicy, $validPolicies)) {
             throw new InvalidArgumentException(sprintf(
-                'Invalid deleted record policy in Identify endpoint: %s (valid values: %s)',
+                'Invalid deleted record policy value in Identify endpoint: %s (valid values: %s)',
                 $deletedRecordPolicy,
-                $validPolicies
+                "'" . implode("', '", $validPolicies) . "'"
             ));
         }
         $this->deletedRecordPolicy = $deletedRecordPolicy;
 
-        // Set date/time granularity
-        if (! in_array($granularity, [self::GRANULARITY_DATE, self::GRANULARITY_DATE_AND_TIME])) {
-            throw new InvalidArgumentException(sprintf(
-                'Invalid granularity: %s (valid values: %s)',
-                $granularity,
-                [self::GRANULARITY_DATE, self::GRANULARITY_DATE_AND_TIME]
-            ));
+        // Admin emails are strings
+        foreach ($adminEmails as $idx => $email) {
+            if (!$this->adminEmails[] = filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                throw new InvalidArgumentException(sprintf(
+                    'Invalid email at index %d: %s',
+                    $idx,
+                    $email
+                ));
+            }
         }
-        $this->granularity = $granularity;
+
+        // Descriptions are DOMNodes
+        foreach ($descriptions as $idx => $desc) {
+            if ($desc instanceof DOMNode) {
+                $this->descriptions[] = $desc;
+            } else {
+                throw new InvalidArgumentException(sprintf(
+                    "Invalid description at index %d in %s",
+                    $idx,
+                    self::getXMLDocumentName()
+                ));
+            }
+        }
     }
 
     /**
@@ -197,9 +248,9 @@ class IdentifyResponse
     }
 
     /**
-     * @return string
+     * @return Granularity
      */
-    public function getGranularity(): string
+    public function getGranularity(): Granularity
     {
         return $this->granularity;
     }
@@ -231,15 +282,15 @@ class IdentifyResponse
     }
 
     /**
-     * @return string|null
+     * @return DOMNode[] |null
      */
-    public function getDescription(): ?string
+    public function getDescriptions(): iterable
     {
-        return $this->description;
+        return $this->descriptions;
     }
 
     /**
-     * Does this endpoint describe its compression method
+     * Does this endpoint report its compression method?
      *
      * @return bool
      */
@@ -251,10 +302,19 @@ class IdentifyResponse
     /**
      * Does this endpoint include a description of the repository?
      *
-     * @return bool
+     * @return int
      */
-    public function hasDescription(): bool
+    public function getDescriptionCount(): int
     {
-        return (bool) $this->description;
+        return count($this->descriptions);
+    }
+
+    /**
+     * Get human-readable name of document for error messages and such
+     * @return string
+     */
+    protected static function getXMLDocumentName(): string
+    {
+        return 'Identify Response';
     }
 }
