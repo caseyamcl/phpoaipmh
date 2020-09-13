@@ -21,8 +21,8 @@
 
 <protocolVersion>2.0</protocolVersion>
 
-<adminEmail>jweather@ucar.edu</adminEmail>
-
+<adminEmail>jweather@example.org</adminEmail>
+<adminEmail>joe@example.org</adminEmail>
 
 
 <earliestDatestamp>1900-01-01T12:00:00Z</earliestDatestamp>
