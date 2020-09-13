@@ -33,7 +33,6 @@ use Phpoaipmh\Granularity;
  * Resumption Token class
  *
  * See: https://www.openarchives.org/OAI/openarchivesprotocol.html#FlowControl
- * TODO: Create test for this
  *
  * @author Casey McLaughlin <caseyamcl@gmail.com>
  */
@@ -169,7 +168,7 @@ class ResumptionToken
         $dom->appendChild($rtNode);
 
         if ($this->expirationDate) {
-            $rtNode->setAttribute('expirationDate', Granularity::formatDate($this->expirationDate));
+            $rtNode->setAttribute('expirationDate', Granularity::forDate($this->expirationDate));
         }
         if ($this->cursor) {
             $rtNode->setAttribute('cursor', (string) $this->cursor);
