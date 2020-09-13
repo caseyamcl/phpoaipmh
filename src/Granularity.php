@@ -37,6 +37,22 @@ class Granularity
      */
     private $format;
 
+    /**
+     * Automatically try to create format for date
+     *
+     * @param DateTimeInterface $dt
+     * @return string
+     */
+    public static function forDate(DateTimeInterface $dt): string
+    {
+        $format = ($dt->format('H:i:s') === '00:00:00') ? static::DATE : static::DATE_AND_TIME;
+        return (new static($format))->formatDate($dt);
+    }
+
+    /**
+     * Granularity constructor.
+     * @param string $format  One of DATE, or DATE_AND_TIME constants
+     */
     public function __construct(string $format)
     {
         $allowedValues = [self::DATE, self::DATE_AND_TIME];
