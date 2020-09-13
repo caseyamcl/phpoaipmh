@@ -8,7 +8,7 @@ use GuzzleHttp\Exception\TransferException;
 use Phpoaipmh\Exception\HttpException;
 
 /**
- * GuzzleAdapter HttpAdapter HttpAdapterInterface Adapter (works with v5 or v6)
+ * GuzzleAdapter HttpAdapter HttpAdapterInterface Adapter (works with v5 or v6/7)
  *
  * @package Phpoaipmh\HttpAdapter
  */
