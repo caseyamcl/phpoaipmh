@@ -22,9 +22,7 @@ namespace Phpoaipmh;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 use Phpoaipmh\Exception\OaipmhException;
-use Phpoaipmh\HttpAdapter\GuzzleAdapter;
 use PHPUnit\Framework\TestCase;
-use PHPUnit_Framework_TestCase;
 
 /**
  * Endpoint Guzzle Test
