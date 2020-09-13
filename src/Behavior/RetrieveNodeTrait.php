@@ -58,7 +58,7 @@ trait RetrieveNodeTrait
             ));
         }
 
-        return $item->item(0)->nodeValue;
+        return trim($item->item(0)->nodeValue);
     }
 
 
@@ -83,7 +83,7 @@ trait RetrieveNodeTrait
         }
 
         foreach ($domNodes as $node) {
-            $returnValues[] = $node->nodeValue;
+            $returnValues[] = trim($node->nodeValue);
         }
 
         return $returnValues ?? [];
