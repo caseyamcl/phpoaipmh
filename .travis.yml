@@ -12,7 +12,7 @@ matrix:
     - env: 'COMPOSER_FLAGS="--prefer-stable --prefer-lowest"'
 
 script:
-  - vendor/bin/phpcs --standard=psr12 src/
+  - vendor/bin/phpcs --standard=psr12 --config-set show_warnings 0 src/
   - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
 
 before_script:
