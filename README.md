@@ -16,7 +16,7 @@ Features:
 * PSR-12 Compliant
 * Composer-compatible
 * Unit-tested
-* Prefers Guzzle (v6 or v5)for HTTP transport layer, but can fall back to cURL, or implement your own
+* Prefers Guzzle (v6, v7, or v5) for HTTP transport layer, but can fall back to cURL, or implement your own
 * Easy-to-use iterator that hides all the HTTP junk necessary to get paginated records
 
 ## Installation Options
@@ -26,13 +26,13 @@ Install via [Composer](http://getcomposer.org/) by including the following in yo
     {
         "require": {
             "caseyamcl/phpoaipmh": "^3.0",
-            "guzzlehttp/guzzle":   "^6.3"
+            "guzzlehttp/guzzle":   "^7.0"
         }
     }
 
 Or, drop the `src` folder into your application and use a PSR-4 autoloader to include the files.
 
-*Note:* Guzzle v6.0 is recommended, but if you do not wish to use Guzzle v6 for whatever reason, you can
+*Note:* Guzzle v6.0 or v7.0 is recommended, but if you do not wish to use Guzzle v6 for whatever reason, you can
 use any one of the following:
 
 * Guzzle 5.0 - You can use Guzzle v5 instead of v6.
