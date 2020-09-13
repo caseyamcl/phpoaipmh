@@ -29,7 +29,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Phpoaipmh\\": ["src/", "tests"],
+            "Phpoaipmh\\": ["src/", "tests/"],
             "Phpoaipmh\\Example\\": "example/src/"
         }
     },
