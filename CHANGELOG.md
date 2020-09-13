@@ -10,14 +10,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Support for any [PSR-18 HTTP client](https://www.php-fig.org/psr/psr-18/)
 - Record processors to provide alternatives to SimpleXML processing
 - Data models to represent all documents that may be returned by an OAI-PMH endpoint
+- Support for asynchronous HTTP requests
 
 ### Changed
 - Refactored how iteration works
-- (dev) Upgraded all tests to PHPUnit v8
+- (dev) Upgraded all tests to PHPUnit v9
 - (dev) Moved sample XML responses to the `Fixtures` directory
 
 ### Removed
-- Support for PHPv5 (if you are still on PHP5, use v3.1 or lower)
+- Support for PHPv5 (if you are still on PHP5, use v3.2 or lower)
 - All HTTP libraries and adapters; v4.0 requires a PSR-18 compatible client
 - `HttpException`, because it is no longer needed
 - `Client` and `ClientInterface` classes (functionality has been refactored)
