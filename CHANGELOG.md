@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v3.2] - 2020-09-13
+### Changed
+- Added PHPUnit Cache file to `.gitignore`
+- Upgraded to PHPUnit v5
+
+### Added
+- Ensured support for Guzzle v7
+- `.travis.yml` now includes tests for more modern versions of PHP (not PHP v7.4 though)
+
+### Fixed
+- **BUGFIX:** `RecordIterator::getTotalRecordCount()` now returns count for single-page requests (thanks @asmecher!)
+- Minor code adjustments
+
 ## [v3.1.1] - 2020-03-30
 ### Changed
 - Implement PSR-12 (require `squizlabs/php_codesniffer: "^3.5"` in `composer.json`)
