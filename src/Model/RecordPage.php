@@ -85,16 +85,16 @@ class RecordPage implements IteratorAggregate, Countable
 
         // Get the response date
         if (! $rdItem = $doc->getElementsByTagName('responseDate')->item(0)) {
-            throw new MalformedResponseException('Expected "responseDate" element in page record XML document');
+            MalformedResponseException::missingTag('responseDate', 'Record Page');
         }
         $responseDate = DateTimeImmutable::createFromFormat('Y-m-d\TH:i:s\Z', trim($rdItem->nodeValue));
 
         // Get the request tag and read attributes into $params variable
         if (! $reqItem = $doc->getElementsByTagName('request')->item(0)) {
-            throw new MalformedResponseException('Expected "request" element in page record XML document');
+            MalformedResponseException::missingTag('request', 'Record Page');
         }
         if (! $verb = $reqItem->attributes->getNamedItem('verb')) {
-            throw new MalformedResponseException('Expected "verb" attribute in "request" element');
+            MalformedResponseException::missingTag('verb', 'Record Page');
         } else {
             $verb = $verb->value;
         }
