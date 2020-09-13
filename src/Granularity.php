@@ -20,6 +20,7 @@ declare(strict_types=1);
 namespace Phpoaipmh;
 
 use DateTimeInterface;
+use Phpoaipmh\Exception\MalformedResponseException;
 
 /**
  * Granularity class provides utility for specifying date and constraint precision
@@ -28,27 +29,47 @@ use DateTimeInterface;
  */
 class Granularity
 {
-    const DATE = "YYYY-MM-DD";
-    const DATE_AND_TIME = "YYYY-MM-DDThh:mm:ssZ";
+    public const DATE = "YYYY-MM-DD";
+    public const DATE_AND_TIME = "YYYY-MM-DDThh:mm:ssZ";
+
+    /**
+     * @var string
+     */
+    private $format;
+
+    public function __construct(string $format)
+    {
+        $allowedValues = [self::DATE, self::DATE_AND_TIME];
+        if (! in_array($format, $allowedValues)) {
+            throw new MalformedResponseException(
+                sprintf('OAI-PMH endpoint returned invalid granularity: %s (allowed %s)', $format, $allowedValues)
+            );
+        }
+
+        $this->format = $format;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->format;
+    }
 
     /**
      * Format DateTime string based on granularity
      *
      * @param DateTimeInterface $dateTime
-     * @param string|null $format  Either self::DATE or self::DATE_AND_TIME; if not specified, will attempt to guess
-     *
      * @return string
      */
-    public static function formatDate(DateTimeInterface $dateTime, ?string $format = null): string
+    public function formatDate(DateTimeInterface $dateTime): string
     {
-        if ($format) {
-            $phpFormats = [self::DATE => "Y-m-d", self::DATE_AND_TIME => 'Y-m-d\TH:i:s\Z'];
-            $phpFormat = $phpFormats[$format];
-        } else {
-            // attempt to guess based on the date/time object
-            $phpFormat = ($dateTime->format('H:i:s') === '00:00:00') ? 'Y-m-d' : 'Y-m-d\TH:i:s\Z';
-        }
+        $formatMapping = [
+            self::DATE => "Y-m-d",
+            self::DATE_AND_TIME => 'Y-m-d\TH:i:s\Z'
+        ];
 
-        return $dateTime->format($phpFormat);
+        return $dateTime->format($formatMapping[$this->format]);
     }
 }

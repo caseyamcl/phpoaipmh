@@ -31,9 +31,9 @@ use PHPUnit\Framework\TestCase;
  */
 class GranularityTest extends TestCase
 {
-
     /**
      * Test the date formatting with granularity
+     *
      * @dataProvider getFormatTests
      * @param string $granularity
      * @param string $expectedResult
@@ -41,9 +41,9 @@ class GranularityTest extends TestCase
      */
     public function testGranularityFormatting(string $granularity, string $expectedResult)
     {
+        $obj = new Granularity($granularity);
         $testDate = new DateTime("2015-02-01 12:15:30", new DateTimeZone("UTC"));
-        $returnValue = Granularity::formatDate($testDate, $granularity);
-        $this->assertEquals($expectedResult, $returnValue);
+        $this->assertEquals($expectedResult, $obj->formatDate($testDate));
     }
 
     public function getFormatTests()
