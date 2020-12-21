@@ -187,7 +187,7 @@ class RecordIterator implements Iterator, RecordIteratorInterface
         
         //If no items in batch, and we have a resumptionToken or need to make initial request...
         if (count($this->batch) == 0 && ($this->resumptionToken or $this->numRequests == 0)) {
-            $this->retrieveBatch();
+            $this->retrieveNextBatch();
         }
 
         //if still items in current batch, return one
@@ -208,7 +208,7 @@ class RecordIterator implements Iterator, RecordIteratorInterface
      *
      * @return int The number of items in the batch after the retrieve
      */
-    private function retrieveBatch()
+    public function retrieveNextBatch()
     {
         // Set OAI-PMH parameters for request
         // If resumptionToken, then we ignore params and just use that
