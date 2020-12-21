@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Parameter in `reset` method to optionally preserve the resumptionToken
+- GitHub Actions build status badge in `README.md`
+- Automatic SVG badge generation for code coverage
+
+### Removed
+- `.travis.yml` build support (switched to Github Actions)
 
 ## [v3.2] - 2020-09-13
 ### Changed

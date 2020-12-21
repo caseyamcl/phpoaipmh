@@ -3,11 +3,12 @@ PHPOAIPMH
 
 ## A PHP OAI-PMH harvester client library
 
-[![Latest Version](https://img.shields.io/github/release/caseyamcl/phpoaipmh.svg?style=flat-square?style=flat-square)](https://github.com/caseyamcl/phpoaipmh/releases)
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Build Status](https://travis-ci.org/caseyamcl/Phpoiapmh.png)](https://travis-ci.org/caseyamcl/Phpoiapmh.png)
-[![Total Downloads](https://img.shields.io/packagist/dt/caseyamcl/Phpoaipmh.svg?style=flat-square)](https://packagist.org/packages/caseyamcl/Phpoaipmh)
-[![Scrutinizer](https://img.shields.io/scrutinizer/g/caseyamcl/phpoaipmh.svg?style=flat-square)](https://scrutinizer-ci.com/g/caseyamcl/phpoaipmh/)
+[![Latest Version](https://img.shields.io/github/release/caseyamcl/phpoaipmh.svg)](https://github.com/caseyamcl/phpoaipmh/releases)
+[![Total Downloads](https://img.shields.io/packagist/dt/caseyamcl/Phpoaipmh.svg)](https://packagist.org/packages/caseyamcl/Phpoaipmh)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE.md)
+[![Github Build](https://github.com/caseyamcl/phpoaipmh/workflows/Github%20Build/badge.svg)](https://github.com/caseyamcl/phpoaipmh/actions?query=workflow%3A%22Github+Build%22)
+[![Code coverage](https://github.com/caseyamcl/toc/blob/master/coverage.svg)](coverage.svg)
+[![Scrutinizer](https://img.shields.io/scrutinizer/g/caseyamcl/phpoaipmh.svg)](https://scrutinizer-ci.com/g/caseyamcl/phpoaipmh/)
 
 This library provides an interface to harvest OAI-PMH metadata
 from any [OAI 2.0 compliant endpoint](http://www.openarchives.org/OAI/openarchivesprotocol.html#ListMetadataFormats).
