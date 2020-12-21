@@ -297,16 +297,20 @@ class RecordIterator implements Iterator, RecordIteratorInterface
 
     /**
      * Reset the request state
+     * @param bool $resetResumptionToken
      */
-    public function reset()
+    public function reset($resetResumptionToken = true)
     {
         $this->numRequests  = 0;
         $this->numProcessed = 0;
 
         $this->currItem                 = null;
-        $this->resumptionToken          = null;
         $this->totalRecordsInCollection = null;
         $this->expireDate               = null;
+
+        if ($resetResumptionToken) {
+            $this->resumptionToken = null;
+        }
 
         $this->batch = [];
     }

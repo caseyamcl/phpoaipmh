@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Renamed method: `retrieveBatch` -> `retrieveNextBatch`
 - Exposed `RecordIterator::retrieveNextBatch` as a public method
 
+### Added
+- Parameter in `reset` method to optionally preserve the resumptionToken
+
 ## [v3.2] - 2020-09-13
 ### Changed
 - Added PHPUnit Cache file to `.gitignore`
