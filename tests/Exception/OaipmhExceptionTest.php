@@ -17,9 +17,9 @@
 
 namespace Phpoaipmh\Exception;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class OaipmhExceptionTest extends PHPUnit_Framework_TestCase
+class OaipmhExceptionTest extends TestCase
 {
     public function testToStringReturnsExpectedValue()
     {

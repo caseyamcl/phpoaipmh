@@ -20,14 +20,14 @@ namespace Phpoaipmh;
 use Phpoaipmh\Exception\HttpException;
 use Phpoaipmh\Fixture\HttpMockClient;
 use Phpoaipmh\HttpAdapter\HttpAdapterInterface;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class ClientTest
  *
  * @author Casey McLaughlin <caseyamcl@gmail.com>
  */
-class ClientTest extends PHPUnit_Framework_TestCase
+class ClientTest extends TestCase
 {
     /**
      * Simple Instantiation Test

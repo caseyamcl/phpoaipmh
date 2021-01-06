@@ -15,16 +15,17 @@
  * ------------------------------------------------------------------
  */
 
-namespace Phpoaipmh\Http;
+namespace Phpoaipmh\HttpAdapter;
 
 use Phpoaipmh\HttpAdapter\CurlAdapter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class CurlAdapterTest
  *
  * @author Casey McLaughlin <caseyamcl@gmail.com>
  */
-class CurlAdapterTest extends \PHPUnit_Framework_TestCase
+class CurlAdapterTest extends TestCase
 {
 
     /**

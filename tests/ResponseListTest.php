@@ -19,14 +19,14 @@ namespace Phpoaipmh;
 
 use Phpoaipmh\Fixture\ClientStub;
 use Phpoaipmh\HttpAdapter\HttpAdapterInterface;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Response List Test
  *
  * @package Phpoaipmh
  */
-class ResponseListTest extends PHPUnit_Framework_TestCase
+class ResponseListTest extends TestCase
 {
     /**
      * Simple Instantiation Test

@@ -15,17 +15,17 @@
  * ------------------------------------------------------------------
  */
 
-namespace Phpoaipmh\Http;
+namespace Phpoaipmh\HttpAdapter;
 
 use Phpoaipmh\HttpAdapter\GuzzleAdapter;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class GuzzleAdapterTest
  *
  * @author Casey McLaughlin <caseyamcl@gmail.com>
  */
-class GuzzleAdapterTest extends PHPUnit_Framework_TestCase
+class GuzzleAdapterTest extends TestCase
 {
     /**
      * Simple Instantiation Test

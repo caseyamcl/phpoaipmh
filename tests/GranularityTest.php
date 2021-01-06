@@ -17,14 +17,14 @@
 
 namespace Phpoaipmh;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Endpoint Test
  *
  * @package Phpoaipmh
  */
-class GranularityTest extends PHPUnit_Framework_TestCase
+class GranularityTest extends TestCase
 {
 
     /**

@@ -20,14 +20,14 @@ namespace Phpoaipmh;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 use Phpoaipmh\HttpAdapter\GuzzleAdapter;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Endpoint Guzzle Test
  *
  * @author Casey McLaughlin <caseyamcl@gmail.com>
  */
-class EndpointIntegrationTest extends PHPUnit_Framework_TestCase
+class EndpointIntegrationTest extends TestCase
 {
     public function testGetRecordWorksForCorrectRecord()
     {
