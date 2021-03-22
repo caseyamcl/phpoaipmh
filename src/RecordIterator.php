@@ -250,6 +250,7 @@ class RecordIterator implements Iterator, RecordIteratorInterface
         }
 
         //Process the results
+        $this->batch = [];
         foreach ($resp->$verb->$nodeName as $node) {
             $this->batch[] = $node;
         }
