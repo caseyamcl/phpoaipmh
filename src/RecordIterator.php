@@ -319,6 +319,7 @@ class RecordIterator implements Iterator, RecordIteratorInterface
     // ----------------------------------------------------------------
     // Iterator methods
 
+    #[\ReturnTypeWillChange]
     public function current()
     {
         return ($this->currItem === null)
@@ -326,11 +327,13 @@ class RecordIterator implements Iterator, RecordIteratorInterface
             : $this->currItem;
     }
 
+    #[\ReturnTypeWillChange]
     public function next()
     {
         return $this->nextItem();
     }
 
+    #[\ReturnTypeWillChange]
     public function key()
     {
         if ($this->currItem === null) {
@@ -340,11 +343,13 @@ class RecordIterator implements Iterator, RecordIteratorInterface
         return $this->getNumRetrieved();
     }
 
+    #[\ReturnTypeWillChange]
     public function valid()
     {
         return ($this->currItem !== false);
     }
 
+    #[\ReturnTypeWillChange]
     public function rewind()
     {
         $this->reset();
