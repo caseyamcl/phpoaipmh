@@ -42,30 +42,22 @@ use Traversable;
  */
 class RecordPage implements IteratorAggregate, Countable
 {
-    /**
-     * @var DateTimeImmutable
-     */
-    private $responseDate;
+    private const PAGE_TYPE = 'record page';
+
+    private string $sourceXml;
+    private DateTimeImmutable $responseDate;
+    private ?ResumptionToken $resumptionToken = null;
+    private string $verb;
 
     /**
-     * @var string
+     * @var array<int,string>
      */
-    private $verb;
+    private array $params = [];
 
     /**
-     * @var array|string[]
+     * @var iterable<int,Record>
      */
-    private $params = [];
-
-    /**
-     * @var iterable|Record[]
-     */
-    private $records = [];
-
-    /**
-     * @var ResumptionToken|null
-     */
-    private $resumptionToken = null;
+    private iterable $records = [];
 
     /**
      * Build class from XML string
@@ -85,58 +77,64 @@ class RecordPage implements IteratorAggregate, Countable
 
         // Get the response date
         if (! $rdItem = $doc->getElementsByTagName('responseDate')->item(0)) {
-            MalformedResponseException::missingTag('responseDate', 'Record Page');
+            MalformedResponseException::missingTag('responseDate', self::PAGE_TYPE);
         }
         $responseDate = DateTimeImmutable::createFromFormat('Y-m-d\TH:i:s\Z', trim($rdItem->nodeValue));
 
         // Get the request tag and read attributes into $params variable
         if (! $reqItem = $doc->getElementsByTagName('request')->item(0)) {
-            MalformedResponseException::missingTag('request', 'Record Page');
+            MalformedResponseException::missingTag('request', self::PAGE_TYPE);
         }
         if (! $verb = $reqItem->attributes->getNamedItem('verb')) {
-            MalformedResponseException::missingTag('verb', 'Record Page');
+            MalformedResponseException::missingTag('verb', self::PAGE_TYPE);
         } else {
             $verb = $verb->value;
         }
-        $params = [];
+        $requestParams = [];
         foreach ($reqItem->attributes as $attrName => $attr) {
             if ($attrName === 'verb') {
                 continue;
             } else {
-                $params[$attrName] = (string) $attr->value;
+                $requestParams[$attrName] = trim($attr->value);
             }
         }
 
         // if this is an error response, handle it here.
         if ($err = $doc->getElementsByTagName('error')->item(0)) {
             $errorCode = (string) $err->attributes->getNamedItem('code')->value;
-            $errorMessage = (string) trim($err->nodeValue);
+            $errorMessage = trim($err->nodeValue);
             throw new OaipmhException($errorCode, $errorMessage);
         }
 
-        // otherwise, the next element should match the verb value
+        // Get the resumptionToken
+        $resumptionToken = ($rt = $doc->getElementsByTagName('resumptionToken')->item(0))
+            ? ResumptionToken::fromDomNode($rt)
+            : null;
+
+        if (! $mdPrefix = $requestParams['metadataPrefix']) {
+            // TODO: allow $mdPrefix to be set by parsing the resumption token (if set) using a custom callback method.
+            // See: https://www.openarchives.org/OAI/openarchivesprotocol.html#ListRecords
+
+            // for now, though, just raise an error
+            throw MalformedResponseException::missingAttribute('metadataPrefix', 'request', self::PAGE_TYPE);
+        }
+
+        // If not an error response, the next element should match the verb value
         // in which case, iterate through the values and build a Record object for each one
-        if ($records = $doc->getElementsByTagName($verb)->item(0)) {
-            $records = function (DOMNode $node) {
-                yield Record::fromDomNode($mdPrefix, $node);
-            };
-        } else {
+        if (! $records = $doc->getElementsByTagName($verb)->item(0)->childNodes) {
             throw new MalformedResponseException(sprintf(
                 'Expected %s element in page record XML document',
                 $verb->value
             ));
         }
 
-        $resumptionToken = ($rt = $doc->getElementsByTagName('resumptionToken')->item(0))
-            ? ResumptionToken::fromDomNode($rt)
-            : null;
-
-        return new static($responseDate, $verb, $records, $resumptionToken, $params);
+        return new static($xml, $responseDate, $verb, $records, $resumptionToken, $requestParams);
     }
 
     /**
      * RecordPage constructor.
      *
+     * @param string $sourceXml
      * @param DateTimeInterface|DateTime $responseDate
      * @param string $verb
      * @param iterable $records
@@ -144,12 +142,14 @@ class RecordPage implements IteratorAggregate, Countable
      * @param array $params
      */
     public function __construct(
+        string $sourceXml,
         DateTimeInterface $responseDate,
         string $verb,
         iterable $records,
         ?ResumptionToken $resumptionToken = null,
         array $params = []
     ) {
+        $this->sourceXml = $sourceXml;
         $this->responseDate = $responseDate instanceof DateTimeImmutable
             ? $responseDate
             : DateTimeImmutable::createFromMutable($responseDate);
@@ -160,55 +160,35 @@ class RecordPage implements IteratorAggregate, Countable
         $this->resumptionToken = $resumptionToken;
     }
 
-    /**
-     * @return string
-     */
     public function __toString(): string
     {
-        $dom = new DOMDocument('1.0', 'UTF-8');
-
-        // TODO: Add elements here.
-
-        return trim($dom->saveXML());
+        return $this->sourceXml;
     }
 
-    /**
-     * @return DateTimeImmutable
-     */
     public function getResponseDate(): DateTimeImmutable
     {
         return $this->responseDate;
     }
 
-    /**
-     * @return string
-     */
     public function getVerb(): string
     {
         return $this->verb;
     }
 
     /**
-     * @return array|string[]
+     * @return array<int,string>
      */
-    public function getParams()
+    public function getParams(): array
     {
         return $this->params;
     }
 
-    /**
-     * @param RecordProcessor|null $processor
-     * @return iterable
-     */
     public function getRecords(RecordProcessor $processor = null): iterable
     {
         // TODO: If processor passed, then process the record; otherwise, return the record iterator
         return $this->records;
     }
 
-    /**
-     * @return ResumptionToken|null
-     */
     public function getResumptionToken(): ?ResumptionToken
     {
         return $this->resumptionToken;
@@ -219,9 +199,6 @@ class RecordPage implements IteratorAggregate, Countable
      *
      * If $processor is set, this method returns a generator that prepares the records.
      * Otherwise, it returns 'Model\Record' instances.
-     *
-     * @param RecordProcessor|null $processor = null
-     * @return Traversable|iterable|mixed[]
      */
     public function getIterator(?RecordProcessor $processor = null): Traversable
     {

@@ -39,12 +39,12 @@ class EndpointIntegrationTest extends TestCase
             new Response(
                 200,
                 ['Content-type' => 'text/xml'],
-                fopen(__DIR__ . '/SampleXML/GoodResponseSingleRecord.xml', 'r')
+                fopen(__DIR__ . '/Fixtures/SampleXML/GoodResponseSingleRecord.xml', 'r')
             )
         ]);
 
         $guzzle = new GuzzleAdapter(new \GuzzleHttp\Client(['handler' => $handler]));
-        $endpoint = new Endpoint(new Client('http://example.org', $guzzle));
+        $endpoint = Endpoint::build('https://example.org');
         $result = $endpoint->getRecord($recordId, 'nsdl_dc');
 
         $this->assertInstanceOf(\SimpleXMLElement::class, $result);
@@ -67,7 +67,7 @@ class EndpointIntegrationTest extends TestCase
         ]);
 
         $guzzle = new GuzzleAdapter(new \GuzzleHttp\Client(['handler' => $handler]));
-        $endpoint = new Endpoint(new Client('http://example.org', $guzzle));
+        $endpoint = new Endpoint('https://example.org');
         $result = $endpoint->getRecord('thisISTotalFake', 'nsdl_dc');
     }
 }

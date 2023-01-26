@@ -14,25 +14,15 @@ use DOMNode;
  */
 class Record
 {
-    /**
-     * @var string
-     */
-    private $header;
+    private string $header;
+    private ?string $metadata;
+    private string $format;
 
     /**
-     * @var string|null
+     * @var array<int,string>
      */
-    private $metadata;
+    private array $about = [];
 
-    /**
-     * @var array|string[]
-     */
-    private $about = [];
-
-    /**
-     * @var string
-     */
-    private $format;
 
     /**
      * @param string $metadataPrefix
@@ -60,9 +50,6 @@ class Record
         $this->about = $about;
     }
 
-    /**
-     * @return string
-     */
     public function __toString(): string
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -72,24 +59,18 @@ class Record
         return trim(str_replace('<?xml version="1.0"?>', '', $xml));
     }
 
-    /**
-     * @return string
-     */
     public function getHeader(): string
     {
         return $this->header;
     }
 
-    /**
-     * @return string
-     */
     public function getMetadata(): string
     {
         return $this->metadata;
     }
 
     /**
-     * @return array|string[]|null
+     * @return array<int,string>|null
      */
     public function getAbout(): ?array
     {

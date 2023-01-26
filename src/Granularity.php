@@ -32,10 +32,7 @@ class Granularity
     public const DATE = "YYYY-MM-DD";
     public const DATE_AND_TIME = "YYYY-MM-DDThh:mm:ssZ";
 
-    /**
-     * @var string
-     */
-    private $format;
+    private string $format;
 
     /**
      * Automatically try to create format for date

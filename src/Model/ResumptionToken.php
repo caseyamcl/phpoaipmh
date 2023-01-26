@@ -38,25 +38,10 @@ use Phpoaipmh\Granularity;
  */
 class ResumptionToken
 {
-    /**
-     * @var string
-     */
-    private $token;
-
-    /**
-     * @var int|null
-     */
-    private $completeListSize = null;
-
-    /**
-     * @var int|null
-     */
-    private $cursor = null;
-
-    /**
-     * @var DateTimeImmutable
-     */
-    private $expirationDate = null;
+    private string $token;
+    private ?int $completeListSize = null;
+    private ?int $cursor = null;
+    private ?DateTimeImmutable $expirationDate = null;
 
     /**
      * Build object from XML string
@@ -82,7 +67,7 @@ class ResumptionToken
             }
 
             return self::fromDomNode($element);
-        } catch (MalformedResponseException $e) {
+        } catch (MalformedResponseException $e) { // Why did I write this??
             // pass-through MalFormedResponse exceptions.
             throw $e;
         }
@@ -158,8 +143,6 @@ class ResumptionToken
 
     /**
      * Get string representation of resumption token
-     *
-     * @return string
      */
     public function __toString(): string
     {
@@ -184,8 +167,6 @@ class ResumptionToken
 
     /**
      * Get the complete list size, if is specified
-     *
-     * @return int|null
      */
     public function getCompleteListSize(): ?int
     {
@@ -194,8 +175,6 @@ class ResumptionToken
 
     /**
      * Get the current cursor, if it is specified
-     *
-     * @return int|null
      */
     public function getCursor(): ?int
     {
@@ -206,8 +185,6 @@ class ResumptionToken
      * Get the expiration date for this record set, if it is specified
      *
      * The expiration date represents the date/time after which the resumptionToken ceases to be valid
-     *
-     * @return DateTimeImmutable|null
      */
     public function getExpirationDate(): ?DateTimeImmutable
     {
@@ -216,8 +193,6 @@ class ResumptionToken
 
     /**
      * Does this token include the optional complete list size parameter?
-     *
-     * @return bool
      */
     public function hasCompleteListSize(): bool
     {
@@ -226,8 +201,6 @@ class ResumptionToken
 
     /**
      * Does this token include the optional expiration date parameter?
-     *
-     * @return bool
      */
     public function hasExpirationDate(): bool
     {
@@ -236,7 +209,6 @@ class ResumptionToken
 
     /**
      * Does this token include the optional cursor parameter?
-     * @return bool
      */
     public function hasCursor(): bool
     {

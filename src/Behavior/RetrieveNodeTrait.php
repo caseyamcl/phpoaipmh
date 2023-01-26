@@ -7,6 +7,7 @@ use DateTimeImmutable;
 use DOMDocument;
 use Exception;
 use Phpoaipmh\Exception\MalformedResponseException;
+use Throwable;
 
 /**
  * Class RetrieveNodeTrait
@@ -22,8 +23,6 @@ trait RetrieveNodeTrait
      *
      *  - 'Identify Response'
      *  - 'Record Page'
-     *
-     * @return string
      */
     abstract protected static function getXMLDocumentName(): string;
 
@@ -31,11 +30,6 @@ trait RetrieveNodeTrait
 
     /**
      * Retrieve a single node value as a string
-     *
-     * @param DOMDocument $doc
-     * @param string $nodeName
-     * @param bool $isRequired
-     * @return string|null
      */
     protected static function retrieveNodeValue(DOMDocument $doc, string $nodeName, bool $isRequired = true): ?string
     {
@@ -65,10 +59,7 @@ trait RetrieveNodeTrait
     /**
      * Retrieve multiple node values as strings
      *
-     * @param DOMDocument $doc
-     * @param string $nodeName
-     * @param bool $isRequired
-     * @return array
+     * @return array<int,string>
      */
     protected static function retrieveNodeValues(DOMDocument $doc, string $nodeName, bool $isRequired = true): array
     {
@@ -91,11 +82,6 @@ trait RetrieveNodeTrait
 
     /**
      * Retrieve a single node value as a date object
-     *
-     * @param DOMDocument $doc
-     * @param string $nodeName
-     * @param bool $isRequired
-     * @return DateTimeImmutable
      */
     protected static function retrieveNodeDateValue(
         DOMDocument $doc,
@@ -104,16 +90,14 @@ trait RetrieveNodeTrait
     ): DateTimeImmutable {
         try {
             return new DateTimeImmutable(static::retrieveNodeValue($doc, $nodeName, $isRequired));
-        } catch (Exception $e) {
-            if ($e instanceof MalformedResponseException) {
-                throw $e;
-            } else {
-                throw new MalformedResponseException(
-                    sprintf('invalid date value for "%s" in %s', $nodeName, static::getXMLDocumentName()),
-                    $e->getCode(),
-                    $e
-                );
-            }
+        } catch (MalformedResponseException $e) { // if already MalformedResponseException, then throw it.
+            throw $e;
+        } catch (Throwable $e) { // else, wrap the exception
+            throw new MalformedResponseException(
+                sprintf('invalid date value for "%s" in %s', $nodeName, static::getXMLDocumentName()),
+                $e->getCode(),
+                $e
+            );
         }
     }
 

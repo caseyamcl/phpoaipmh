@@ -25,7 +25,6 @@ use Phpoaipmh\Model\IdentifyResponse;
 use Phpoaipmh\Processor\SimpleXMLProcessor;
 use Phpoaipmh\Processor\StringProcessor;
 use Psr\Http\Client\ClientInterface;
-use RicardoFiorani\GuzzlePsr18Adapter\Client;
 use SimpleXMLElement;
 
 /**
@@ -38,25 +37,10 @@ class Endpoint implements EndpointInterface
 {
     const AUTO = null;
 
-    /**
-     * @var string
-     */
-    private $url;
-
-    /**
-     * @var string
-     */
-    private $granularity;
-
-    /**
-     * @var ClientInterface
-     */
-    private $client;
-
-    /**
-     * @var RecordProcessor
-     */
-    private $processor;
+    private string $url;
+    private string $granularity;
+    private ClientInterface $client;
+    private RecordProcessor $processor;
 
     /**
      * Build endpoint using URL and default settings
@@ -72,7 +56,7 @@ class Endpoint implements EndpointInterface
         ?RecordProcessor $processor = self::AUTO
     ): self {
         if (! $client && class_exists('\RicardoFiorani\GuzzlePsr18Adapter\Client')) {
-            $client = new Client();
+            $client = new \RicardoFiorani\GuzzlePsr18Adapter\Client();
         }
 
         return new static($url, $client, $processor);

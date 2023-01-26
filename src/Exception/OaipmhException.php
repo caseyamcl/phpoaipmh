@@ -29,10 +29,7 @@ use Throwable;
  */
 class OaipmhException extends BaseOaipmhException
 {
-    /**
-     * @var string
-     */
-    private $oaiErrorCode;
+    private string $oaiErrorCode;
 
     /**
      * OaipmhException constructor.
@@ -47,17 +44,11 @@ class OaipmhException extends BaseOaipmhException
         parent::__construct($message, $code, $previous);
     }
 
-    /**
-     * @return string
-     */
     public function __toString(): string
     {
         return "OaiPmhException: [{$this->code}]: ({$this->oaiErrorCode}) {$this->message}";
     }
 
-    /**
-     * @return string
-     */
     public function getOaiErrorCode(): string
     {
         return $this->oaiErrorCode;
