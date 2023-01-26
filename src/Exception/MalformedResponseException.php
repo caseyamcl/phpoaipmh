@@ -45,11 +45,22 @@ class MalformedResponseException extends BaseOaipmhException
         string $responseDocName,
         int $code = 0,
         ?Throwable $previous = null
-    ) {
+    ): self {
         return new self(
             sprintf("Expected '%s' element in %s XML document", $tagName, $responseDocName),
             $code,
             $previous
         );
+    }
+
+    public static function missingAttribute(
+        string $attributeName,
+        string $tagName,
+        string $responseDocName,
+        int $code = 0,
+        ?Throwable $previous = null
+    ): self {
+        $msg = sprintf('Missing %s attribute of %s tag in %s XML document', $attributeName, $tagName, $responseDocName);
+        return new self($msg, $code, $previous);
     }
 }

@@ -15,7 +15,7 @@ class IdentifyResponseTest extends TestCase
 {
     private const GOOD_XML_FILEPATH = __DIR__ . '/../Fixture/SampleXML/GoodResponseIdentify.xml';
 
-    public function testInstantiateFromXmlString()
+    public function testInstantiateFromXmlString(): void
     {
         $pageObj = IdentifyResponse::fromXmlString(file_get_contents(self::GOOD_XML_FILEPATH));
         $this->assertInstanceOf(IdentifyResponse::class, $pageObj);
@@ -24,6 +24,7 @@ class IdentifyResponseTest extends TestCase
     public function testInstantiateViaConstructorWithValidValues(): void
     {
         $obj = new IdentifyResponse(
+            '<test>test</test>',
             'Test Identify',
             'http://example.org/oai',
             '2.0',
@@ -44,6 +45,7 @@ class IdentifyResponseTest extends TestCase
         $this->expectExceptionMessage('Invalid value for "baseURL"');
 
         new IdentifyResponse(
+            '<test>test</test>',
             'Test Identify',
             '@@@', // <-- Invalid URL
             '2.0',
@@ -62,8 +64,9 @@ class IdentifyResponseTest extends TestCase
         $this->expectNoticeMessage('library is designed to work with OAI-PMH 2.0');
 
         new IdentifyResponse(
+            '<test>test</test>',
             'Test Identify',
-            'http://example.org/oai',
+            'https://example.org/oai',
             '1.0', // <-- Non 2.0 Version
             new DateTimeImmutable(),
             IdentifyResponse::DELETED_RECORD_TRANSIENT,
@@ -77,8 +80,9 @@ class IdentifyResponseTest extends TestCase
     public function testInstantiateWithNonImmutableDateTimeObjectConvertsToImmutable()
     {
         $obj = new IdentifyResponse(
+            '<test>test</test>',
             'Test Identify',
-            'http://example.org/oai',
+            'https://example.org/oai',
             '2.0',
             new DateTime('2010-09-08'), // <-- Mutable date/time
             IdentifyResponse::DELETED_RECORD_TRANSIENT,
@@ -98,8 +102,9 @@ class IdentifyResponseTest extends TestCase
         $this->expectExceptionMessage('Invalid deleted record policy value');
 
         new IdentifyResponse(
+            '<test>test</test>',
             'Test Identify',
-            'http://example.org/oai',
+            'https://example.org/oai',
             '2.0',
             new DateTimeImmutable(),
             'blarh', // <-- Invalid deleted record policy
@@ -116,8 +121,9 @@ class IdentifyResponseTest extends TestCase
         $this->expectExceptionMessage('Invalid email at index 1');
 
         new IdentifyResponse(
+            '<test>test</test>',
             'Test Identify',
-            'http://example.org/oai',
+            'https://example.org/oai',
             '2.0',
             new DateTimeImmutable(),
             IdentifyResponse::DELETED_RECORD_TRANSIENT,
@@ -134,8 +140,9 @@ class IdentifyResponseTest extends TestCase
         $this->expectExceptionMessage('Invalid description at index 1');
 
         new IdentifyResponse(
+            '<test>test</test>',
             'Test Identify',
-            'http://example.org/oai',
+            'https://example.org/oai',
             '2.0',
             new DateTimeImmutable(),
             IdentifyResponse::DELETED_RECORD_TRANSIENT,
@@ -149,8 +156,9 @@ class IdentifyResponseTest extends TestCase
     public function testGetDescriptionCountWhenDescriptionExists()
     {
         $obj = new IdentifyResponse(
+            '<test>test</test>',
             'Test Identify',
-            'http://example.org/oai',
+            'https://example.org/oai',
             '2.0',
             new DateTimeImmutable(),
             IdentifyResponse::DELETED_RECORD_TRANSIENT,
@@ -166,8 +174,9 @@ class IdentifyResponseTest extends TestCase
     public function testGetDescriptionCountWhenDescriptionNotExists()
     {
         $obj = new IdentifyResponse(
+            '<test>test</test>',
             'Test Identify',
-            'http://example.org/oai',
+            'https://example.org/oai',
             '2.0',
             new DateTimeImmutable(),
             IdentifyResponse::DELETED_RECORD_TRANSIENT,
@@ -183,8 +192,9 @@ class IdentifyResponseTest extends TestCase
     public function testHasCompressionReturnsTrueWhenValuePresent(): void
     {
         $obj = new IdentifyResponse(
+            '<test>test</test>',
             'Test Identify',
-            'http://example.org/oai',
+            'https://example.org/oai',
             '2.0',
             new DateTimeImmutable(),
             IdentifyResponse::DELETED_RECORD_TRANSIENT,
@@ -201,8 +211,9 @@ class IdentifyResponseTest extends TestCase
     public function testHasCompressionReturnsFalseWhenValueNotPresent(): void
     {
         $obj = new IdentifyResponse(
+            '<test>test</test>',
             'Test Identify',
-            'http://example.org/oai',
+            'https://example.org/oai',
             '2.0',
             new DateTimeImmutable(),
             IdentifyResponse::DELETED_RECORD_TRANSIENT,
@@ -219,8 +230,9 @@ class IdentifyResponseTest extends TestCase
     public function testGetters()
     {
         $obj = new IdentifyResponse(
+            '<test>test</test>',
             'Test Identify',
-            'http://example.org/oai',
+            'https://example.org/oai',
             '2.0',
             new DateTimeImmutable(),
             IdentifyResponse::DELETED_RECORD_TRANSIENT,
@@ -231,7 +243,7 @@ class IdentifyResponseTest extends TestCase
         );
 
         $this->assertSame('Test Identify', $obj->getRepositoryName());
-        $this->assertSame('http://example.org/oai', $obj->getBaseURL());
+        $this->assertSame('https://example.org/oai', $obj->getBaseURL());
         $this->assertSame(IdentifyResponse::DELETED_RECORD_TRANSIENT, $obj->getDeletedRecordPolicy());
         $this->assertInstanceOf(Granularity::class, $obj->getGranularity());
         $this->assertSame('test@example.org', $obj->getFirstAdminEmail());
@@ -243,9 +255,10 @@ class IdentifyResponseTest extends TestCase
 
     public function testToStringReturnsXML()
     {
-        new IdentifyResponse(
+        $obj = new IdentifyResponse(
+            '<test>test</test>',
             'Test Identify',
-            'http://example.org/oai',
+            'https://example.org/oai',
             '2.0',
             new DateTimeImmutable(),
             IdentifyResponse::DELETED_RECORD_TRANSIENT,
@@ -255,7 +268,6 @@ class IdentifyResponseTest extends TestCase
             [new DOMNode(), new DOMNode()]
         );
 
-        $this->assertSame(1, 1);
-        // TODO: Write logic for and test __toString()
+        $this->assertSame('<test>test</test>', (string) $obj);
     }
 }

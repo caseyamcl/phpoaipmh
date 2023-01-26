@@ -28,53 +28,24 @@ class IdentifyResponse
     public const DELETED_RECORD_TRANSIENT = 'transient';
     public const DELETED_RECORD_PERSISTENT = 'persistent';
 
-    public const GRANULARITY_DATE = "YYYY-MM-DD";
-    public const GRANULARITY_DATE_AND_TIME = "YYYY-MM-DDThh:mm:ssZ";
+    private string $sourceXml;
+    private string $repositoryName;
+    private string $baseURL;
+    private string $protocolVersion;
+    private DateTimeImmutable $earliestDatestamp;
+    private string $deletedRecordPolicy;
+    private Granularity $granularity;
 
     /**
-     * @var string
+     * @var array<int,string>
      */
-    private $repositoryName;
+    private array $adminEmails;
+    private ?string $compression;
 
     /**
-     * @var string
+     * @var iterable<int,DOMNode>
      */
-    private $baseURL;
-
-    /**
-     * @var string
-     */
-    private $protocolVersion;
-
-    /**
-     * @var DateTimeImmutable
-     */
-    private $earliestDatestamp;
-
-    /**
-     * @var string
-     */
-    private $deletedRecordPolicy;
-
-    /**
-     * @var Granularity
-     */
-    private $granularity;
-
-    /**
-     * @var array|string[]
-     */
-    private $adminEmails;
-
-    /**
-     * @var string|null
-     */
-    private $compression;
-
-    /**
-     * @var iterable|DOMNode[]
-     */
-    private $descriptions = [];
+    private iterable $descriptions = [];
 
     /**
      * @param string $xml
@@ -100,6 +71,7 @@ class IdentifyResponse
         $descriptions = $doc->getElementsByTagName('description');
 
         return new static(
+            $xml,
             $repoName,
             $baseUrl,
             $protocolVersion,
@@ -115,6 +87,7 @@ class IdentifyResponse
     /**
      * IdentifyResponse constructor.
      *
+     * @param string $sourceXML
      * @param string $repositoryName
      * @param string $baseURL
      * @param string $protocolVersion
@@ -126,6 +99,7 @@ class IdentifyResponse
      * @param iterable|DOMNode[] $descriptions
      */
     public function __construct(
+        string $sourceXML,
         string $repositoryName,
         string $baseURL,
         string $protocolVersion,
@@ -136,12 +110,13 @@ class IdentifyResponse
         ?string $compression = null,
         iterable $descriptions = []
     ) {
+        $this->sourceXml = $sourceXML;
         $this->repositoryName = $repositoryName;
         $this->granularity = $granularity;
         $this->compression = $compression ?: null;
 
-        $this->baseURL = filter_var($baseURL, FILTER_VALIDATE_URL);
-        if (! $this->baseURL) {
+        $this->baseURL = filter_var($baseURL, FILTER_VALIDATE_URL) ?: '';
+        if ($this->baseURL === '') {
             throw new InvalidArgumentException('Invalid value for "baseURL" element');
         }
 
@@ -195,69 +170,41 @@ class IdentifyResponse
         }
     }
 
-    /**
-     * @return string
-     */
     public function __toString(): string
     {
-        $dom = new DOMDocument('1.0', 'UTF-8');
-
-        // TODO: Add elements here.
-
-        return trim($dom->saveXML());
+        return $this->sourceXml;
     }
 
-    /**
-     * @return string
-     */
     public function getRepositoryName(): string
     {
         return $this->repositoryName;
     }
 
-    /**
-     * @return string
-     */
     public function getBaseURL(): string
     {
         return $this->baseURL;
     }
 
-    /**
-     * @return string
-     */
     public function getProtocolVersion(): string
     {
         return $this->protocolVersion;
     }
 
-    /**
-     * @return DateTimeImmutable
-     */
     public function getEarliestDatestamp(): DateTimeImmutable
     {
         return $this->earliestDatestamp;
     }
 
-    /**
-     * @return string
-     */
     public function getDeletedRecordPolicy(): string
     {
         return $this->deletedRecordPolicy;
     }
 
-    /**
-     * @return Granularity
-     */
     public function getGranularity(): Granularity
     {
         return $this->granularity;
     }
 
-    /**
-     * @return array|string[]
-     */
     public function getAdminEmails(): array
     {
         return $this->adminEmails;
@@ -265,24 +212,19 @@ class IdentifyResponse
 
     /**
      * Get the first admin email from the list
-     *
-     * @return string
      */
     public function getFirstAdminEmail(): string
     {
         return current($this->adminEmails);
     }
 
-    /**
-     * @return string|null
-     */
     public function getCompression(): ?string
     {
         return $this->compression;
     }
 
     /**
-     * @return DOMNode[] |null
+     * @return iterable<int,DOMNode>
      */
     public function getDescriptions(): iterable
     {
@@ -291,8 +233,6 @@ class IdentifyResponse
 
     /**
      * Does this endpoint report its compression method?
-     *
-     * @return bool
      */
     public function hasCompression(): bool
     {
@@ -300,9 +240,7 @@ class IdentifyResponse
     }
 
     /**
-     * Does this endpoint include a description of the repository?
-     *
-     * @return int
+     * Does this endpoint include one or more descriptions of the repository?
      */
     public function getDescriptionCount(): int
     {
@@ -311,7 +249,6 @@ class IdentifyResponse
 
     /**
      * Get human-readable name of document for error messages and such
-     * @return string
      */
     protected static function getXMLDocumentName(): string
     {
