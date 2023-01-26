@@ -14,7 +14,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.2",
+        "php": ">=7.4",
         "ext-dom": "*",
         "psr/http-client": "^1.0"
     },
