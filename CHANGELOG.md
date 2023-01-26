@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v4.0] - UNRELEASED
 ### Added
-- PHP 7 goodness: `declare(strict_types=1)` and method argument & return signatures
+- Modern PHP goodness: `declare(strict_types=1)` and method argument & return signatures
 - Support for any [PSR-18 HTTP client](https://www.php-fig.org/psr/psr-18/)
 - Record processors to provide alternatives to SimpleXML processing
 - Data models to represent all documents that may be returned by an OAI-PMH endpoint
@@ -18,13 +18,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - (dev) Moved sample XML responses to the `Fixtures` directory
 
 ### Removed
-- Support for PHPv5 (if you are still on PHP5, use v3.2 or lower)
+- Support for PHPv5 - 7.3 (if you are still on PHP5, use v3.2 or lower)
 - All HTTP libraries and adapters; v4.0 requires a PSR-18 compatible client
 - `HttpException`, because it is no longer needed
 - `Client` and `ClientInterface` classes (functionality has been refactored)
 - Dependency on SimpleXML extension
 - (dev) Dependency on Mockery library in favor of built-in PHPUnit mocks and stubs
-
 
 ## [v3.1] - 2019-12-14
 ### Added
