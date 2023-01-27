@@ -2,7 +2,9 @@
 
 namespace Phpoaipmh;
 
+use DateTimeImmutable;
 use DateTimeInterface;
+use DateTimeZone;
 
 /**
  * PHPOAIPMH Library
@@ -36,6 +38,7 @@ class Granularity
      * @param string $format       Either self::DATE or self::DATE_AND_TIME
      *
      * @return string
+     * @throws \Exception
      */
     public static function formatDate(DateTimeInterface $dateTime, $format)
     {
@@ -45,6 +48,9 @@ class Granularity
         );
         $phpFormat = $phpFormats[$format];
 
-        return $dateTime->format($phpFormat);
+        return (new DateTimeImmutable(
+            '@' . $dateTime->getTimestamp(),
+            new DateTimeZone("UTC")
+        ))->format($phpFormat);
     }
 }
