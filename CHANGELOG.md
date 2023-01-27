@@ -8,11 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Tests for PHP 8.0, 8.1, and 8.2
 
+### Removed
+- Tests for PHP 5.5 - 7.1
+
 ### Changed
 - Upgraded phpUnit to v8.5
 
 ### Fixed
 - Prevent deprecation errors on PHP8 and newer (thanks @tikaszvince)
+- Ensure that other time zones besides UTC are converted to UTC (thanks @rudolfbyker)
 
 ## [v3.3] - 2020-12-21
 ### Changed
