@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v3.3.1] - 2023-01-27
+### Added
+- Tests for PHP 8.0, 8.1, and 8.2
+
+### Changed
+- Upgraded phpUnit to v8.5
+
+### Fixed
+- Prevent deprecation errors on PHP8 and newer (thanks @tikaszvince)
+
 ## [v3.3] - 2020-12-21
 ### Changed
 - Renamed method: `retrieveBatch` -> `retrieveNextBatch`
