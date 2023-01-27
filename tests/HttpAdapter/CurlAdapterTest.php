@@ -17,14 +17,16 @@
 
 namespace Phpoaipmh\Http;
 
+use Phpoaipmh\Exception\HttpException;
 use Phpoaipmh\HttpAdapter\CurlAdapter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class CurlAdapterTest
  *
  * @author Casey McLaughlin <caseyamcl@gmail.com>
  */
-class CurlAdapterTest extends \PHPUnit_Framework_TestCase
+class CurlAdapterTest extends TestCase
 {
 
     /**
@@ -63,7 +65,7 @@ class CurlAdapterTest extends \PHPUnit_Framework_TestCase
      */
     public function test404ResponseThrowsAnException()
     {
-        $this->setExpectedException('Phpoaipmh\Exception\HttpException');
+        $this->expectException(HttpException::class);
 
         $obj = new CurlAdapter();
         $obj->request('http://w3.org/doesnotexistyo');
@@ -76,7 +78,7 @@ class CurlAdapterTest extends \PHPUnit_Framework_TestCase
      */
     public function testNonExistentServerThrowsException()
     {
-        $this->setExpectedException('Phpoaipmh\Exception\HttpException');
+        $this->expectException(HttpException::class);
 
         $obj = new CurlAdapter();
         $obj->request('http://doesnotexist.blargasdf');

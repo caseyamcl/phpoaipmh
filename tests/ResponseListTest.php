@@ -19,14 +19,15 @@ namespace Phpoaipmh;
 
 use Phpoaipmh\Fixture\ClientStub;
 use Phpoaipmh\HttpAdapter\HttpAdapterInterface;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 /**
  * Response List Test
  *
  * @package Phpoaipmh
  */
-class ResponseListTest extends PHPUnit_Framework_TestCase
+class ResponseListTest extends TestCase
 {
     /**
      * Simple Instantiation Test
@@ -120,7 +121,7 @@ class ResponseListTest extends PHPUnit_Framework_TestCase
      */
     public function testRequestThrowsExceptionForNonListVerb()
     {
-        $this->setExpectedException('RuntimeException');
+        $this->expectException(RuntimeException::class);
         $output = $this->generateSampleXML(array('GoodResponseSinglePage.xml'));
         new RecordIterator($this->getMockClient($output), 'Identify');
     }
@@ -135,7 +136,7 @@ class ResponseListTest extends PHPUnit_Framework_TestCase
      */
     public function testRequestThrowsExceptionForMissingSchemaForVerb()
     {
-        $this->setExpectedException('RuntimeException');
+        $this->expectException(RuntimeException::class);
         $output = $this->generateSampleXML(array('GoodResponseSinglePage.xml'));
         $obj = new RecordIterator($this->getMockClient($output), 'ListIdentifiers');
         $obj->nextItem();
@@ -156,6 +157,7 @@ class ResponseListTest extends PHPUnit_Framework_TestCase
         //Single page sample file contains 162 results in a valid ListRecords response
         $output = $this->generateSampleXML(array('GoodResponseSinglePage.xml'));
         $obj = new RecordIterator($this->getMockClient($output), 'ListRecords');
+        $this->assertEquals(162, $obj->getTotalRecordCount());
     }
 
     // ---------------------------------------------------------------

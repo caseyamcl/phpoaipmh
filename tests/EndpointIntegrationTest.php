@@ -19,15 +19,16 @@ namespace Phpoaipmh;
 
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
+use Phpoaipmh\Exception\OaipmhException;
 use Phpoaipmh\HttpAdapter\GuzzleAdapter;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Endpoint Guzzle Test
  *
  * @author Casey McLaughlin <caseyamcl@gmail.com>
  */
-class EndpointIntegrationTest extends PHPUnit_Framework_TestCase
+class EndpointIntegrationTest extends TestCase
 {
     public function testGetRecordWorksForCorrectRecord()
     {
@@ -51,10 +52,11 @@ class EndpointIntegrationTest extends PHPUnit_Framework_TestCase
 
     /**
      * @depends testGetRecordWorksForCorrectRecord
-     * @expectedException \Phpoaipmh\Exception\OaipmhException
      */
     public function testGetRecordThrowsOAIExceptionForInvalidRecord()
     {
+        $this->expectException(OaipmhException::class);
+
         $handler = new MockHandler([
             new Response(
                 200,

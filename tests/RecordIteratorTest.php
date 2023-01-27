@@ -4,6 +4,7 @@ namespace Phpoaipmh;
 
 use DateTimeInterface;
 use Phpoaipmh\HttpAdapter\GuzzleAdapter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Created by PhpStorm.
@@ -12,7 +13,7 @@ use Phpoaipmh\HttpAdapter\GuzzleAdapter;
  * Time: 1:27 PM
  */
 
-class RecordIteratorTest extends \PHPUnit_Framework_TestCase
+class RecordIteratorTest extends TestCase
 {
     public function testGetClientReturnsClientInstance()
     {
@@ -52,7 +53,7 @@ class RecordIteratorTest extends \PHPUnit_Framework_TestCase
     {
         $iterator = new \Phpoaipmh\RecordIterator($this->multiplePageRequestClient(), 'ListIdentifiers');
         $key = $iterator->key();
-        $this->assertInternalType('int', $key);
+        $this->assertIsInt($key);
     }
 
     /**
