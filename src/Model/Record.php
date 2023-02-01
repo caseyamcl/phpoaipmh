@@ -34,7 +34,7 @@ class Record
         // TODO: finish this...
         die('left off here');
     }
-    
+
     /**
      * Record constructor.
      * @param string $format  Format of the record

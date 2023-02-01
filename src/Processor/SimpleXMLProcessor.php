@@ -40,19 +40,15 @@ class SimpleXMLProcessor implements RecordProcessor
      */
     public function __construct()
     {
-        if (! class_exists(SimpleXMLElement::class)) {
+        if (! class_exists('\SimpleXMLElement')) {
             throw new RuntimeException(sprintf(
-                'Please install the SimpleXML extension in order to use the %s processor',
+                'Please install the SimpleXML extension in order to use the %s',
                 get_called_class()
             ));
         }
     }
 
-    /**
-     * @param string $recordData
-     * @return SimpleXMLElement
-     */
-    public function process(string $recordData)
+    public function process(string $recordData): SimpleXMLElement
     {
         //Setup a SimpleXML Document
         try {
@@ -61,7 +57,7 @@ class SimpleXMLProcessor implements RecordProcessor
             throw new MalformedResponseException(sprintf("Could not decode XML Response: %s", $e->getMessage()));
         }
 
-        //If we get back a OAI-PMH error, throw a OaipmhException
+        //If we get back an OAI-PMH error, throw a OaipmhException
         if (isset($xml->error)) {
             $code = (string) $xml->error['code'];
             $msg  = (string) $xml->error;
