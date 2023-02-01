@@ -5,6 +5,7 @@
 ## To-do for v4:
 
 - Refer to v3 code at: <https://github.com/caseyamcl/phpoaipmh/blob/v3.1/src>
+- Good OAI-PMH site to test against: https://scholarship.law.unc.edu/do/oai/?verb=ListMetadataFormats
 
 1. Finish implementing data models and their tests.
 2. Figure out how I'm going to refactor the `Endpoint` class
