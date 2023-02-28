@@ -15,7 +15,8 @@ from any [OAI 2.0 compliant endpoint](http://www.openarchives.org/OAI/openarchiv
 
 Features:
 * PSR-12 Compliant
-* Composer-compatible
+* 
+r-compatible
 * Unit-tested
 * Prefers Guzzle (v6, v7, or v5) for HTTP transport layer, but can fall back to cURL, or implement your own
 * Easy-to-use iterator that hides all the HTTP junk necessary to get paginated records
@@ -258,7 +259,7 @@ to automatically handle OAI-PMH endpoint rate limiting rules.
 First, include the middleware as a dependency in your app:
 
 ```bash
-$ composer require caseyamcl/guzzle_retry_middleware
+composer require caseyamcl/guzzle_retry_middleware
 ```
 
 Then, when loading the Phpoaipmh libraries, build a Guzzle client manually, and add
