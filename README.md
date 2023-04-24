@@ -15,8 +15,7 @@ from any [OAI 2.0 compliant endpoint](http://www.openarchives.org/OAI/openarchiv
 
 Features:
 * PSR-12 Compliant
-* 
-r-compatible
+* Composer-compatible
 * Unit-tested
 * Prefers Guzzle (v6, v7, or v5) for HTTP transport layer, but can fall back to cURL, or implement your own
 * Easy-to-use iterator that hides all the HTTP junk necessary to get paginated records
